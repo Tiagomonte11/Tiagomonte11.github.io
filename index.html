@@ -188,6 +188,7 @@
     h1 .name { font-size: clamp(96px, min(24vw, 30svh), 360px); line-height: .8; letter-spacing: -.005em; }
     /* keep the name below the door labels and arrows, even on short laptop screens */
     @media (min-width: 761px) { .hero { padding-top: 340px; } }
+    @media (max-width: 760px) { .hero { padding-top: 300px; } .badge { display: none; } }   /* phones: name below the labels; no room for the badge */
 
     .hero-bottom {
       display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 32px;
