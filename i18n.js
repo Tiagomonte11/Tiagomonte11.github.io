@@ -17,6 +17,22 @@
     "Let's connect": 'Vamos conectar',
     'Home': 'Início',
     'Back to top': 'Voltar ao topo',
+    'About Tiago Monte': 'Sobre Tiago Monte',
+    'Tiago Monte DJing': 'Tiago Monte a atuar como DJ',
+    'Tiago Monte — Call me Monte': 'Tiago Monte — Call me Monte',
+
+    // page titles and descriptions (what Google shows in results)
+    'Tiago Monte — Entrepreneur, DJ & Producer | Call me Monte': 'Tiago Monte — Empreendedor, DJ & Produtor | Call me Monte',
+    'Tiago Monte (Monte) is an entrepreneur, organic house DJ and producer based in Luanda, Angola, with business experience across Portugal, Mozambique and the USA.':
+      'Tiago Monte (Monte) é empreendedor, DJ e produtor de house orgânico baseado em Luanda, Angola, com experiência em negócios em Portugal, Moçambique e nos EUA.',
+    'Tiago Monte DJ — Organic & Underground House, Luanda | Monte': 'Tiago Monte DJ — House Orgânico & Underground, Luanda | Monte',
+    'Monte (Tiago Monte) is a DJ and producer of organic, underground and afrotech house from Luanda, Angola. Sets at Sunset Sino, Sunset DST, Festival Utopia, Magusto and Abrir Abril.':
+      'Monte (Tiago Monte) é DJ e produtor de house orgânico, underground e afrotech em Luanda, Angola. Sets no Sunset Sino, Sunset DST, Festival Utopia, Magusto e Abrir Abril.',
+    'Tiago Monte — Business: Sales, HR & Ventures | Call me Monte': 'Tiago Monte — Negócios: Vendas, RH & Empreendimentos | Call me Monte',
+    "Tiago Monte's road in business: Head of HR at DST Angola in Luanda, Head of Sales at Assim Store in Braga, co-founder of Casa Sauna LLC in Delaware, BBA from EU Business School.":
+      'O percurso de Tiago Monte nos negócios: Diretor de RH na DST Angola, em Luanda, Diretor Comercial na Assim Store, em Braga, cofundador da Casa Sauna LLC, no Delaware, e BBA pela EU Business School.',
+    'The music side of Tiago Monte': 'O lado musical de Tiago Monte',
+    'The business side of Tiago Monte': 'O lado dos negócios de Tiago Monte',
 
     // home: opening screen
     'Frequency': 'Frequência',
@@ -210,6 +226,7 @@
     [/^(\d{4}) edition$/, 'Edição de $1'],
     [/^(\d+) photos$/, '$1 fotos'],
     [/^Open photo (\d+) of (.+)$/, 'Abrir foto $1 de $2'],
+    [/^Tiago Monte DJ set at (.+) (\d{4}), photo (\d+)$/, 'Tiago Monte a atuar no $1 $2, foto $3'],
     [/^(.+) (\d{4}), photo (\d+)$/, '$1 $2, foto $3'],
   ];
 
@@ -257,11 +274,23 @@
     if (!document.documentElement.dataset.i18nTitle) document.documentElement.dataset.i18nTitle = document.title;
     const t = document.documentElement.dataset.i18nTitle;
     document.title = lang === 'pt' ? (toPT(t) ?? t) : t;
-    document.querySelectorAll('meta[name="description"], meta[property="og:title"]').forEach(m => {
+    document.querySelectorAll('meta[name="description"], meta[property="og:title"], meta[property="og:description"], meta[name="twitter:title"], meta[name="twitter:description"]').forEach(m => {
       if (!m.dataset.i18nContent) m.dataset.i18nContent = m.content;
       m.content = lang === 'pt' ? (toPT(m.dataset.i18nContent) ?? m.dataset.i18nContent) : m.dataset.i18nContent;
     });
     document.documentElement.lang = lang === 'pt' ? 'pt-PT' : 'en';
+    const loc = document.querySelector('meta[property="og:locale"]');
+    if (loc) loc.content = lang === 'pt' ? 'pt_PT' : 'en_US';
+    setCanonical();
+  };
+
+  // canonical address of this page: the clean URL in English, ?lang=pt for the Portuguese version
+  const setCanonical = () => {
+    let link = document.querySelector('link[rel="canonical"]');
+    if (!link) { link = document.createElement('link'); link.rel = 'canonical'; document.head.appendChild(link); }
+    const url = new URL(location.href); url.hash = ''; url.search = '';
+    if (new URLSearchParams(location.search).get('lang') === 'pt') url.search = '?lang=pt';
+    link.href = url.href;
   };
 
   // ---- the EN | PT switch, added to the menu ----

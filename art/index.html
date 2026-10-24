@@ -3,10 +3,78 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Music · Call me Monte</title>
-  <meta name="description" content="The music side of Tiago Monte: music production, DJ sets and the events he has played, from Sunset Sino to Abrir Abril.">
-  <meta property="og:title" content="Music · Call me Monte">
+  <title>Tiago Monte DJ — Organic &amp; Underground House, Luanda | Monte</title>
+  <meta name="description" content="Monte (Tiago Monte) is a DJ and producer of organic, underground and afrotech house from Luanda, Angola. Sets at Sunset Sino, Sunset DST, Festival Utopia, Magusto and Abrir Abril.">
+  <meta name="author" content="Tiago Monte">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <!-- English and Portuguese versions of this page (the address of each is set as canonical by i18n.js) -->
+  <link rel="alternate" hreflang="en" href="https://callmemonte.com/art/">
+  <link rel="alternate" hreflang="pt" href="https://callmemonte.com/art/?lang=pt">
+  <link rel="alternate" hreflang="x-default" href="https://callmemonte.com/art/">
+  <!-- how the page looks when shared (LinkedIn, WhatsApp, X, ...) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Call me Monte">
+  <meta property="og:title" content="Tiago Monte DJ — Organic &amp; Underground House, Luanda | Monte">
+  <meta property="og:description" content="Monte (Tiago Monte) is a DJ and producer of organic, underground and afrotech house from Luanda, Angola. Sets at Sunset Sino, Sunset DST, Festival Utopia, Magusto and Abrir Abril.">
   <meta property="og:url" content="https://callmemonte.com/art/">
+  <meta property="og:image" content="https://callmemonte.com/og-tiago-monte.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Tiago Monte — Call me Monte">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="pt_PT">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tiago Monte DJ — Organic &amp; Underground House, Luanda | Monte">
+  <meta name="twitter:description" content="Monte (Tiago Monte) is a DJ and producer of organic, underground and afrotech house from Luanda, Angola. Sets at Sunset Sino, Sunset DST, Festival Utopia, Magusto and Abrir Abril.">
+  <meta name="twitter:image" content="https://callmemonte.com/og-tiago-monte.jpg">
+  <!-- who this site is about, in a form search engines read -->
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ProfilePage",
+        "@id": "https://callmemonte.com/art/#page",
+        "url": "https://callmemonte.com/art/",
+        "name": "Tiago Monte — Music",
+        "about": {
+          "@id": "https://callmemonte.com/#person"
+        },
+        "mainEntity": {
+          "@type": "Person",
+          "@id": "https://callmemonte.com/#person",
+          "name": "Tiago Monte",
+          "alternateName": [
+            "Monte",
+            "Call me Monte"
+          ]
+        },
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://callmemonte.com/#website",
+          "url": "https://callmemonte.com/"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Tiago Monte",
+            "item": "https://callmemonte.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Music",
+            "item": "https://callmemonte.com/art/"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
   <meta name="theme-color" content="#0d0d0b">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23e9e2d4'/%3E%3Ctext x='32' y='42' font-family='Impact,sans-serif' font-size='34' fill='%230d0d0b' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
   <script>document.documentElement.classList.add('js');</script>
@@ -226,7 +294,7 @@
   </nav>
 
   <header class="hero">
-    <p class="tag"><b>I.</b> The music side</p>
+    <p class="tag"><b>I.</b> The music side of Tiago Monte</p>
     <h1><span class="wrap"><span>Music</span></span></h1>
     <div class="hero-foot">
       <p class="lede">Music where inspiration leads. <i>Sharing the art, one set at a time.</i></p>
@@ -330,7 +398,7 @@
       const photos = ev.shapes.map((s, i) => {
         const cls = ['ph', i === 0 ? 'cover' : (s === 'p' ? 'p' : '')].join(' ').trim();
         return `<button class="${cls}" style="--d:${(i % 4) * 0.08}s" data-ev="${ei}" data-i="${i}" aria-label="Open photo ${i + 1} of ${ev.title}">
-                  <img src="img/${ev.slug}/thumb/${pad(i + 1)}.jpg" alt="${ev.title} ${ev.year}, photo ${i + 1}" loading="lazy">
+                  <img src="img/${ev.slug}/thumb/${pad(i + 1)}.jpg" alt="Tiago Monte DJ set at ${ev.title} ${ev.year}, photo ${i + 1}" loading="lazy">
                 </button>`;
       }).join('');
       main.insertAdjacentHTML('beforeend', `
@@ -371,7 +439,7 @@
       lbImg.classList.add('swap');
       const src = `img/${ev.slug}/${pad(cur.i + 1)}.jpg`;
       const pre = new Image(); pre.src = src;
-      pre.onload = () => { lbImg.src = src; lbImg.alt = `${ev.title} ${ev.year}, photo ${cur.i + 1}`; requestAnimationFrame(() => lbImg.classList.remove('swap')); };
+      pre.onload = () => { lbImg.src = src; lbImg.alt = `Tiago Monte DJ set at ${ev.title} ${ev.year}, photo ${cur.i + 1}`; requestAnimationFrame(() => lbImg.classList.remove('swap')); };
       document.getElementById('lbTitle').innerHTML = `<b>${ev.title}</b> · ${ev.year}`;
       document.getElementById('lbCount').textContent = `${pad(cur.i + 1)} / ${pad(n)}`;
       document.getElementById('lbDots').innerHTML = ev.shapes.map((_, k) => `<i class="${k === cur.i ? 'on' : ''}"></i>`).join('');
