@@ -29,7 +29,7 @@
   <meta name="twitter:image" content="https://callmemonte.com/og-tiago-monte.jpg">
   <!-- who this site is about, in a form search engines read -->
   <script type="application/ld+json">
-{
+  {
     "@context": "https://schema.org",
     "@graph": [
       {
@@ -47,6 +47,10 @@
           "alternateName": [
             "Monte",
             "Call me Monte"
+          ],
+          "sameAs": [
+            "https://www.linkedin.com/in/tiago-monte-9a91bb111",
+            "https://soundcloud.com/tigas-m"
           ]
         },
         "isPartOf": {
@@ -271,6 +275,9 @@
     .soon p { font-family: var(--serif); font-size: clamp(30px, 4.4vw, 60px); line-height: 1.1; }
     .soon p i { color: var(--accent); }
     .soon .other { margin-top: 40px; }
+    /* SoundCloud link in the intro */
+    .listen { display: inline-flex; align-items: center; gap: 12px; padding: 12px 22px; border-radius: 999px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 50%, transparent); transition: background .35s, color .35s; }
+    .listen:hover { background: var(--accent); color: var(--bg); }
     .event-intro .lede .count { display: block; margin-top: 14px; font-family: var(--sans); }
 
     footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 28px var(--pad); border-top: 1px solid var(--line); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
@@ -298,6 +305,7 @@
     <h1><span class="wrap"><span>Music</span></span></h1>
     <div class="hero-foot">
       <p class="lede">Music where inspiration leads. <i>Sharing the art, one set at a time.</i></p>
+      <a class="listen" href="https://soundcloud.com/tigas-m" target="_blank" rel="noopener me">Listen on SoundCloud <span aria-hidden="true">↗</span></a>
       <p class="count">Organic · Underground · House</p>
     </div>
   </header>

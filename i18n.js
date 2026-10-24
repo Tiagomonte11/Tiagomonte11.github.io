@@ -96,6 +96,7 @@
       'O lado musical de Tiago Monte: produção musical, DJ sets e os eventos onde tocou, do Sunset Sino ao Abrir Abril.',
     'The music side': 'O lado da música',
     'Sharing the art, one set at a time.': 'A partilhar a arte, um set de cada vez.',
+    'Listen on SoundCloud': 'Ouvir no SoundCloud',
     'Organic · Underground · House': 'Orgânico · Underground · House',
     'Born in the': 'Nascida no',
     'studio,': 'estúdio,',
