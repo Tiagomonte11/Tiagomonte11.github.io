@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Music · Call me Monte</title>
+  <meta name="description" content="The music side of Tiago Monte: music production, DJ sets and the events he has played, from Sunset Sino to Abrir Abril.">
+  <meta property="og:title" content="Music · Call me Monte">
+  <meta property="og:url" content="https://callmemonte.com/art/">
+  <meta name="theme-color" content="#0d0d0b">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23e9e2d4'/%3E%3Ctext x='32' y='42' font-family='Impact,sans-serif' font-size='34' fill='%230d0d0b' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0d0b; --bg-2: #151512; --card: #1a1a17;
+      --text: #e9e2d4; --muted: #8f897d; --line: #2c2b27;
+      --accent: #df8fb0; --biz: #d9b46c;   /* Frequency colour, same as the Frequency side on the home page */
+      --display: "Anton", Impact, "Arial Narrow", sans-serif;
+      --serif: "Instrument Serif", Georgia, serif;
+      --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --pad: clamp(16px, 4vw, 48px);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; }
+    ::selection { background: var(--accent); color: var(--bg); }
+
+    .grain {
+      position: fixed; inset: -50%; z-index: 100; pointer-events: none; opacity: .06;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      animation: grain 1.2s steps(6) infinite;
+    }
+    @keyframes grain { 0%,100% { transform: translate(0,0); } 20% { transform: translate(-3%,2%); } 40% { transform: translate(2%,-3%); } 60% { transform: translate(-2%,-1%); } 80% { transform: translate(3%,3%); } }
+
+    /* nav */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 20px var(--pad); transition: background .4s; }
+    nav.solid { background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: blur(10px); }
+    .logo { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--text); color: var(--bg); font-family: var(--display); font-size: 17px; }
+    .pill { border: 1px solid var(--text); border-radius: 999px; padding: 10px 20px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; font-weight: 500; transition: background .3s, color .3s; display: inline-flex; gap: 10px; align-items: center; }
+    .pill:hover { background: var(--text); color: var(--bg); }
+
+    /* hero */
+    .hero { padding: 150px var(--pad) 60px; position: relative; }
+    .tag { font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); display: flex; gap: 14px; align-items: center; margin-bottom: 22px; }
+    .tag b { color: var(--accent); font-weight: 500; }
+    h1 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(88px, 20vw, 300px); line-height: .82; letter-spacing: -.01em; }
+    h1 span { display: inline-block; }
+    .js h1 span { transform: translateY(105%); animation: rise 1.1s cubic-bezier(.2,.8,.2,1) forwards; }
+    h1 .wrap { display: block; overflow: hidden; }
+    @keyframes rise { to { transform: none; } }
+    .hero-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 24px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); }
+    .lede { font-family: var(--serif); font-size: clamp(22px, 2.4vw, 32px); line-height: 1.25; max-width: 620px; }
+    .lede i { color: var(--accent); }
+    .count { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+    .count b { color: var(--text); font-weight: 500; }
+
+    .nav-links { display: flex; gap: 32px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+    .nav-links a { color: var(--muted); transition: color .2s; }
+    .nav-links a:hover, .nav-links a[aria-current] { color: var(--text); }
+    .nav-links a[aria-current] { box-shadow: inset 0 -1px var(--accent); }
+    @media (max-width: 600px) { .nav-links { gap: 20px; font-size: 12px; } }
+
+
+    /* section heads */
+    .sec { padding: clamp(80px, 11vw, 150px) var(--pad) 0; }
+    .sec h2.big { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(48px, 8vw, 128px); line-height: .9; margin-bottom: 48px; }
+    .sec h2.big em { font-family: var(--serif); text-transform: none; color: var(--accent); }
+
+    /* sound: what I make and how I share it */
+    .sound { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .sound article { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: clamp(26px, 3.4vw, 40px); display: flex; flex-direction: column; gap: 14px; transition: border-color .4s, transform .5s cubic-bezier(.2,.8,.2,1); }
+    .sound article:hover { border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); transform: translateY(-4px); }
+    .sound .no { font-family: var(--display); font-size: 14px; letter-spacing: .12em; color: var(--accent); }
+    .sound h3, .sound .h3 { display: block; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(34px, 3.6vw, 52px); line-height: .95; }
+    .sound p { color: var(--muted); font-size: 16px; }
+    .genres { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 10px; }
+    .genres span { padding: 8px 14px; border-radius: 999px; font-size: 13px; color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); background: color-mix(in srgb, var(--accent) 7%, var(--bg)); }
+    .eq { display: flex; gap: 4px; align-items: flex-end; height: 26px; margin-top: auto; }
+    .eq i { width: 4px; background: var(--accent); border-radius: 2px; animation: eq 1.1s ease-in-out infinite; }
+    .eq i:nth-child(1) { animation-delay: -.2s; } .eq i:nth-child(2) { animation-delay: -.6s; } .eq i:nth-child(3) { animation-delay: -.4s; } .eq i:nth-child(4) { animation-delay: -.9s; } .eq i:nth-child(5) { animation-delay: -.1s; }
+    @keyframes eq { 0%,100% { height: 25%; } 50% { height: 100%; } }
+    /* DJ sets: full width under the other two cards, room for the longer text */
+    .sound { grid-template-columns: 1fr 1fr; }
+    .sound .wide { grid-column: 1 / -1; order: 1; }
+    .sound .dj-lead { display: block; margin-top: 14px; font-family: var(--serif); font-size: clamp(26px, 3vw, 42px); line-height: 1.15; color: var(--text); max-width: 900px; }
+    .sound .dj-lead em { color: var(--accent); }
+    .sound .dj-close { font-family: var(--serif); font-style: italic; font-size: clamp(22px, 2.2vw, 30px); line-height: 1.25; color: var(--accent); max-width: 820px; margin-top: 28px; }
+
+    /* DJ sets opens like the rows in "The road so far" */
+    .dj-head { all: unset; box-sizing: border-box; width: 100%; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; }
+    .dj-head .no { display: block; margin-bottom: 14px; }
+    .dj-head:focus-visible { outline: 1px solid var(--accent); outline-offset: 6px; border-radius: 8px; }
+    .dj .h3 { transition: transform .45s cubic-bezier(.2,.8,.2,1), color .4s; }
+    .dj:hover .h3, .dj.open .h3 { transform: translateX(10px); color: var(--accent); }
+    .toggle { position: relative; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; flex: none; transition: background .35s, border-color .35s, transform .45s cubic-bezier(.2,.8,.2,1); }
+    .toggle::before, .toggle::after { content: ""; position: absolute; left: 50%; top: 50%; width: 14px; height: 1.5px; margin: -.75px 0 0 -7px; background: var(--accent); transition: transform .45s cubic-bezier(.2,.8,.2,1), background .35s; }
+    .toggle::after { transform: rotate(90deg); }
+    .dj:hover .toggle { border-color: var(--accent); }
+    .dj.open .toggle { background: var(--accent); border-color: var(--accent); transform: rotate(180deg); }
+    .dj.open .toggle::before, .dj.open .toggle::after { background: var(--bg); }
+    .dj.open .toggle::after { transform: rotate(0deg); }
+    .dj-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .6s cubic-bezier(.2,.8,.2,1); }
+    .dj.open .dj-body { grid-template-rows: 1fr; }
+    .dj-body > div { overflow: hidden; }
+    .dj-inner { padding-top: 32px; max-width: 900px; opacity: 0; transform: translateY(-8px); transition: opacity .4s ease, transform .5s cubic-bezier(.2,.8,.2,1); }
+    .dj.open .dj-inner { opacity: 1; transform: none; transition-delay: .12s; }
+    /* paragraphs as numbered points joined by a thread */
+    .dj-text { display: grid; gap: 22px; position: relative; }
+    .dj-text::before { content: ""; position: absolute; left: 13px; top: 14px; bottom: 14px; width: 1px; background: linear-gradient(to bottom, var(--accent), color-mix(in srgb, var(--accent) 15%, transparent)); transform: scaleY(0); transform-origin: top; transition: transform .9s cubic-bezier(.2,.8,.2,1) .15s; }
+    .dj.open .dj-text::before { transform: scaleY(1); }
+    .dj-text p { position: relative; padding-left: 40px; color: var(--muted); font-size: 16px; line-height: 1.65; opacity: 0; transform: translateX(-6px); transition: color .3s; }
+    .dj.open .dj-text p { opacity: 1; transform: none; transition: color .3s, opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1); }
+    .dj.open .dj-text p:nth-child(1) { transition-delay: 0s, .2s, .2s; }
+    .dj.open .dj-text p:nth-child(2) { transition-delay: 0s, .3s, .3s; }
+    .dj.open .dj-text p:nth-child(3) { transition-delay: 0s, .4s, .4s; }
+    .dj.open .dj-text p:nth-child(4) { transition-delay: 0s, .5s, .5s; }
+    .dj-text p::before { content: ""; position: absolute; left: 9px; top: 9px; width: 9px; height: 9px; border-radius: 50%; background: var(--card); border: 1px solid var(--accent); box-shadow: 0 0 0 4px var(--card); transition: background .35s, transform .35s cubic-bezier(.2,.8,.2,1); }
+    .dj-text p:hover { color: var(--text); }
+    .dj-text p:hover::before { background: var(--accent); transform: scale(1.3); }
+    .dj .eq { margin-top: 24px; }
+    .sound .wide:hover { transform: none; }
+    @media (prefers-reduced-motion: reduce) { .dj-text p { opacity: 1; transform: none; } .dj-text::before { transform: none; } }
+    @media (max-width: 860px) { .sound { grid-template-columns: 1fr; } }
+    #events { scroll-margin-top: 40px; }
+
+    /* the other side */
+    .other { display: inline-flex; align-items: center; gap: 14px; margin-top: 28px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--biz); padding: 12px 22px; border: 1px solid color-mix(in srgb, var(--biz) 50%, transparent); border-radius: 999px; transition: background .35s, color .35s; }
+    .other:hover { background: var(--biz); color: var(--bg); }
+
+    /* index of events (jump links) */
+    .index { position: sticky; top: 84px; z-index: 20; display: flex; gap: 10px; overflow-x: auto; padding: 14px var(--pad); scrollbar-width: none; background: linear-gradient(var(--bg) 70%, transparent); }
+    .index::-webkit-scrollbar { display: none; }
+    .index a {
+      flex: none; display: inline-flex; gap: 10px; align-items: baseline; padding: 10px 18px; border-radius: 999px;
+      border: 1px solid var(--line); font-size: 14px; color: var(--muted); transition: color .3s, border-color .3s, background .3s;
+    }
+    .index a small { font-size: 11px; letter-spacing: .12em; }
+    .index a:hover, .index a.active { color: var(--bg); background: var(--accent); border-color: var(--accent); }
+
+    /* one block per event */
+    .event { padding: clamp(64px, 9vw, 120px) var(--pad) 0; scroll-margin-top: 140px; }
+    .event-head { display: grid; grid-template-columns: auto 1fr auto; gap: 8px 32px; align-items: end; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+    .year { font-family: var(--display); font-size: clamp(64px, 10vw, 150px); line-height: .8; color: transparent; -webkit-text-stroke: 1.5px var(--accent); }
+    .event h2 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(36px, 5.4vw, 80px); line-height: .9; }
+    .event h2 em { display: block; font-family: var(--serif); font-style: italic; text-transform: none; font-size: .42em; color: var(--muted); margin-top: 10px; letter-spacing: 0; }
+    .event .n { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+    @media (max-width: 700px) {
+      .event-head { grid-template-columns: 1fr; }
+      .year { font-size: 72px; }
+    }
+
+    /* photo grid: the first photo (cover) is larger */
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: clamp(140px, 17vw, 260px); grid-auto-flow: dense; gap: 12px; }
+    .ph { position: relative; overflow: hidden; border-radius: 14px; background: var(--card); cursor: zoom-in; border: 0; padding: 0; display: block; }
+    .ph.p { grid-row: span 2; }
+    .ph.cover { grid-column: span 2; grid-row: span 2; }
+    .ph img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      filter: saturate(.75) brightness(.9); transform: scale(1.02);
+      transition: filter .6s ease, transform .9s cubic-bezier(.2,.8,.2,1);
+    }
+    .ph:hover img, .ph:focus-visible img { filter: none; transform: scale(1.07); }
+    .ph:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .ph::after {
+      content: "↗"; position: absolute; right: 12px; bottom: 12px; width: 34px; height: 34px; border-radius: 50%;
+      display: grid; place-items: center; background: var(--accent); color: var(--bg); font-size: 14px;
+      opacity: 0; transform: scale(.6); transition: opacity .35s, transform .35s cubic-bezier(.2,.8,.2,1);
+    }
+    .ph:hover::after { opacity: 1; transform: none; }
+    .js .ph { opacity: 0; transform: translateY(30px); transition: opacity .9s ease var(--d, 0s), transform .9s cubic-bezier(.2,.8,.2,1) var(--d, 0s); }
+    .js .ph.in { opacity: 1; transform: none; }
+    @media (max-width: 860px) { .grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 42vw; } .ph.cover { grid-column: span 2; grid-row: span 2; } }
+
+    /* lightbox */
+    .lb { position: fixed; inset: 0; z-index: 90; background: rgba(8,8,7,.94); backdrop-filter: blur(6px); display: grid; grid-template-rows: auto 1fr auto; opacity: 0; pointer-events: none; transition: opacity .35s; }
+    .lb.open { opacity: 1; pointer-events: auto; }
+    .lb-top, .lb-bottom { display: flex; justify-content: space-between; align-items: center; padding: 18px var(--pad); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+    .lb-top b { color: var(--text); font-weight: 500; }
+    .lb-stage { position: relative; display: grid; place-items: center; min-height: 0; padding: 0 var(--pad); }
+    /* fit the whole photo on screen: leave room for the top bar and the counter below */
+    .lb-stage img { width: auto; height: auto; max-width: 100%; max-height: calc(100svh - 180px); object-fit: contain; border-radius: 10px; transition: opacity .25s, transform .4s cubic-bezier(.2,.8,.2,1); }
+    .lb-stage img.swap { opacity: 0; transform: scale(.98); }
+    .round { width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--line); background: var(--bg); cursor: pointer; display: grid; place-items: center; font-size: 18px; transition: background .3s, color .3s, border-color .3s; }
+    .round:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+    .lb-prev, .lb-next { position: absolute; top: 50%; transform: translateY(-50%); }
+    .lb-prev { left: var(--pad); } .lb-next { right: var(--pad); }
+    .dots { display: flex; gap: 6px; }
+    .dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--line); transition: background .3s, width .3s; }
+    .dots i.on { background: var(--accent); width: 20px; border-radius: 3px; }
+    @media (max-width: 700px) {
+      .lb-prev, .lb-next { position: fixed; top: auto; bottom: 16px; transform: none; }
+      .lb-bottom { flex-direction: column; justify-content: center; gap: 10px; min-height: 92px; }
+      .lb-stage img { max-height: calc(100svh - 200px); }
+    }
+
+    /* more to come */
+    .soon { text-align: center; padding: clamp(100px, 13vw, 170px) var(--pad); }
+    .soon p { font-family: var(--serif); font-size: clamp(30px, 4.4vw, 60px); line-height: 1.1; }
+    .soon p i { color: var(--accent); }
+    .soon .other { margin-top: 40px; }
+    .event-intro .lede .count { display: block; margin-top: 14px; font-family: var(--sans); }
+
+    footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 28px var(--pad); border-top: 1px solid var(--line); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .js h1 span, .js .ph { transform: none; opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <nav id="nav">
+    <a class="logo" href="../" aria-label="Home">M</a>
+    <div class="nav-links">
+      <a href="./" aria-current="page">Music</a>
+      <a href="../business/">Business</a>
+    </div>
+    <a class="pill" href="../"><span aria-hidden="true">←</span> Home</a>
+  </nav>
+
+  <header class="hero">
+    <p class="tag"><b>I.</b> The music side</p>
+    <h1><span class="wrap"><span>Music</span></span></h1>
+    <div class="hero-foot">
+      <p class="lede">Music where inspiration leads. <i>Sharing the art, one set at a time.</i></p>
+      <p class="count">Organic · Underground · House</p>
+    </div>
+  </header>
+
+  <section class="sec" id="sound">
+    <p class="tag"><b>01</b> Sound</p>
+    <h2 class="big">Born in the <em>studio,</em><br>alive on the dance floor</h2>
+    <div class="sound">
+      <article>
+        <span class="no">Studio</span>
+        <h3>Production</h3>
+        <p>I produce within the creative house space: organic, underground and afrotech. I don't limit myself to one style; I follow what inspiration asks for.</p>
+        <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+      </article>
+      <article class="wide dj">
+        <button class="dj-head" aria-expanded="false" aria-controls="dj-body">
+          <span>
+            <span class="no">Live</span>
+            <span class="h3">DJ sets</span>
+            <span class="dj-lead">DJing is how I share my art <em>with the world</em></span>
+          </span>
+          <i class="toggle" aria-hidden="true"></i>
+        </button>
+        <div class="dj-body" id="dj-body"><div><div class="dj-inner">
+        <div class="dj-text">
+          <p>For me, DJing is more than mixing tracks. It is the art of feeling a room, reading its energy, and transforming a fleeting moment into an unforgettable experience.</p>
+          <p>Every set is a journey, a story told through rhythm, atmosphere, and emotion. Like a sine wave in motion, it rises to euphoric heights and falls into soulful valleys. The peaks ignite the dance floor, while the quieter moments offer space to breathe, take a sip, and surrender to the music.</p>
+          <p>It’s a delicate dance between tension and release, anticipation and exhilaration. Every beat has a purpose, every transition tells a story, and every silence makes the next drop more powerful.</p>
+          <p>Because the magic isn’t just in the music. It’s in the connection, the warmth, the shared energy, and those moments when strangers become one with the rhythm.</p>
+        </div>
+        <p class="dj-close">I don’t just play music. I create moments you can feel long after the last track fades.</p>
+        </div></div></div>
+        <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+      </article>
+      <article>
+        <span class="no">Sound</span>
+        <h3>Genres</h3>
+        <p>Where my music lives right now.</p>
+        <div class="genres"><span>Organic house</span><span>Underground house</span><span>Afrotech</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec" id="events">
+    <p class="tag"><b>02</b> Events</p>
+    <div class="event-intro">
+      <h2 class="big">The venues <em>I've played</em></h2>
+      <p class="lede">And the people who made them. <span class="count" id="count"></span></p>
+    </div>
+  </section>
+
+  <div class="index" id="index" aria-label="Jump to an event"></div>
+  <main id="event-list"></main>
+
+  <section class="soon">
+    <p>More sets, <i>more stories</i>, soon.</p>
+    <a class="other" href="../business/">The other side: Business <span aria-hidden="true">→</span></a>
+  </section>
+
+  <footer>
+    <span>© <span id="year">2026</span> Tiago Monte</span>
+    <span>callmemonte.com</span>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <div class="lb-top"><span id="lbTitle"></span><button class="round" id="lbClose" aria-label="Close">✕</button></div>
+    <div class="lb-stage">
+      <img id="lbImg" alt="">
+      <button class="round lb-prev" id="lbPrev" aria-label="Previous photo">←</button>
+      <button class="round lb-next" id="lbNext" aria-label="Next photo">→</button>
+    </div>
+    <div class="lb-bottom"><span id="lbCount"></span><span class="dots" id="lbDots"></span></div>
+  </div>
+
+  <script src="../i18n.js"></script>
+  <script>
+    /*
+      To add an event: put its photos in img/<slug>/ (01.jpg, 02.jpg, ...) plus smaller copies in img/<slug>/thumb/,
+      then add one entry below. "shapes" lists each photo's shape in order: "p" = portrait, "l" = landscape.
+      The first photo is the cover.
+    */
+    const EVENTS = [
+      { slug: 'abrir-abril-2025',     title: 'Abrir Abril',     year: 2025, shapes: ['p', 'l', 'p'] },
+      { slug: 'magusto-2024',         title: 'Magusto',         year: 2024, shapes: ['l', 'p', 'p', 'p', 'p', 'p', 'p'] },
+      { slug: 'festival-utopia-2024', title: 'Festival Utopia', year: 2024, shapes: ['l', 'l', 'l'] },
+      { slug: 'sunset-dst-2024',      title: 'Sunset DST',      year: 2024, shapes: ['l', 'p', 'l', 'l'] },
+      { slug: 'sunset-sino-2023',     title: 'Sunset Sino',     year: 2023, shapes: ['p', 'l', 'l'] },
+    ];
+
+    const pad = n => String(n).padStart(2, '0');
+    const main = document.getElementById('event-list'), index = document.getElementById('index');
+    const total = EVENTS.reduce((s, e) => s + e.shapes.length, 0);
+    document.getElementById('count').innerHTML = `<b>${EVENTS.length}</b> events · <b>${total}</b> photos`;
+
+    EVENTS.forEach((ev, ei) => {
+      index.insertAdjacentHTML('beforeend', `<a href="#${ev.slug}" data-slug="${ev.slug}"><small>${ev.year}</small>${ev.title}</a>`);
+      const photos = ev.shapes.map((s, i) => {
+        const cls = ['ph', i === 0 ? 'cover' : (s === 'p' ? 'p' : '')].join(' ').trim();
+        return `<button class="${cls}" style="--d:${(i % 4) * 0.08}s" data-ev="${ei}" data-i="${i}" aria-label="Open photo ${i + 1} of ${ev.title}">
+                  <img src="img/${ev.slug}/thumb/${pad(i + 1)}.jpg" alt="${ev.title} ${ev.year}, photo ${i + 1}" loading="lazy">
+                </button>`;
+      }).join('');
+      main.insertAdjacentHTML('beforeend', `
+        <section class="event" id="${ev.slug}">
+          <div class="event-head">
+            <span class="year">${ev.year}</span>
+            <h2>${ev.title}<em>${ev.year} edition</em></h2>
+            <span class="n">${pad(ev.shapes.length)} photos</span>
+          </div>
+          <div class="grid">${photos}</div>
+        </section>`);
+    });
+
+    /* reveal photos as they scroll in */
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+    document.querySelectorAll('.ph').forEach(p => io.observe(p));
+
+    /* highlight the event you're looking at in the index */
+    const spy = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      index.querySelectorAll('a').forEach(a => a.classList.toggle('active', a.dataset.slug === e.target.id));
+    }), { rootMargin: '-45% 0px -50% 0px' });
+    document.querySelectorAll('.event').forEach(s => spy.observe(s));
+
+    /* DJ sets: click to open or close */
+    const dj = document.querySelector('.dj'), djHead = dj.querySelector('.dj-head');
+    djHead.addEventListener('click', () => djHead.setAttribute('aria-expanded', dj.classList.toggle('open')));
+
+    /* nav background once you scroll */
+    const nav = document.getElementById('nav');
+    addEventListener('scroll', () => nav.classList.toggle('solid', scrollY > 40), { passive: true });
+
+    /* lightbox */
+    const lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg');
+    let cur = { ev: 0, i: 0 }, lastFocus = null;
+    const show = () => {
+      const ev = EVENTS[cur.ev], n = ev.shapes.length;
+      lbImg.classList.add('swap');
+      const src = `img/${ev.slug}/${pad(cur.i + 1)}.jpg`;
+      const pre = new Image(); pre.src = src;
+      pre.onload = () => { lbImg.src = src; lbImg.alt = `${ev.title} ${ev.year}, photo ${cur.i + 1}`; requestAnimationFrame(() => lbImg.classList.remove('swap')); };
+      document.getElementById('lbTitle').innerHTML = `<b>${ev.title}</b> · ${ev.year}`;
+      document.getElementById('lbCount').textContent = `${pad(cur.i + 1)} / ${pad(n)}`;
+      document.getElementById('lbDots').innerHTML = ev.shapes.map((_, k) => `<i class="${k === cur.i ? 'on' : ''}"></i>`).join('');
+    };
+    const open = (ev, i) => { cur = { ev, i }; lastFocus = document.activeElement; lb.classList.add('open'); document.body.style.overflow = 'hidden'; show(); document.getElementById('lbClose').focus(); };
+    const close = () => { lb.classList.remove('open'); document.body.style.overflow = ''; lastFocus && lastFocus.focus(); };
+    const step = d => { const n = EVENTS[cur.ev].shapes.length; cur.i = (cur.i + d + n) % n; show(); };
+    main.addEventListener('click', e => { const b = e.target.closest('.ph'); if (b) open(+b.dataset.ev, +b.dataset.i); });
+    document.getElementById('lbClose').onclick = close;
+    document.getElementById('lbPrev').onclick = () => step(-1);
+    document.getElementById('lbNext').onclick = () => step(1);
+    lb.addEventListener('click', e => { if (e.target === lb || e.target.classList.contains('lb-stage')) close(); });
+    addEventListener('keydown', e => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') close(); if (e.key === 'ArrowRight') step(1); if (e.key === 'ArrowLeft') step(-1);
+    });
+    let tx = null;
+    lb.addEventListener('touchstart', e => tx = e.touches[0].clientX, { passive: true });
+    lb.addEventListener('touchend', e => { if (tx === null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1); tx = null; });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

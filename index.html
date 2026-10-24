@@ -24,6 +24,8 @@
       --muted: #8f897d;
       --line: #2c2b27;
       --accent: #b8c49a;    /* soft moss: organic, calm */
+      --art: #df8fb0;       /* Art side (music & events) */
+      --biz: #d9b46c;       /* Enterprise side (business) */
       --display: "Anton", Impact, "Arial Narrow", sans-serif;
       --serif: "Instrument Serif", Georgia, serif;
       --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -55,9 +57,22 @@
       position: fixed; top: 0; left: 0; z-index: 101; pointer-events: none;
       width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%;
       background: var(--text); mix-blend-mode: difference;
-      transition: width .3s, height .3s, margin .3s; display: none;
+      transition: width .3s, height .3s, margin .3s, background .3s, border-color .3s, box-shadow .3s; display: none; box-sizing: border-box;
     }
-    .cursor.big { width: 56px; height: 56px; margin: -28px 0 0 -28px; }
+    /* over links: a clear ring with a small centre dot, so what's underneath stays readable */
+    .cursor::after {
+      content: ""; position: absolute; left: 50%; top: 50%; width: 4px; height: 4px; margin: -2px 0 0 -2px;
+      border-radius: 50%; background: var(--text); opacity: 0; transition: opacity .3s;
+    }
+    .cursor.big {
+      width: 48px; height: 48px; margin: -24px 0 0 -24px; mix-blend-mode: normal;
+      background: transparent; border: 1.5px solid color-mix(in srgb, var(--text) 80%, transparent);
+      box-shadow: 0 0 18px -6px color-mix(in srgb, var(--text) 50%, transparent);
+    }
+    .cursor.big::after { opacity: 1; }
+    /* over a place on the map: a tighter golden ring for aiming */
+    .cursor.big.aim { width: 26px; height: 26px; margin: -13px 0 0 -13px; border-color: var(--biz); box-shadow: 0 0 14px -4px var(--biz); }
+    .cursor.big.aim::after { background: var(--biz); }
     @media (hover: hover) and (pointer: fine) { .cursor { display: block; } }
 
     /* ---------- Nav ---------- */
@@ -89,22 +104,71 @@
       position: relative; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end;
       padding: 120px var(--pad) 40px; overflow: hidden; isolation: isolate;
     }
-    #lines { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; }
-    .photo {
-      position: absolute; z-index: -1; top: 0; right: 0; bottom: 0; width: 46vw; overflow: hidden;
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 35%), linear-gradient(to top, transparent 0%, #000 25%);
-      -webkit-mask-composite: source-in;
-              mask-image: linear-gradient(to right, transparent 0%, #000 35%), linear-gradient(to top, transparent 0%, #000 25%);
-              mask-composite: intersect;
+    /* the opening screen is split in two doors: Frequency (left) and Enterprise (right) */
+    .hero > :not(.doors, .badge) { position: relative; pointer-events: none; }
+    .doors { position: absolute; inset: 0; z-index: -1; display: grid; grid-template-columns: 1fr 1fr; }
+    .door {
+      --c: var(--art); position: relative; overflow: hidden; isolation: isolate; display: block;
+      outline-offset: -6px;
     }
-    .photo img {
-      width: 100%; height: 115%; object-fit: cover; object-position: 55% 60%;
-      filter: grayscale(1) contrast(1.15) brightness(.85); opacity: .85;
-      transition: filter 1.2s ease; will-change: transform;
+    .door.art { --c: var(--art); }
+    .door.biz {
+      --c: var(--biz); border-left: 1px solid var(--line);
+      /* warm, deep backdrop for the journey map */
+      background:
+        radial-gradient(ellipse 70% 55% at 45% 58%, rgba(217,180,108,.09), transparent 70%),
+        radial-gradient(ellipse 60% 40% at 100% 0%, rgba(217,180,108,.06), transparent 70%),
+        #100f0c;
     }
-    .hero:hover .photo img { filter: grayscale(.55) contrast(1.1) brightness(.9); }
-    .js .photo img { animation: settle 2.4s cubic-bezier(.2,.8,.2,1) both; }
-    @keyframes settle { from { opacity: 0; scale: 1.08; } to { opacity: .85; scale: 1; } }
+    /* where the two sides meet: pink drifts into gold so they read as one picture */
+    .doors::after {
+      content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1; mix-blend-mode: screen;
+      background:
+        radial-gradient(ellipse 22% 60% at 47% 50%, rgba(223,143,176,.10), transparent 70%),
+        radial-gradient(ellipse 22% 60% at 53% 50%, rgba(217,180,108,.08), transparent 70%);
+    }
+    .door canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
+    .door img {
+      position: absolute; inset: 0; width: 100%; height: 115%; object-fit: cover; object-position: 55% 60%;
+      filter: grayscale(1) contrast(1.15) brightness(.7); opacity: .6;
+      transition: filter 1.2s ease, opacity 1.2s ease; will-change: transform;
+    }
+    .js .door img { animation: settle 2.4s cubic-bezier(.2,.8,.2,1) both; }
+    @keyframes settle { from { opacity: 0; scale: 1.08; } to { opacity: .6; scale: 1; } }
+    /* colour wash in each side's colour, stronger on hover */
+    .door::before {
+      content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background: var(--c); mix-blend-mode: color; opacity: .25; transition: opacity .8s ease;
+    }
+    .door.biz::before { mix-blend-mode: normal; opacity: 0; background: radial-gradient(circle at 70% 30%, color-mix(in srgb, var(--c) 14%, transparent), transparent 60%); }
+    /* dark fade at the bottom so the name stays readable */
+    .door::after {
+      content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none;
+      background: linear-gradient(to top, var(--bg) 4%, color-mix(in srgb, var(--bg) 55%, transparent) 38%, transparent 70%);
+    }
+    .door:hover::before, .door:focus-visible::before { opacity: .55; }
+    .door.biz:hover::before, .door.biz:focus-visible::before { opacity: 1; }
+    .door:hover img, .door:focus-visible img { filter: grayscale(.4) contrast(1.1) brightness(.85); opacity: .85; }
+    .door-label {
+      position: absolute; z-index: 4; top: 124px; left: var(--pad); right: var(--pad);
+      display: flex; flex-direction: column; align-items: flex-start; gap: 20px;
+    }
+    @media (min-width: 761px) { .door.biz .door-label { left: calc(var(--pad) + 56px); } }  /* clear the badge on the seam */
+    .door-label .no { display: block; font-family: var(--display); font-size: 14px; letter-spacing: .12em; color: var(--c); margin-bottom: 8px; }
+    .door-label b {
+      display: block; font-family: var(--display); font-weight: 400; text-transform: uppercase;
+      font-size: clamp(30px, 4.4vw, 68px); line-height: .95; transition: color .5s;
+    }
+    .door-label small { display: block; margin-top: 10px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+    .door:hover .door-label b, .door:focus-visible .door-label b { color: var(--c); }
+    .door-go {
+      flex: none; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; font-size: 16px;
+      border: 1px solid color-mix(in srgb, var(--c) 55%, transparent); color: var(--c);
+      transition: background .4s, color .4s, transform .5s cubic-bezier(.2,.8,.2,1);
+    }
+    .door:hover .door-go, .door:focus-visible .door-go { background: var(--c); color: var(--bg); transform: rotate(45deg); }
+    .door:focus-visible { outline: 2px solid var(--c); }
+    .door.on-place { cursor: pointer; }
     .hero-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 20px; }
     .eyebrow { font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
     .eyebrow b { color: var(--accent); font-weight: 500; }
@@ -121,7 +185,9 @@
       font-family: var(--serif); font-style: italic; text-transform: none; color: var(--accent);
       font-size: clamp(34px, 5.6vw, 92px); line-height: 1.1; padding-left: .12em; margin-bottom: -.05em;
     }
-    h1 .name { font-size: clamp(96px, 24vw, 360px); line-height: .8; letter-spacing: -.005em; }
+    h1 .name { font-size: clamp(96px, min(24vw, 30svh), 360px); line-height: .8; letter-spacing: -.005em; }
+    /* keep the name below the door labels and arrows, even on short laptop screens */
+    @media (min-width: 761px) { .hero { padding-top: 340px; } }
 
     .hero-bottom {
       display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 32px;
@@ -134,18 +200,21 @@
     @keyframes cue { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(0); transform-origin: bottom; } }
 
     /* rotating badge */
-    .badge { position: absolute; top: 120px; right: var(--pad); width: 128px; height: 128px; }
+    .badge { position: absolute; top: 116px; left: 50%; width: 128px; height: 128px; margin-left: -64px; pointer-events: none; }
+    .badge::before { content: ""; position: absolute; inset: 14px; border-radius: 50%; background: var(--bg); }
+    .badge svg { position: relative; }
     .badge svg { width: 100%; height: 100%; animation: spin 22s linear infinite; }
     .badge text { font-family: var(--sans); font-size: 10.5px; letter-spacing: .26em; text-transform: uppercase; fill: var(--text); }
     .badge .dot { position: absolute; inset: 0; margin: auto; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); }
     @keyframes spin { to { transform: rotate(360deg); } }
     @media (max-width: 760px) {
-      .badge { width: 96px; height: 96px; top: 96px; }
+      .badge { width: 84px; height: 84px; margin-left: -42px; top: 40%; }
+      .badge text { font-size: 12px; }
       .hero-bottom { grid-template-columns: 1fr; }
       .scroll-cue::after { display: none; }
-      .photo { width: 100%; }
-      .photo img { opacity: .4; }
-      @keyframes settle { from { opacity: 0; scale: 1.08; } to { opacity: .4; scale: 1; } }
+      .door-label { top: 96px; gap: 14px; }
+      .door-label small { font-size: 10px; letter-spacing: .12em; }
+      .door-go { width: 38px; height: 38px; font-size: 14px; }
     }
 
     /* ---------- Marquee ---------- */
@@ -167,7 +236,9 @@
     /* About: words light up on scroll */
     .statement {
       font-family: var(--serif); font-size: clamp(30px, 4.6vw, 68px); line-height: 1.12; max-width: 1180px;
+      margin: 0 auto; text-align: center; text-wrap: balance;
     }
+    #about > .tag { justify-content: center; }
     .statement .w { opacity: .14; transition: opacity .25s; }
     .statement .w.on { opacity: 1; }
     .statement em { color: var(--accent); }
@@ -233,137 +304,6 @@
       .about-foot { grid-template-columns: 1fr; }
       .about-foot > div { padding: 24px 0 20px; }
       .about-foot > div + div { border-left: 0; border-top: 1px solid var(--line); }
-    }
-
-    /* Two sides */
-    .sides { background: var(--bg-2); }
-    .sides h2, .journey h2 {
-      font-family: var(--display); font-weight: 400; text-transform: uppercase;
-      font-size: clamp(48px, 8vw, 128px); line-height: .9; margin-bottom: 56px;
-    }
-    .sides h2 em, .journey h2 em { font-family: var(--serif); text-transform: none; font-weight: 400; color: var(--accent); }
-    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; perspective: 1200px; }
-    .card {
-      position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 22px;
-      padding: clamp(28px, 4vw, 48px); min-height: 460px; display: flex; flex-direction: column;
-      transition: transform .5s cubic-bezier(.2,.8,.2,1), border-color .4s; transform-style: preserve-3d; overflow: hidden;
-    }
-    .card:hover { border-color: #45443e; }
-    .card .no { font-family: var(--display); font-size: 15px; color: var(--muted); letter-spacing: .1em; }
-    .card h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(56px, 6vw, 88px); line-height: .95; margin: 18px 0 20px; }
-    .card p { color: var(--muted); font-size: 17px; max-width: 460px; }
-    .card ul { list-style: none; margin-top: auto; padding-top: 32px; }
-    .card li { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid var(--line); font-size: 15px; }
-    .card li span { color: var(--muted); font-family: var(--serif); font-style: italic; font-size: 17px; }
-    /* tiny equaliser in the music card */
-    .eq { position: absolute; top: clamp(28px, 4vw, 48px); right: clamp(28px, 4vw, 48px); display: flex; gap: 4px; align-items: flex-end; height: 26px; }
-    .eq i { width: 4px; background: var(--accent); border-radius: 2px; animation: eq 1.1s ease-in-out infinite; }
-    .eq i:nth-child(1) { animation-delay: -.2s; } .eq i:nth-child(2) { animation-delay: -.6s; }
-    .eq i:nth-child(3) { animation-delay: -.4s; } .eq i:nth-child(4) { animation-delay: -.9s; }
-    @keyframes eq { 0%,100% { height: 25%; } 50% { height: 100%; } }
-    .rise-arrow { position: absolute; top: clamp(28px, 4vw, 48px); right: clamp(28px, 4vw, 48px); width: 26px; height: 26px; color: var(--accent); }
-    @media (max-width: 860px) { .cards { grid-template-columns: 1fr; } .card { min-height: 0; } }
-
-    /* Stats */
-    .stats { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); margin-bottom: 96px; }
-    .stat { padding: 40px 24px 8px; text-align: center; }
-    .stat + .stat { border-left: 1px solid var(--line); }
-    .stat b { display: block; font-family: var(--display); font-weight: 400; font-size: clamp(56px, 8vw, 120px); line-height: 1; }
-    .stat .lbl { color: var(--muted); font-size: 14px; display: block; margin: 14px auto 0; max-width: 240px; }
-    @media (max-width: 760px) {
-      .stats { grid-template-columns: 1fr; }
-      .stat { padding: 32px 0 24px; }
-      .stat + .stat { border-left: 0; border-top: 1px solid var(--line); }
-    }
-
-    /* Journey rows */
-    .rows { list-style: none; border-top: 1px solid var(--line); }
-    .rows { isolation: isolate; }
-    .rows li { position: relative; border-bottom: 1px solid var(--line); overflow: hidden; }
-    .rows li::before {
-      content: ""; position: absolute; inset: 0; background: var(--card); z-index: -1;
-      transform: scaleY(0); transform-origin: bottom; transition: transform .45s cubic-bezier(.2,.8,.2,1);
-    }
-    .rows li:hover::before, .rows li.open::before { transform: scaleY(1); }
-    .row-head {
-      all: unset; box-sizing: border-box; width: 100%; cursor: pointer;
-      display: grid; grid-template-columns: 160px 1fr auto; gap: 24px; align-items: baseline; padding: 30px 0;
-    }
-    .row-head:focus-visible { outline: 1px solid var(--accent); outline-offset: -1px; }
-    .rows .when { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding-left: 4px; }
-    .rows .now .when { color: var(--accent); }
-    .rows .title { display: block;  font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(26px, 3.2vw, 44px); line-height: 1.05; transition: transform .45s cubic-bezier(.2,.8,.2,1); }
-    .rows li:hover .title, .rows li.open .title { transform: translateX(10px); }
-    .rows .where { font-family: var(--serif); font-style: italic; font-size: 19px; color: var(--muted); display: block; margin-top: 6px; text-transform: none; transition: color .3s; }
-    .rows li:hover .where, .rows li.open .where { color: var(--text); }
-    .rows .place { font-size: 13px; color: var(--muted); text-align: right; padding-right: 4px; white-space: nowrap; display: inline-flex; align-items: center; gap: 14px; justify-content: flex-end; }
-    /* plus that turns into a minus */
-    .toggle {
-      position: relative; width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 50%; flex: none;
-      transition: background .35s, border-color .35s, transform .45s cubic-bezier(.2,.8,.2,1);
-    }
-    .toggle::before, .toggle::after {
-      content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 1.5px; margin: -.75px 0 0 -6px;
-      background: var(--accent); transition: transform .45s cubic-bezier(.2,.8,.2,1), background .35s;
-    }
-    .toggle::after { transform: rotate(90deg); }
-    .rows li:hover .toggle { border-color: var(--accent); }
-    .rows li.open .toggle { background: var(--accent); border-color: var(--accent); transform: rotate(180deg); }
-    .rows li.open .toggle::before, .rows li.open .toggle::after { background: var(--bg); }
-    .rows li.open .toggle::after { transform: rotate(0deg); }
-    /* the opening panel */
-    .row-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .55s cubic-bezier(.2,.8,.2,1); }
-    .rows li.open .row-body { grid-template-rows: 1fr; }
-    .row-body > div { overflow: hidden; }
-    .row-inner {
-      padding: 0 0 36px calc(160px + 24px + 10px); max-width: 860px;
-      opacity: 0; transform: translateY(-8px); transition: opacity .4s ease, transform .5s cubic-bezier(.2,.8,.2,1);
-    }
-    .rows li.open .row-inner { opacity: 1; transform: none; transition-delay: .12s; }
-    /* points: numbered nodes joined by a thread, like connected neurons */
-    .points { display: grid; gap: 18px; position: relative; counter-reset: pt; }
-    .points::before {
-      content: ""; position: absolute; left: 13px; top: 14px; bottom: 14px; width: 1px;
-      background: linear-gradient(to bottom, var(--accent), color-mix(in srgb, var(--accent) 15%, transparent));
-      transform: scaleY(0); transform-origin: top; transition: transform .9s cubic-bezier(.2,.8,.2,1) .15s;
-    }
-    .rows li.open .points::before { transform: scaleY(1); }
-    .points p {
-      counter-increment: pt; position: relative; padding-left: 46px; min-height: 28px;
-      color: var(--muted); font-size: 16px; line-height: 1.6; transition: color .3s;
-      opacity: 0; transform: translateX(-6px);
-    }
-    .rows li.open .points p { opacity: 1; transform: none; transition: color .3s, opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1); }
-    .rows li.open .points p:nth-child(1) { transition-delay: 0s, .2s, .2s; }
-    .rows li.open .points p:nth-child(2) { transition-delay: 0s, .3s, .3s; }
-    .rows li.open .points p:nth-child(3) { transition-delay: 0s, .4s, .4s; }
-    .rows li.open .points p:nth-child(4) { transition-delay: 0s, .5s, .5s; }
-    .rows li.open .points p:nth-child(5) { transition-delay: 0s, .6s, .6s; }
-    .points p::before {
-      content: counter(pt, decimal-leading-zero); position: absolute; left: 0; top: 0;
-      width: 27px; height: 27px; border-radius: 50%; display: grid; place-items: center;
-      font-size: 10px; letter-spacing: .02em; font-weight: 600; color: var(--accent);
-      background: var(--card); border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
-      box-shadow: 0 0 0 4px var(--card);
-      transition: background .35s, color .35s, box-shadow .35s, transform .35s cubic-bezier(.2,.8,.2,1);
-    }
-    .points p:hover { color: var(--text); }
-    .points p:hover::before {
-      background: var(--accent); color: var(--bg); transform: scale(1.12);
-      box-shadow: 0 0 0 4px var(--card), 0 0 18px 2px color-mix(in srgb, var(--accent) 45%, transparent);
-    }
-    @media (prefers-reduced-motion: reduce) { .points p { opacity: 1; transform: none; } .points::before { transform: none; } }
-    .row-inner .visit {
-      display: inline-flex; align-items: center; gap: 10px; margin-top: 24px; padding: 10px 18px;
-      border: 1px solid var(--line); border-radius: 999px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
-      transition: background .3s, color .3s, border-color .3s;
-    }
-    .row-inner .visit:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
-    @media (max-width: 760px) {
-      .row-head { grid-template-columns: 1fr auto; gap: 6px 16px; }
-      .row-head .when { grid-column: 1 / -1; }
-      .rows .place { grid-column: 1 / -1; justify-content: space-between; order: 3; }
-      .row-inner { padding-left: 0; }
     }
 
     /* Closing */
@@ -442,6 +382,7 @@
     /* final call to action */
     .cta { margin-top: clamp(96px, 12vw, 160px); padding-top: clamp(72px, 9vw, 110px); border-top: 1px solid var(--line); }
     .cta .big { margin-bottom: 48px; }
+    #connect { scroll-margin-top: 40px; }
     .magnet {
       display: inline-flex; align-items: center; justify-content: center; gap: 12px;
       width: 190px; height: 190px; border-radius: 50%; background: var(--text); color: var(--bg);
@@ -477,26 +418,41 @@
     <a class="logo" href="#top" aria-label="Back to top">M</a>
     <div class="nav-links">
       <a href="#about">About</a>
-      <a href="#sides">Music &amp; Business</a>
-      <a href="#journey">Journey</a>
+      <a href="art/">Music</a>
+      <a href="business/">Business</a>
     </div>
     <a class="pill" href="#connect">Let's connect</a>
   </nav>
 
   <header class="hero" id="top">
-    <canvas id="lines" aria-hidden="true"></canvas>
-    <div class="photo"><img id="heroPhoto" src="dj.jpg" alt="Tiago Monte at the decks"></div>
+    <div class="doors">
+      <a class="door art" href="art/">
+        <img id="heroPhoto" src="dj.jpg" alt="">
+        <canvas id="waves" aria-hidden="true"></canvas>
+        <span class="door-label">
+          <span><span class="no">I.</span><b>Music</b><small>Music · DJ sets · Events</small></span>
+          <span class="door-go" aria-hidden="true">↗</span>
+        </span>
+      </a>
+      <a class="door biz" href="business/">
+        <canvas id="growth" aria-hidden="true"></canvas>
+        <span class="door-label">
+          <span><span class="no">II.</span><b>Business</b><small>Sales · People · Ventures</small></span>
+          <span class="door-go" aria-hidden="true">↗</span>
+        </span>
+      </a>
+    </div>
 
     <div class="badge" aria-hidden="true">
       <svg viewBox="0 0 120 120">
         <defs><path id="circle" d="M60,60 m-48,0 a48,48 0 1,1 96,0 a48,48 0 1,1 -96,0"/></defs>
-        <text><textPath href="#circle" textLength="298" lengthAdjust="spacing">Organic · Underground · House · </textPath></text>
+        <text><textPath href="#circle" textLength="298" lengthAdjust="spacing">Music · Business · Purpose · </textPath></text>
       </svg>
       <span class="dot"></span>
     </div>
 
     <div class="hero-top">
-      <p class="eyebrow">Producer · DJ · <b>Entrepreneur</b></p>
+      <p class="eyebrow"><b>Entrepreneur</b> · Producer · DJ</p>
     </div>
     <h1 aria-label="Call me Monte">
       <span class="row callme"><span>call me</span></span>
@@ -508,16 +464,16 @@
     </div>
   </header>
 
-  <div class="marquee" aria-label="Create, Innovate, Help, Explore, Endure, Connect">
+  <div class="marquee" aria-label="Create, Innovate, Explore, Endure, Connect">
     <div class="marquee-track" aria-hidden="true">
-      <span>Create</span><span>Innovate</span><span>Help</span><span>Explore</span><span>Endure</span><span>Connect</span>
-      <span>Create</span><span>Innovate</span><span>Help</span><span>Explore</span><span>Endure</span><span>Connect</span>
+      <span>Create</span><span>Innovate</span><span>Explore</span><span>Endure</span><span>Connect</span>
+      <span>Create</span><span>Innovate</span><span>Explore</span><span>Endure</span><span>Connect</span>
     </div>
   </div>
 
   <section id="about">
     <p class="tag"><b>01</b> About</p>
-    <p class="statement" id="statement">
+    <p class="statement" id="statement" data-i18n-skip>
       I'm driven by thinking beyond conventional boundaries. The world is dynamic, layered and
       constantly evolving, and I'm drawn to the fields that shape its future. Knowing my days are counted,
       what matters is the impact I have on each person who is part of my journey, and theirs on mine.
@@ -525,10 +481,10 @@
     </p>
     <p class="chips-label">Drawn to</p>
     <ul class="chips reveal" aria-label="Interests">
-      <li style="--i:0; --dur:6.5s; --delay:-1s;   --dx:5px;  --rot:.7deg; --c:#d9b46c"><span class="chip">Finance &amp; investing</span></li>
+      <li style="--i:0; --dur:6.5s; --delay:-1s;   --dx:5px;  --rot:.7deg; --c:#d9b46c"><a class="chip chip-link" href="business/" aria-label="Finance and investing: see the business side">Finance &amp; investing <span class="chip-go" aria-hidden="true">↗</span></a></li>
       <li style="--i:1; --dur:5.2s; --delay:-3s;   --dx:-4px; --rot:-.8deg; --c:#e8925a"><span class="chip">Energy</span></li>
       <li style="--i:2; --dur:7.1s; --delay:-.5s;  --dx:3px;  --rot:.5deg; --c:#a3c27f"><span class="chip">Agriculture</span></li>
-      <li style="--i:3; --dur:5.8s; --delay:-2.2s; --dx:-5px; --rot:-.6deg; --c:#df8fb0"><a class="chip chip-link" href="events/" aria-label="Events: see the portfolio">Events <span class="chip-go" aria-hidden="true">↗</span></a></li>
+      <li style="--i:3; --dur:5.8s; --delay:-2.2s; --dx:-5px; --rot:-.6deg; --c:#df8fb0"><a class="chip chip-link" href="art/" aria-label="Music production: see the music page">Music Production <span class="chip-go" aria-hidden="true">↗</span></a></li>
       <li style="--i:4; --dur:6.2s; --delay:-4s;   --dx:4px;  --rot:.9deg; --c:#7fcbd8"><span class="chip">AI</span></li>
       <li style="--i:5; --dur:6.9s; --delay:-1.6s; --dx:-3px; --rot:-.5deg; --c:#a99ce6"><span class="chip">Blockchain</span></li>
     </ul>
@@ -539,128 +495,7 @@
     </dl>
   </section>
 
-  <section class="sides" id="sides">
-    <p class="tag"><b>02</b> Two sides, one drive</p>
-    <h2 class="reveal">Art <em>&amp;</em><br>Enterprise</h2>
-    <div class="cards">
-      <article class="card reveal" data-tilt>
-        <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-        <span class="no">I.</span>
-        <h3>Music</h3>
-        <p>
-          I produce within the creative house space: organic, underground and afrotech.
-          I don't limit myself to one style; I follow what inspiration asks for.
-          DJing is how I share that art with people.
-        </p>
-        <ul>
-          <li>Music production <span>studio</span></li>
-          <li>DJ sets <span>live</span></li>
-          <li>Organic house · Underground house <span>sound</span></li>
-        </ul>
-      </article>
-      <article class="card reveal" data-tilt>
-        <svg class="rise-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 19 19 5M8 5h11v11"/></svg>
-        <span class="no">II.</span>
-        <h3>Business</h3>
-        <p>
-          I'm passionate about investing, building ventures and the entrepreneurial path.
-          My work spans people, sales and operations, from Portugal to Mozambique to Angola.
-        </p>
-        <ul>
-          <li>Investing &amp; business ventures <span>vision</span></li>
-          <li>People &amp; leadership <span>team</span></li>
-          <li>Sales, partnerships &amp; operations <span>growth</span></li>
-        </ul>
-      </article>
-    </div>
-  </section>
-
-  <section class="journey" id="journey">
-    <p class="tag"><b>03</b> Journey</p>
-    <h2 class="reveal">The road <em>so far</em></h2>
-
-    <div class="stats reveal">
-      <div class="stat"><b><span data-count="90">0</span>+</b><span class="lbl">strategic supplier partnerships built</span></div>
-      <div class="stat"><b>€1–<span data-count="2">0</span>M</b><span class="lbl">yearly revenue contributed</span></div>
-      <div class="stat"><b><span data-count="3">0</span></b><span class="lbl">continents lived and worked on</span></div>
-    </div>
-
-    <ol class="rows">
-      <li class="now reveal">
-        <button class="row-head" aria-expanded="false" aria-controls="job-1">
-          <span class="when">2026 — Now</span>
-          <span class="title">Head of HR<span class="where">DST Angola</span></span>
-          <span class="place">Luanda, AO <i class="toggle" aria-hidden="true"></i></span>
-        </button>
-        <div class="row-body" id="job-1"><div><div class="row-inner">
-          <div class="points">
-            <p>Leading Human Resources for DST Group's operations in Angola, based in Luanda.</p>
-          </div>
-          <a class="visit" href="https://www.dstsgps.com/intro-pt-pt/#/#intro" target="_blank" rel="noopener">Visit DST Group <span aria-hidden="true">↗</span></a>
-        </div></div></div>
-      </li>
-      <li class="reveal">
-        <button class="row-head" aria-expanded="false" aria-controls="job-2">
-          <span class="when">2023 — 26</span>
-          <span class="title">Head of Sales<span class="where">Assim Store, a DST Group construction retail company</span></span>
-          <span class="place">Braga, PT <i class="toggle" aria-hidden="true"></i></span>
-        </button>
-        <div class="row-body" id="job-2"><div><div class="row-inner">
-          <div class="points">
-            <p>Secured 90+ strategic supplier partnerships within 12 months, expanding the product portfolio and market reach.</p>
-            <p>Negotiated six-figure contracts with major construction firms, with strong profit margins.</p>
-            <p>Negotiated exclusive agreements to bring EV chargers to the Portuguese market.</p>
-            <p>Set up yearly supply contracts with DST Group's stock material warehouse.</p>
-            <p>Sourced high-end home brands (furniture, spas and appliances) for the online store, and ran sales and after-sales with construction companies.</p>
-          </div>
-        </div></div></div>
-      </li>
-      <li class="reveal">
-        <button class="row-head" aria-expanded="false" aria-controls="job-3">
-          <span class="when">2022 — 23</span>
-          <span class="title">Co-Founder &amp; Operations<span class="where">Casa Sauna LLC</span></span>
-          <span class="place">Delaware, US <i class="toggle" aria-hidden="true"></i></span>
-        </button>
-        <div class="row-body" id="job-3"><div><div class="row-inner">
-          <div class="points">
-            <p>Built the operation from the ground up: sourcing, logistics and customer fulfilment.</p>
-            <p>Negotiated supplier contracts to improve costs and supply reliability.</p>
-            <p>Streamlined order management and improved the customer experience.</p>
-            <p>Led a small operations team.</p>
-          </div>
-        </div></div></div>
-      </li>
-      <li class="reveal">
-        <button class="row-head" aria-expanded="false" aria-controls="job-4">
-          <span class="when">2022 — 23</span>
-          <span class="title">Operations, Volunteer<span class="where">Quinta Arca</span></span>
-          <span class="place">Maputo, MZ <i class="toggle" aria-hidden="true"></i></span>
-        </button>
-        <div class="row-body" id="job-4"><div><div class="row-inner">
-          <div class="points">
-            <p>Supported day-to-day lodge operations, including payroll and inventory.</p>
-            <p>Coordinated events and designed promotional materials to engage guests.</p>
-          </div>
-        </div></div></div>
-      </li>
-      <li class="reveal">
-        <button class="row-head" aria-expanded="false" aria-controls="job-5">
-          <span class="when">2019 — 23</span>
-          <span class="title">BBA, Business Administration<span class="where">European Business School</span></span>
-          <span class="place">Barcelona, ES <i class="toggle" aria-hidden="true"></i></span>
-        </button>
-        <div class="row-body" id="job-5"><div><div class="row-inner">
-          <div class="points">
-            <p>Co-founded the finance club “Common Cents”.</p>
-            <p>Focused on strategic management, financial analysis and operations planning.</p>
-          </div>
-          <a class="visit" href="https://study.euruni.edu/all-programs/barcelona" target="_blank" rel="noopener">Visit EU Business School <span aria-hidden="true">↗</span></a>
-        </div></div></div>
-      </li>
-    </ol>
-  </section>
-
-  <section class="closing" id="connect">
+  <section class="closing" id="closing">
     <p class="ethos-tag">What drives me</p>
     <p class="pursuit reveal" aria-label="In pursuit of purpose and greatness.">
       <span class="wr" aria-hidden="true"><span style="--d:0s">In</span></span>
@@ -708,7 +543,7 @@
       <figcaption class="cite">Galatians 6:7</figcaption>
     </figure>
 
-    <div class="cta">
+    <div class="cta" id="connect">
     <p class="big reveal">Let's<br><em>connect</em></p>
     <a class="magnet" id="magnet" href="https://www.linkedin.com/in/tiago-monte-9a91bb111" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
@@ -723,53 +558,266 @@
     <span>callmemonte.com</span>
   </footer>
 
+  <script src="i18n.js"></script>
   <script>
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
     let mouseX = -9999, mouseY = -9999;
 
-    /* ---- Hero: flowing sound lines that swell near the cursor ---- */
-    (() => {
-      const canvas = document.getElementById('lines');
+    /* ---- Hero: two living backgrounds, one per door ---- */
+    const canvasLoop = (canvas, draw) => {
       const ctx = canvas.getContext('2d');
-      let w, h, dpr, visible = true, t = 0;
+      const st = { w: 0, h: 0, t: 0, ctx, visible: true };
       const resize = () => {
-        dpr = Math.min(devicePixelRatio || 1, 2);
-        w = canvas.clientWidth; h = canvas.clientHeight;
-        canvas.width = w * dpr; canvas.height = h * dpr;
+        const dpr = Math.min(devicePixelRatio || 1, 2);
+        st.w = canvas.clientWidth; st.h = canvas.clientHeight;
+        canvas.width = st.w * dpr; canvas.height = st.h * dpr;
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       };
       resize(); addEventListener('resize', resize);
-      new IntersectionObserver(([e]) => visible = e.isIntersecting).observe(canvas);
+      new IntersectionObserver(([e]) => st.visible = e.isIntersecting).observe(canvas);
+      const frame = () => { const r = canvas.getBoundingClientRect(); ctx.clearRect(0, 0, st.w, st.h); draw(st, mouseX - r.left, mouseY - r.top); };
+      const loop = () => { if (st.visible) { st.t += 0.016; frame(); } requestAnimationFrame(loop); };
+      if (reduce) { st.t = 4; frame(); } else loop();
+    };
 
-      const LINES = 26;
-      const draw = () => {
-        ctx.clearRect(0, 0, w, h);
-        const rect = canvas.getBoundingClientRect();
-        const mx = mouseX - rect.left, my = mouseY - rect.top;
-        for (let i = 0; i < LINES; i++) {
-          const baseY = h * 0.12 + (h * 0.62) * (i / (LINES - 1));
-          ctx.beginPath();
-          for (let x = 0; x <= w; x += 8) {
-            const n = x / w;
-            // calm swell, strongest in the middle of the screen
-            const env = Math.sin(Math.PI * n) ** 2;
-            let y = Math.sin(n * 9 + t * 0.6 + i * 0.35) * 10 * env
-                  + Math.sin(n * 23 - t * 0.9 + i * 0.6) * 4 * env;
-            // cursor pulls the lines gently
-            const dx = x - mx, dy = baseY - my;
-            const d = Math.exp(-(dx * dx + dy * dy) / 26000);
-            y += Math.sin(x * 0.045 - t * 3) * 22 * d;
-            x === 0 ? ctx.moveTo(x, baseY + y) : ctx.lineTo(x, baseY + y);
-          }
-          const a = 0.05 + 0.13 * Math.sin(Math.PI * i / (LINES - 1));
-          ctx.strokeStyle = `rgba(233,226,212,${a})`;
-          ctx.lineWidth = 1;
-          ctx.stroke();
+    /* Frequency: flowing sound lines that swell near the cursor */
+    canvasLoop(document.getElementById('waves'), ({ ctx, w, h, t }, mx, my) => {
+      const LINES = 18;
+      for (let i = 0; i < LINES; i++) {
+        const baseY = h * 0.3 + (h * 0.45) * (i / (LINES - 1));
+        ctx.beginPath();
+        for (let x = 0; x <= w; x += 8) {
+          const n = x / w, env = Math.sin(Math.PI * n) ** 2;
+          let y = Math.sin(n * 7 + t * 0.6 + i * 0.35) * 10 * env + Math.sin(n * 19 - t * 0.9 + i * 0.6) * 4 * env;
+          const dx = x - mx, dy = baseY - my, d = Math.exp(-(dx * dx + dy * dy) / 22000);
+          y += Math.sin(x * 0.045 - t * 3) * 20 * d;
+          x === 0 ? ctx.moveTo(x, baseY + y) : ctx.lineTo(x, baseY + y);
         }
+        ctx.strokeStyle = `rgba(223,143,176,${0.06 + 0.16 * Math.sin(Math.PI * i / (LINES - 1))})`;
+        ctx.lineWidth = 1; ctx.stroke();
+      }
+    });
+
+    /* Enterprise: a living, dotted map of the road so far.
+       Light sweeps across it, each dot shimmers, the places glow, a traveller flies the journey leg by leg
+       and lights the land beneath it. Colour runs from rose (beside the music side) to gold. */
+    (() => {
+      const canvas = document.getElementById('growth'), ctx = canvas.getContext('2d');
+      // land dots on a 1.5° grid from 100°W, 62°N (one hex string per row; built from Natural Earth land data)
+      const MAP = { cols: 108, L0: -100, A0: 62, step: 1.5, hex: 'f801e0003e00000001fe7ffffff.f001f8000400000001fe3ffffff.f001f9800000000001fe1ffffff.f800ffc000000001c01c1ffffff.ff80ffe00000000180487ffffff.fff3fff8000000066043fffffff.fff9fffc00000006e3fffffffff.fffffff800000000f3fffffffff.fffffe00000000000ffffffffff.fffffb0f00000000fffffffffff.ffffff81000000003ffffff7fff.ffffffe0000000003ffffe6fe1f.fffff900000000003fb7fc07e7f.fffff00000000007f819fc01e3f.ffffe00000000007f00efdfff0f.ffffc00000000007e04267fff1f.ffff000000000007e00867fff1f.ffff8000000000010fc021dffff.ffff000000000001ffc0085ffff.fffc000000000003ffc0001ffff.fff8000000000007fff8e03ffff.fff8000000000007fffffffffff.f00800000000000fffffffffe7f.c00c00000000003fffffff9ff3f.c00400000000007fffffffcff87.c00000000000007fffffffeff98.c00c0000000000ffffffffe7ffe.c0010000000000fffffffff7ffe.e1818000000000fffffffff3ffc.f7801e00000000fffffffff1ff8.ff000000000000fffffffff9ff0.07e00000000000fffffffffcfc0.03f00000000000fffffffffef00.00700000000000ffffffffff000.00206c000000007fffffffff180.00106fc00000003ffffffffff80.0005fff00000003ffffffffff80.0000fff80000000ffffffffff00.0000ffff0000000641ffffffe00.0000ffff80000000003fffffe00.0001ffff80000000003fffff800.0003ffffc0000000007fffff000.0007fffff0000000007ffffe000.0007fffffa000000003ffffc000.0007ffffffc00000001ffffc000.0007fffffff00000001ffff8000.0003fffffff00000000ffff8000.0001fffffff00000000ffff8000.0001ffffffe00000000ffffc000.0000ffffffc00000000ffffc000.0000ffffffc00000000ffffc000.0000ffffff800000001ffffc180.00003fffff800000001ffffc700.00000fffff800000001ffff0f00.00000fffff800000000fffe0700.00000fffff000000000fffc0700.00000fffff0000000007ffe0e00.00000ffff80000000007ffe0e00.00000fffe00000000007ffc0400.00000fffe00000000007ff80000.00000fffe00000000003ff80000.00000fffc00000000003ff00000.00001fff800000000001fe00000.00000fff000000000001fc00000.00001ffe000000000001c000000.00001ff80000000000000000000.00003ff80000000000000000000.00003ff00000000000000000000.00003fc00000000000000000000.00003f000000000000000000000' };
+      const rows = MAP.hex.split('.'), ROWS = rows.length;
+      const land = [];
+      rows.forEach((h, r) => [...h].forEach((ch, i) => {
+        const bits = parseInt(ch, 16);
+        for (let b = 0; b < 4; b++) if (bits & (8 >> b)) { const c = i * 4 + b; if (c < MAP.cols) land.push({ c, r, ph: Math.random() * 6.283, sp: .6 + Math.random() * 1.2 }); }
+      }));
+      // where life happened, in order
+      const PLACES = [
+        // job = the row it opens on the Business page; role = shown when you hover the place
+        { name: 'Barcelona', year: '2019', lon: 2.17, lat: 41.39, side: 1, job: 'job-5', role: 'BBA, Business Administration' },
+        { name: 'Delaware', year: '2022', lon: -75.5, lat: 39.0, side: 1, job: 'job-3', role: 'Co-Founder & Operations' },
+        { name: 'Maputo', year: '2022', lon: 32.58, lat: -25.97, side: 1, job: 'job-4', role: 'Operations, Volunteer' },
+        { name: 'Braga', year: '2023', lon: -8.43, lat: 41.55, side: -1, job: 'job-2', role: 'Head of Sales' },
+        { name: 'Luanda', lon: 13.23, lat: -8.84, side: -1, now: true, job: 'job-1', role: 'Head of HR' },
+      ];
+      const ROSE = [223, 143, 176], GOLD = [217, 180, 108], CREAM = [246, 236, 214];
+      const mix = (a, b, k) => [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k, a[2] + (b[2] - a[2]) * k];
+      const sstep = (a, b, x) => { const k = Math.min(1, Math.max(0, (x - a) / (b - a))); return k * k * (3 - 2 * k); };
+      const place = p => ({ u: (p.lon - MAP.L0) / MAP.step / (MAP.cols - 1), v: (MAP.A0 - p.lat) / MAP.step / (ROWS - 1) });
+
+      let w = 0, h = 0, dpr = 1, visible = true, t = 0, narrow = false;
+      let shown = [], hover = null, glow = {};                 // places on screen now, the one under the pointer, hover fade
+      let mapW, mapH, top, cx0, cell;
+      let px = 0, py = 0;                                        // smoothed pointer, -1..1, for the gentle tilt
+      // each dot's warmth from the places nearby (worked out once)
+      land.forEach(d => {
+        d.u = d.c / (MAP.cols - 1); d.v = d.r / (ROWS - 1);
+        d.heat = 0; d.home = 0;
+        PLACES.forEach(p => {
+          const q = place(p), du = (d.u - q.u) * (MAP.cols / ROWS), dv = d.v - q.v, e = Math.exp(-(du * du + dv * dv) / .0035);
+          if (p.now) d.home = e; else d.heat = Math.max(d.heat, e);
+        });
+        d.hue = sstep(.12, .62, d.u);                            // rose on the left, gold on the right
+      });
+
+      const build = () => {
+        dpr = Math.min(devicePixelRatio || 1, 2);
+        w = canvas.clientWidth; h = canvas.clientHeight;
+        canvas.width = w * dpr; canvas.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        narrow = w < 300;   // phones (each half of the screen is under 300px)
+        // big and bleeding off the edges; on phones, zoom on Europe and Africa where most of the story is
+        mapW = narrow ? Math.max(w * 1.7, h * .58) : Math.max(w * 1.3, h * .9);
+        mapH = mapW * (ROWS / MAP.cols);
+        top = h * (narrow ? .3 : .25);
+        const focus = ((narrow ? 4 : -24) - MAP.L0) / MAP.step / (MAP.cols - 1);
+        cx0 = w * .5 + (.5 - focus) * mapW * .87;
+        cell = mapW / MAP.cols;
       };
-      const loop = () => { if (visible) { t += 0.016; draw(); } requestAnimationFrame(loop); };
-      reduce ? draw() : loop();
+      // flat map position (0..1) → screen, on a plane tilted away from the viewer; the pointer leans it a little
+      const project = (u, v) => {
+        const s = .72 + .28 * v + py * .035 * (v - .5);
+        return { x: cx0 + px * -18 * (1 - v * .5) + (u - .5) * mapW * s, y: top + py * -10 + mapH * (v * .9 + .1 * v * v), s };
+      };
+
+      const legPoint = (L, k) => {
+        const m = 1 - k;
+        return { x: m * m * L.a.x + 2 * m * k * L.c.x + k * k * L.b.x, y: m * m * L.a.y + 2 * m * k * L.c.y + k * k * L.b.y };
+      };
+      const strokeLeg = (L, k0, k1, style, width) => {
+        ctx.beginPath();
+        for (let i = 0; i <= 32; i++) { const p = legPoint(L, k0 + (k1 - k0) * i / 32); i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y); }
+        ctx.strokeStyle = style; ctx.lineWidth = width; ctx.stroke();
+      };
+      const rgba = (c, a) => `rgba(${c[0] | 0},${c[1] | 0},${c[2] | 0},${a.toFixed(3)})`;
+
+      const draw = (mx, my) => {
+        ctx.clearRect(0, 0, w, h);
+        const places = PLACES.map(p => { const q = place(p); return { ...p, ...project(q.u, q.v) }; });
+        shown = places;
+        const legs = places.slice(1).map((b, i) => {
+          const a = places[i], dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy);
+          return { a, b, c: { x: (a.x + b.x) / 2 + dy * .28, y: (a.y + b.y) / 2 - Math.abs(dx) * .28 - d * .04 } };
+        });
+
+        // where the traveller is right now
+        const LEG = 1.9, PAUSE = 2.4, cycle = legs.length * LEG + PAUSE;
+        const ph = reduce ? cycle : (t * .85) % cycle;
+        const legNow = Math.min(legs.length - 1, Math.floor(ph / LEG));
+        const kNow = ph < legs.length * LEG ? (ph - legNow * LEG) / LEG : 1;
+        const eNow = kNow < .5 ? 2 * kNow * kNow : 1 - Math.pow(-2 * kNow + 2, 2) / 2;
+        const comet = ph < legs.length * LEG ? legPoint(legs[legNow], eNow) : null;
+
+        // the light sweeping across, like daylight moving over the earth
+        const sweep = reduce ? -9 : ((t * .045) % 1.6) - .3;
+        const pulse = .5 + .5 * Math.sin(t * 1.6);
+        const R2cursor = Math.pow(Math.max(90, w * .15), 2), R2comet = Math.pow(Math.max(40, cell * 5), 2);
+
+        for (const d of land) {
+          const p = project(d.u, d.v);
+          if (p.x < -10 || p.x > w + 10 || p.y < -10 || p.y > h + 10) continue;
+          let a = .14 + .2 * p.s * p.s;                              // base: nearer is brighter
+          a += .07 * Math.sin(t * d.sp + d.ph);                     // shimmer
+          const sw = d.u - sweep; a += .32 * Math.exp(-(sw * sw) / .006);
+          a += .45 * d.heat + (.55 + .35 * pulse) * d.home;         // the places glow; home pulses
+          let lift = 0;
+          if (comet) { const dx = p.x - comet.x, dy = p.y - comet.y, q = dx * dx + dy * dy; if (q < R2comet * 4) { const k = Math.exp(-q / R2comet); a += .8 * k; lift += k; } }
+          { const dx = p.x - mx, dy = p.y - my, q = dx * dx + dy * dy; if (q < R2cursor) { const k = 1 - q / R2cursor; a += .55 * k * k; lift += k * k; } }
+          a = Math.min(1, Math.max(.05, a));
+          let col = mix(ROSE, GOLD, d.hue);
+          col = mix(col, CREAM, sstep(.55, 1, a) * .75);             // the brightest dots turn to warm white
+          ctx.fillStyle = rgba(col, a);
+          const r = Math.max(.6, cell * .22 * p.s) * (1 + .45 * Math.min(1, lift) + .25 * d.home);
+          ctx.beginPath(); ctx.arc(p.x, p.y - 2 * Math.min(1, lift), r, 0, 6.283); ctx.fill();
+        }
+
+        // the journey: a faint dashed route, then the traveller drawing each leg in light
+        ctx.setLineDash([2, 5]);
+        legs.forEach(L => strokeLeg(L, 0, 1, rgba(GOLD, .22), 1));
+        ctx.setLineDash([]);
+        legs.forEach((L, i) => {
+          const k = Math.min(1, Math.max(0, (ph - i * LEG) / LEG));
+          if (k <= 0) return;
+          const e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+          const fade = ph > legs.length * LEG ? 1 - (ph - legs.length * LEG) / PAUSE : 1;
+          strokeLeg(L, 0, e, rgba(mix(ROSE, GOLD, .7), .55 * fade), 1.4);
+        });
+        if (comet) {
+          const g = ctx.createRadialGradient(comet.x, comet.y, 0, comet.x, comet.y, 22);
+          g.addColorStop(0, rgba(CREAM, 1)); g.addColorStop(.25, rgba(GOLD, .6)); g.addColorStop(1, rgba(GOLD, 0));
+          ctx.fillStyle = g; ctx.beginPath(); ctx.arc(comet.x, comet.y, 22, 0, 6.283); ctx.fill();
+        }
+
+        // the places
+        ctx.font = `500 ${narrow ? 8.5 : 10.5}px Inter, system-ui, sans-serif`;
+        ctx.textBaseline = 'middle';
+        if ('letterSpacing' in ctx) ctx.letterSpacing = narrow ? '1.4px' : '2.2px';
+        const pt = window.I18N && I18N.lang === 'pt';
+        const boxes = places.map(p => ({ x0: p.x - 8, x1: p.x + 8, y: p.y, own: p.name }));   // dots and placed labels: nothing overlaps
+        places.forEach(p => {
+          const hv = glow[p.name] = (glow[p.name] || 0) + ((hover === p.name ? 1 : 0) - (glow[p.name] || 0)) * .18;
+          const r = (p.now ? 4.5 : 3) + hv * 1.5;
+          if (hv > .02) {                                           // hovered: a ring that says "click me"
+            ctx.strokeStyle = rgba(CREAM, .75 * hv); ctx.lineWidth = 1.2;
+            ctx.beginPath(); ctx.arc(p.x, p.y, 9 + hv * 4, 0, 6.283); ctx.stroke();
+          }
+          if (p.now && !reduce) for (let j = 0; j < 2; j++) {          // Luanda: two rings rippling out
+            const k = (t * .45 + j * .5) % 1;
+            ctx.strokeStyle = rgba(GOLD, .6 * (1 - k)); ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.arc(p.x, p.y, 6 + k * 30, 0, 6.283); ctx.stroke();
+          }
+          const halo = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.now ? 26 : 14);
+          halo.addColorStop(0, rgba(GOLD, p.now ? .45 : .25)); halo.addColorStop(1, rgba(GOLD, 0));
+          ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(p.x, p.y, p.now ? 26 : 14, 0, 6.283); ctx.fill();
+          ctx.fillStyle = '#100f0c'; ctx.beginPath(); ctx.arc(p.x, p.y, r + 2.5, 0, 6.283); ctx.fill();
+          ctx.fillStyle = rgba(p.now ? CREAM : GOLD, 1); ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 6.283); ctx.fill();
+          if ((narrow && !p.now && hv < .3) || p.x < 4 || p.x > w - 4) return;
+          const name = p.name.toUpperCase(), tail = p.now ? (pt ? 'AGORA' : 'NOW') : p.year;
+          const gapW = ctx.measureText('  ').width, nameW = ctx.measureText(name).width, tailW = ctx.measureText(tail).width;
+          const total = nameW + gapW + tailW;
+          // try beside the dot (its usual side), then above, below, the other side: first spot that is clear wins
+          const spots = [
+            { x: p.x + p.side * (r + 10) - (p.side < 0 ? total : 0), y: p.y },
+            { x: p.x - total / 2, y: p.y - 17 },
+            { x: p.x - total / 2, y: p.y + 17 },
+            { x: p.x - p.side * (r + 10) - (p.side > 0 ? total : 0), y: p.y },
+          ];
+          const clear = sp => sp.x > 8 && sp.x + total < w - 8 &&
+            !boxes.some(b => b.own !== p.name && b.x0 < sp.x + total + 6 && sp.x < b.x1 + 6 && Math.abs(b.y - sp.y) < 13);
+          const spot = spots.find(clear) || spots[0];
+          boxes.push({ x0: spot.x, x1: spot.x + total, y: spot.y });
+          // name in light, year in gold
+          ctx.textAlign = 'left';
+          ctx.shadowColor = 'rgba(10,10,8,.95)'; ctx.shadowBlur = 8;   // keeps labels readable over bright dots
+          ctx.fillStyle = `rgba(233,226,212,${Math.min(1, (p.now ? .95 : .78) + hv)})`; ctx.fillText(name, spot.x, spot.y);
+          ctx.fillStyle = rgba(GOLD, 1); ctx.fillText(tail, spot.x + nameW + gapW, spot.y);
+          if (hv > .02) {                                           // the role there, and an arrow to it
+            const role = (window.I18N ? I18N.t(p.role) : p.role) + '  →';
+            const f = ctx.font; ctx.font = `italic 400 ${narrow ? 13 : 16}px "Instrument Serif", Georgia, serif`;
+            if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
+            const rw = ctx.measureText(role).width, rx = Math.max(8, Math.min(w - 8 - rw, spot.x));
+            ctx.fillStyle = rgba(GOLD, hv); ctx.fillText(role, rx, spot.y + (spot.y < p.y ? -16 : 17));
+            ctx.font = f; if ('letterSpacing' in ctx) ctx.letterSpacing = narrow ? '1.4px' : '2.2px';
+          }
+          ctx.shadowBlur = 0;
+        });
+      };
+
+      // places are clickable: they open that part of the road on the Business page
+      const door = canvas.closest('.door');
+      const hit = (x, y, touch) => {
+        const r = canvas.getBoundingClientRect(), R = touch ? 30 : 22;
+        let best = null, bd = R * R;
+        shown.forEach(p => { const dx = p.x - (x - r.left), dy = p.y - (y - r.top), d = dx * dx + dy * dy; if (d < bd) { bd = d; best = p; } });
+        return best;
+      };
+      addEventListener('pointermove', e => {
+        const p = e.pointerType === 'mouse' ? hit(e.clientX, e.clientY) : null;
+        hover = p ? p.name : null;
+        door.classList.toggle('on-place', !!p);
+        const cur = document.getElementById('cursor'); if (cur) cur.classList.toggle('aim', !!p);
+      }, { passive: true });
+      door.addEventListener('click', e => {
+        const p = hit(e.clientX, e.clientY, e.pointerType !== 'mouse');
+        if (!p) return;                                           // anywhere else: the normal Business link
+        e.preventDefault();
+        location.href = `business/#${p.job}`;
+      });
+
+      build(); addEventListener('resize', build);
+      document.fonts && document.fonts.ready.then(build);
+      new IntersectionObserver(([e]) => visible = e.isIntersecting).observe(canvas);
+      const frame = () => {
+        const r = canvas.getBoundingClientRect();
+        const lx = mouseX - r.left, ly = mouseY - r.top;
+        // lean toward the pointer only while it is over the opening screen
+        const over = mouseY > -9000 && ly > -r.height * .2 && ly < r.height * 1.2;
+        const tx = over ? Math.max(-1, Math.min(1, (lx / w - .5) * 2)) : 0, ty = over ? Math.max(-1, Math.min(1, (ly / h - .5) * 2)) : 0;
+        px += (tx - px) * .05; py += (ty - py) * .05;
+        draw(lx, ly);
+      };
+      const loop = () => { if (visible) { t += .016; frame(); } requestAnimationFrame(loop); };
+      if (reduce) { t = 4; frame(); } else loop();
     })();
 
     /* ---- Cursor ---- */
@@ -783,7 +831,7 @@
         requestAnimationFrame(follow);
       };
       follow();
-      document.querySelectorAll('a:not(.chip), .card, .rows li').forEach(el => {
+      document.querySelectorAll('a:not(.chip)').forEach(el => {
         el.addEventListener('mouseenter', () => cursor.classList.add('big'));
         el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
       });
@@ -819,8 +867,17 @@
         } else wrapWords(n);
       });
     };
-    wrapWords(st);
-    const words = [...st.querySelectorAll('.w')];
+    // English is written in the page; the Portuguese comes from i18n.js. Words are re-split on each language change.
+    const ST_EN = st.innerHTML;
+    let words = [];
+    const setStatement = () => {
+      st.innerHTML = window.I18N && I18N.lang === 'pt' ? I18N.html.statement : ST_EN;
+      wrapWords(st);
+      words = [...st.querySelectorAll('.w')];
+      if (reduce) words.forEach(wd => wd.classList.add('on'));
+    };
+    setStatement();
+    document.addEventListener('langchange', () => { setStatement(); if (!reduce) lightWords(); });
     const lightWords = () => {
       const r = st.getBoundingClientRect();
       const p = Math.min(1, Math.max(0, (innerHeight * 0.85 - r.top) / (r.height + innerHeight * 0.35)));
@@ -850,17 +907,7 @@
     }, { threshold: 0.15 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    /* ---- Cards: gentle 3D tilt ---- */
     if (finePointer && !reduce) {
-      document.querySelectorAll('[data-tilt]').forEach(card => {
-        card.addEventListener('mousemove', e => {
-          const r = card.getBoundingClientRect();
-          const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
-          card.style.transform = `rotateY(${x * 5}deg) rotateX(${-y * 5}deg)`;
-        });
-        card.addEventListener('mouseleave', () => card.style.transform = '');
-      });
-
       /* ---- Interest tags: lean toward the cursor ---- */
       document.querySelectorAll('.chip').forEach(chip => {
         chip.addEventListener('mousemove', e => {
@@ -878,14 +925,6 @@
       });
       mag.addEventListener('mouseleave', () => mag.style.transform = '');
     }
-
-    /* ---- Journey: click a row to open its description (one at a time) ---- */
-    const heads = document.querySelectorAll('.row-head');
-    heads.forEach(btn => btn.addEventListener('click', () => {
-      const row = btn.closest('li'), willOpen = !row.classList.contains('open');
-      heads.forEach(b => { b.closest('li').classList.remove('open'); b.setAttribute('aria-expanded', 'false'); });
-      if (willOpen) { row.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
-    }));
 
     /* ---- Sprout: grows from seed to wheat as you scroll down to the verse ---- */
     (() => {

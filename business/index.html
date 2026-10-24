@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Business · Call me Monte</title>
+  <meta name="description" content="The business side of Tiago Monte: sales, people and operations across Portugal, Mozambique and Angola, and the road so far.">
+  <meta property="og:title" content="Business · Call me Monte">
+  <meta property="og:url" content="https://callmemonte.com/business/">
+  <meta name="theme-color" content="#0d0d0b">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23e9e2d4'/%3E%3Ctext x='32' y='42' font-family='Impact,sans-serif' font-size='34' fill='%230d0d0b' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0d0b; --bg-2: #151512; --card: #1a1a17;
+      --text: #e9e2d4; --muted: #8f897d; --line: #2c2b27;
+      --accent: #d9b46c; --art: #df8fb0;   /* Enterprise colour, same as the Enterprise side on the home page */
+      --display: "Anton", Impact, "Arial Narrow", sans-serif;
+      --serif: "Instrument Serif", Georgia, serif;
+      --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --pad: clamp(16px, 4vw, 48px);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; }
+    ::selection { background: var(--accent); color: var(--bg); }
+
+    .grain {
+      position: fixed; inset: -50%; z-index: 100; pointer-events: none; opacity: .06;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      animation: grain 1.2s steps(6) infinite;
+    }
+    @keyframes grain { 0%,100% { transform: translate(0,0); } 20% { transform: translate(-3%,2%); } 40% { transform: translate(2%,-3%); } 60% { transform: translate(-2%,-1%); } 80% { transform: translate(3%,3%); } }
+
+    /* nav */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 20px var(--pad); transition: background .4s; }
+    nav.solid { background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: blur(10px); }
+    .logo { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--text); color: var(--bg); font-family: var(--display); font-size: 17px; }
+    .pill { border: 1px solid var(--text); border-radius: 999px; padding: 10px 20px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; font-weight: 500; transition: background .3s, color .3s; display: inline-flex; gap: 10px; align-items: center; }
+    .pill:hover { background: var(--text); color: var(--bg); }
+
+    /* hero */
+    .hero { padding: 150px var(--pad) 60px; position: relative; }
+    .tag { font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); display: flex; gap: 14px; align-items: center; margin-bottom: 22px; }
+    .tag b { color: var(--accent); font-weight: 500; }
+    h1 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(88px, 20vw, 300px); line-height: .82; letter-spacing: -.01em; }
+    h1 span { display: inline-block; }
+    .js h1 span { transform: translateY(105%); animation: rise 1.1s cubic-bezier(.2,.8,.2,1) forwards; }
+    h1 .wrap { display: block; overflow: hidden; }
+    @keyframes rise { to { transform: none; } }
+    .hero-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 24px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); }
+    .lede { font-family: var(--serif); font-size: clamp(22px, 2.4vw, 32px); line-height: 1.25; max-width: 620px; }
+    .lede i { color: var(--accent); }
+    .count { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+    .count b { color: var(--text); font-weight: 500; }
+
+    .nav-links { display: flex; gap: 32px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+    .nav-links a { color: var(--muted); transition: color .2s; }
+    .nav-links a:hover, .nav-links a[aria-current] { color: var(--text); }
+    .nav-links a[aria-current] { box-shadow: inset 0 -1px var(--accent); }
+    @media (max-width: 600px) { .nav-links { gap: 20px; font-size: 12px; } }
+
+    /* section heads */
+    .sec { padding: clamp(80px, 11vw, 150px) var(--pad) 0; }
+    .sec h2.big { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(48px, 8vw, 128px); line-height: .9; margin-bottom: 48px; }
+    .sec h2.big em { font-family: var(--serif); text-transform: none; color: var(--accent); }
+
+    /* "The road ⋯→ so far": a road that draws itself to the right as you scroll (see script) */
+    .road-title { display: flex; align-items: center; gap: clamp(14px, 2vw, 30px); white-space: nowrap; }
+    .rt-road, .rt-far { flex: none; will-change: opacity, transform, filter; }
+    .rt-far { display: inline-flex; padding-right: .06em; }
+    .rt-far span { display: inline-block; white-space: pre; will-change: opacity, transform, filter; }
+    .rt-path { flex: 1; min-width: 48px; height: 1em; overflow: visible; }
+    .rt-ahead { stroke: var(--accent); stroke-opacity: .3; stroke-linecap: round; }        /* the road still ahead */
+    .rt-trail { stroke: var(--accent); stroke-linecap: round; }                            /* the road travelled */
+    .rt-head path { stroke: var(--accent); stroke-linecap: round; stroke-linejoin: round; }
+    .rt-glow { fill: var(--accent); opacity: .14; }
+    .js .rt-road, .js .rt-far span, .js .rt-head { opacity: 0; }
+    @media (max-width: 600px) { .sec h2.road-title { font-size: clamp(30px, 9.5vw, 64px); gap: 10px; } .rt-path { min-width: 32px; } }
+
+
+    /* hero: a slow growth line behind the title */
+    .hero { overflow: hidden; isolation: isolate; }
+    h1 { font-size: clamp(60px, 16.5vw, 260px); }   /* keep the title on one line on phones */
+    #growth { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
+    .intro { font-family: var(--serif); font-size: clamp(28px, 3.8vw, 54px); line-height: 1.15; max-width: 1100px; }
+    .intro em { color: var(--accent); }
+
+    /* what I bring */
+    .bring { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .bring article { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: clamp(24px, 2.8vw, 34px); display: flex; flex-direction: column; gap: 12px; min-height: 280px; transition: border-color .4s, transform .5s cubic-bezier(.2,.8,.2,1); }
+    .bring article:hover { border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); transform: translateY(-4px); }
+    .bring .no { font-family: var(--display); font-size: 14px; letter-spacing: .12em; color: var(--accent); }
+    .bring h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(28px, 2.6vw, 38px); line-height: .98; }
+    .bring p { color: var(--muted); font-size: 15.5px; margin-top: auto; }
+    @media (max-width: 1000px) { .bring { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .bring { grid-template-columns: 1fr; } .bring article { min-height: 0; } }
+
+    /* fields I'm drawn to */
+    .fields { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; max-width: 900px; margin: 0 auto; }
+    .fields-sec .tag { justify-content: center; }
+    .fields span { padding: 14px 22px; border-radius: 999px; font-size: 15px; color: color-mix(in srgb, var(--c) 60%, var(--text)); border: 1px solid color-mix(in srgb, var(--c) 35%, var(--bg)); background: color-mix(in srgb, var(--c) 7%, var(--bg)); }
+    .facts { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 64px; border-top: 1px solid var(--line); }
+    .facts > div { padding: 28px 16px 8px; text-align: center; }
+    .facts > div + div { border-left: 1px solid var(--line); }
+    .facts dt { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .facts dd { font-size: 17px; }
+    @media (max-width: 760px) { .facts { grid-template-columns: 1fr; } .facts > div + div { border-left: 0; border-top: 1px solid var(--line); } }
+
+    /* Stats */
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); margin-bottom: 96px; }
+    .stat { padding: 40px 24px 8px; text-align: center; }
+    .stat + .stat { border-left: 1px solid var(--line); }
+    .stat b { display: block; font-family: var(--display); font-weight: 400; font-size: clamp(56px, 8vw, 120px); line-height: 1; }
+    .stat .lbl { color: var(--muted); font-size: 14px; display: block; margin: 14px auto 0; max-width: 240px; }
+    @media (max-width: 760px) {
+      .stats { grid-template-columns: 1fr; }
+      .stat { padding: 32px 0 24px; }
+      .stat + .stat { border-left: 0; border-top: 1px solid var(--line); }
+    }
+
+    /* Journey rows */
+    .rows { list-style: none; border-top: 1px solid var(--line); }
+    .rows { isolation: isolate; }
+    .rows li { position: relative; border-bottom: 1px solid var(--line); overflow: hidden; }
+    .rows li::before {
+      content: ""; position: absolute; inset: 0; background: var(--card); z-index: -1;
+      transform: scaleY(0); transform-origin: bottom; transition: transform .45s cubic-bezier(.2,.8,.2,1);
+    }
+    .rows li:hover::before, .rows li.open::before { transform: scaleY(1); }
+    .row-head {
+      all: unset; box-sizing: border-box; width: 100%; cursor: pointer;
+      display: grid; grid-template-columns: 160px 1fr auto; gap: 24px; align-items: baseline; padding: 30px 0;
+    }
+    .row-head:focus-visible { outline: 1px solid var(--accent); outline-offset: -1px; }
+    .rows .when { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding-left: 4px; }
+    .rows .now .when { color: var(--accent); }
+    .rows .title { display: block;  font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(26px, 3.2vw, 44px); line-height: 1.05; transition: transform .45s cubic-bezier(.2,.8,.2,1); }
+    .rows li:hover .title, .rows li.open .title { transform: translateX(10px); }
+    .rows .where { font-family: var(--serif); font-style: italic; font-size: 19px; color: color-mix(in srgb, #e4412f 62%, var(--bg)); display: block; margin-top: 6px; text-transform: none; transition: color .4s ease; }  /* company / school: faded red */
+    .rows li:hover .where, .rows li.open .where { color: #e4412f; }  /* full red on hover or when open */
+    .rows .place { font-size: 13px; color: var(--muted); text-align: right; padding-right: 4px; white-space: nowrap; display: inline-flex; align-items: center; gap: 14px; justify-content: flex-end; }
+    /* plus that turns into a minus */
+    .toggle {
+      position: relative; width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 50%; flex: none;
+      transition: background .35s, border-color .35s, transform .45s cubic-bezier(.2,.8,.2,1);
+    }
+    .toggle::before, .toggle::after {
+      content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 1.5px; margin: -.75px 0 0 -6px;
+      background: var(--accent); transition: transform .45s cubic-bezier(.2,.8,.2,1), background .35s;
+    }
+    .toggle::after { transform: rotate(90deg); }
+    .rows li:hover .toggle { border-color: var(--accent); }
+    .rows li.open .toggle { background: var(--accent); border-color: var(--accent); transform: rotate(180deg); }
+    .rows li.open .toggle::before, .rows li.open .toggle::after { background: var(--bg); }
+    .rows li.open .toggle::after { transform: rotate(0deg); }
+    /* the opening panel */
+    .row-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .55s cubic-bezier(.2,.8,.2,1); }
+    .rows li.open .row-body { grid-template-rows: 1fr; }
+    .row-body > div { overflow: hidden; }
+    .row-inner {
+      padding: 0 0 36px calc(160px + 24px + 10px); max-width: 860px;
+      opacity: 0; transform: translateY(-8px); transition: opacity .4s ease, transform .5s cubic-bezier(.2,.8,.2,1);
+    }
+    .rows li.open .row-inner { opacity: 1; transform: none; transition-delay: .12s; }
+    /* points: numbered nodes joined by a thread, like connected neurons */
+    .points { display: grid; gap: 18px; position: relative; counter-reset: pt; }
+    .points::before {
+      content: ""; position: absolute; left: 13px; top: 14px; bottom: 14px; width: 1px;
+      background: linear-gradient(to bottom, var(--accent), color-mix(in srgb, var(--accent) 15%, transparent));
+      transform: scaleY(0); transform-origin: top; transition: transform .9s cubic-bezier(.2,.8,.2,1) .15s;
+    }
+    .rows li.open .points::before { transform: scaleY(1); }
+    .points p {
+      counter-increment: pt; position: relative; padding-left: 46px; min-height: 28px;
+      color: var(--muted); font-size: 16px; line-height: 1.6; transition: color .3s;
+      opacity: 0; transform: translateX(-6px);
+    }
+    .rows li.open .points p { opacity: 1; transform: none; transition: color .3s, opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1); }
+    .rows li.open .points p:nth-child(1) { transition-delay: 0s, .2s, .2s; }
+    .rows li.open .points p:nth-child(2) { transition-delay: 0s, .3s, .3s; }
+    .rows li.open .points p:nth-child(3) { transition-delay: 0s, .4s, .4s; }
+    .rows li.open .points p:nth-child(4) { transition-delay: 0s, .5s, .5s; }
+    .rows li.open .points p:nth-child(5) { transition-delay: 0s, .6s, .6s; }
+    .points p::before {
+      content: counter(pt, decimal-leading-zero); position: absolute; left: 0; top: 0;
+      width: 27px; height: 27px; border-radius: 50%; display: grid; place-items: center;
+      font-size: 10px; letter-spacing: .02em; font-weight: 600; color: var(--accent);
+      background: var(--card); border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+      box-shadow: 0 0 0 4px var(--card);
+      transition: background .35s, color .35s, box-shadow .35s, transform .35s cubic-bezier(.2,.8,.2,1);
+    }
+    .points p:hover { color: var(--text); }
+    .points p:hover::before {
+      background: var(--accent); color: var(--bg); transform: scale(1.12);
+      box-shadow: 0 0 0 4px var(--card), 0 0 18px 2px color-mix(in srgb, var(--accent) 45%, transparent);
+    }
+    @media (prefers-reduced-motion: reduce) { .points p { opacity: 1; transform: none; } .points::before { transform: none; } }
+    .row-inner .visit {
+      display: inline-flex; align-items: center; gap: 10px; margin-top: 24px; padding: 10px 18px;
+      border: 1px solid var(--line); border-radius: 999px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
+      transition: background .3s, color .3s, border-color .3s;
+    }
+    .row-inner .visit:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+    @media (max-width: 760px) {
+      .row-head { grid-template-columns: 1fr auto; gap: 6px 16px; }
+      .row-head .when { grid-column: 1 / -1; }
+      .rows .place { grid-column: 1 / -1; justify-content: space-between; order: 3; }
+      .row-inner { padding-left: 0; }
+    }
+
+
+    /* closing */
+    .closing { text-align: center; padding: clamp(100px, 13vw, 170px) var(--pad); }
+    .closing .big { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(56px, 12vw, 200px); line-height: .88; margin-bottom: 48px; }
+    .closing .big em { font-family: var(--serif); text-transform: none; color: #e4412f; }  /* same bold red as the home page */
+    .closing .magnet:hover { background: #e4412f; color: var(--text); }
+    .magnet {
+      display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+      width: 190px; height: 190px; border-radius: 50%; background: var(--text); color: var(--bg);
+      font-size: 13px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600;
+      transition: transform .3s cubic-bezier(.2,.8,.2,1), background .3s;
+    }
+    .magnet:hover { background: var(--accent); }
+    .magnet svg { width: 18px; height: 18px; fill: currentColor; }
+    .closing .other-wrap { margin-top: 56px; }
+    .other { display: inline-flex; align-items: center; gap: 14px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--art); padding: 12px 22px; border: 1px solid color-mix(in srgb, var(--art) 50%, transparent); border-radius: 999px; transition: background .35s, color .35s; }
+    .other:hover { background: var(--art); color: var(--bg); }
+
+    footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 28px var(--pad); border-top: 1px solid var(--line); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+
+    .js .reveal { opacity: 0; transform: translateY(40px); transition: opacity 1s ease, transform 1s cubic-bezier(.2,.8,.2,1); }
+    .js .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .js h1 span, .js .reveal { transform: none; opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <nav id="nav">
+    <a class="logo" href="../" aria-label="Home">M</a>
+    <div class="nav-links">
+      <a href="../art/">Music</a>
+      <a href="./" aria-current="page">Business</a>
+    </div>
+    <a class="pill" href="../"><span aria-hidden="true">←</span> Home</a>
+  </nav>
+
+  <header class="hero">
+    <canvas id="growth" aria-hidden="true"></canvas>
+    <p class="tag"><b>II.</b> The business side</p>
+    <h1><span class="wrap"><span>Business</span></span></h1>
+    <div class="hero-foot">
+      <p class="lede">Business that moves the world forward. <i>People, sales and operations.</i></p>
+      <p class="count">Portugal · Mozambique · Angola</p>
+    </div>
+  </header>
+
+  <section class="sec">
+    <p class="tag"><b>01</b> In short</p>
+    <p class="intro reveal">
+      I'm passionate about investing, building ventures and the entrepreneurial path.
+      My work spans <em>people, sales and operations</em>, from Portugal to Mozambique to Angola.
+    </p>
+  </section>
+
+  <section class="sec journey" id="journey">
+    <p class="tag"><b>02</b> Journey</p>
+    <h2 class="big road-title" id="roadTitle" aria-label="The road so far">
+      <span class="rt-road" aria-hidden="true">The road</span>
+      <svg class="rt-path" aria-hidden="true">
+        <defs>
+          <radialGradient id="rtFade"><stop offset="0" stop-color="#000"/><stop offset=".45" stop-color="#000"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+          <mask id="rtMask" maskUnits="userSpaceOnUse">
+            <path class="rt-reveal" fill="none" stroke="#fff" stroke-linecap="round"/>
+            <circle class="rt-hole" r="0" fill="url(#rtFade)"/>
+          </mask>
+        </defs>
+        <path class="rt-ahead" fill="none"/>
+        <path class="rt-trail" fill="none" mask="url(#rtMask)"/>
+        <g class="rt-head"><circle class="rt-glow" r="14"/><path d="M-11 -8 L0 0 L-11 8" fill="none"/></g>
+      </svg>
+      <em class="rt-far" aria-hidden="true" data-i18n-skip>so far</em>
+    </h2>
+
+    <div class="stats reveal">
+      <div class="stat"><b><span data-count="90">0</span>+</b><span class="lbl">strategic supplier partnerships built</span></div>
+      <div class="stat"><b>€1–<span data-count="2">0</span>M</b><span class="lbl">yearly revenue contributed</span></div>
+      <div class="stat"><b><span data-count="3">0</span></b><span class="lbl">continents lived and worked on</span></div>
+    </div>
+
+    <ol class="rows">
+      <li class="now reveal">
+        <button class="row-head" aria-expanded="false" aria-controls="job-1">
+          <span class="when">2026 — Now</span>
+          <span class="title">Head of HR<span class="where">DST Angola</span></span>
+          <span class="place">Luanda, AO <i class="toggle" aria-hidden="true"></i></span>
+        </button>
+        <div class="row-body" id="job-1"><div><div class="row-inner">
+          <div class="points">
+            <p>Leading Human Resources for DST Group's operations in Angola, based in Luanda.</p>
+          </div>
+          <a class="visit" href="https://www.dstsgps.com/intro-pt-pt/#/#intro" target="_blank" rel="noopener">Visit DST Group <span aria-hidden="true">↗</span></a>
+        </div></div></div>
+      </li>
+      <li class="reveal">
+        <button class="row-head" aria-expanded="false" aria-controls="job-2">
+          <span class="when">2023 — 26</span>
+          <span class="title">Head of Sales<span class="where">Assim Store, a DST Group construction retail company</span></span>
+          <span class="place">Braga, PT <i class="toggle" aria-hidden="true"></i></span>
+        </button>
+        <div class="row-body" id="job-2"><div><div class="row-inner">
+          <div class="points">
+            <p>Secured 90+ strategic supplier partnerships within 12 months, expanding the product portfolio and market reach.</p>
+            <p>Negotiated six-figure contracts with major construction firms, with strong profit margins.</p>
+            <p>Negotiated exclusive agreements to bring EV chargers to the Portuguese market.</p>
+            <p>Set up yearly supply contracts with DST Group's stock material warehouse.</p>
+            <p>Sourced high-end home brands (furniture, spas and appliances) for the online store, and ran sales and after-sales with construction companies.</p>
+          </div>
+        </div></div></div>
+      </li>
+      <li class="reveal">
+        <button class="row-head" aria-expanded="false" aria-controls="job-3">
+          <span class="when">2022 — 23</span>
+          <span class="title">Co-Founder &amp; Operations<span class="where">Casa Sauna LLC</span></span>
+          <span class="place">Delaware, US <i class="toggle" aria-hidden="true"></i></span>
+        </button>
+        <div class="row-body" id="job-3"><div><div class="row-inner">
+          <div class="points">
+            <p>Built the operation from the ground up: sourcing, logistics and customer fulfilment.</p>
+            <p>Negotiated supplier contracts to improve costs and supply reliability.</p>
+            <p>Streamlined order management and improved the customer experience.</p>
+            <p>Led a small operations team.</p>
+          </div>
+        </div></div></div>
+      </li>
+      <li class="reveal">
+        <button class="row-head" aria-expanded="false" aria-controls="job-4">
+          <span class="when">2022 — 23</span>
+          <span class="title">Operations, Volunteer<span class="where">Quinta Arca</span></span>
+          <span class="place">Maputo, MZ <i class="toggle" aria-hidden="true"></i></span>
+        </button>
+        <div class="row-body" id="job-4"><div><div class="row-inner">
+          <div class="points">
+            <p>Supported day-to-day lodge operations, including payroll and inventory.</p>
+            <p>Coordinated events and designed promotional materials to engage guests.</p>
+          </div>
+        </div></div></div>
+      </li>
+      <li class="reveal">
+        <button class="row-head" aria-expanded="false" aria-controls="job-5">
+          <span class="when">2019 — 23</span>
+          <span class="title">BBA, Business Administration<span class="where">European Business School</span></span>
+          <span class="place">Barcelona, ES <i class="toggle" aria-hidden="true"></i></span>
+        </button>
+        <div class="row-body" id="job-5"><div><div class="row-inner">
+          <div class="points">
+            <p>Co-founded the finance club “Common Cents”.</p>
+            <p>Focused on strategic management, financial analysis and operations planning.</p>
+          </div>
+          <a class="visit" href="https://study.euruni.edu/all-programs/barcelona" target="_blank" rel="noopener">Visit EU Business School <span aria-hidden="true">↗</span></a>
+        </div></div></div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="sec">
+    <p class="tag"><b>03</b> What I bring</p>
+    <div class="bring">
+      <article class="reveal">
+        <span class="no">I.</span>
+        <h3>People &amp; leadership</h3>
+        <p>Leading Human Resources for DST Group in Angola, and running small teams from the ground up.</p>
+      </article>
+      <article class="reveal">
+        <span class="no">II.</span>
+        <h3>Sales &amp; partnerships</h3>
+        <p>90+ supplier partnerships in a year, six-figure contracts and exclusive deals, like bringing EV chargers to Portugal.</p>
+      </article>
+      <article class="reveal">
+        <span class="no">III.</span>
+        <h3>Operations</h3>
+        <p>Sourcing, logistics, supplier contracts and fulfilment, from a Delaware start-up to a lodge in Maputo.</p>
+      </article>
+      <article class="reveal">
+        <span class="no">IV.</span>
+        <h3>Investing &amp; ventures</h3>
+        <p>Building ventures and investing, grounded in a BBA and the finance club I co-founded in Barcelona.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec fields-sec">
+    <p class="tag"><b>04</b> Fields I'm drawn to</p>
+    <div class="fields reveal">
+      <span style="--c:#d9b46c">Finance &amp; investing</span>
+      <span style="--c:#e8925a">Energy</span>
+      <span style="--c:#a3c27f">Agriculture</span>
+      <span style="--c:#7fcbd8">AI</span>
+      <span style="--c:#a99ce6">Blockchain</span>
+    </div>
+    <dl class="facts reveal">
+      <div><dt>Now</dt><dd>Head of HR, DST Angola</dd></div>
+      <div><dt>Based in</dt><dd>Luanda, Angola</dd></div>
+      <div><dt>Speaks</dt><dd>Portuguese, English, Spanish</dd></div>
+    </dl>
+  </section>
+
+  <section class="closing">
+    <p class="big reveal">Let's<br><em>work together</em></p>
+    <a class="magnet" id="magnet" href="https://www.linkedin.com/in/tiago-monte-9a91bb111" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+      LinkedIn
+    </a>
+    <div class="other-wrap"><a class="other" href="../art/">The other side: Music <span aria-hidden="true">→</span></a></div>
+  </section>
+
+  <footer>
+    <span>© <span id="year">2026</span> Tiago Monte</span>
+    <span>callmemonte.com</span>
+  </footer>
+
+  <script src="../i18n.js"></script>
+  <script>
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    /* hero: gold growth lines that draw themselves upward */
+    (() => {
+      const canvas = document.getElementById('growth'), ctx = canvas.getContext('2d');
+      let w, h, t = 0, visible = true;
+      const resize = () => {
+        const dpr = Math.min(devicePixelRatio || 1, 2);
+        w = canvas.clientWidth; h = canvas.clientHeight;
+        canvas.width = w * dpr; canvas.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      };
+      resize(); addEventListener('resize', resize);
+      new IntersectionObserver(([e]) => visible = e.isIntersecting).observe(canvas);
+      const draw = () => {
+        ctx.clearRect(0, 0, w, h);
+        const LINES = 7, reveal = Math.min(1, t / 2.6), end = w * (1 - Math.pow(1 - reveal, 3));
+        for (let i = 0; i < LINES; i++) {
+          const k = i / (LINES - 1), lift = 0.15 + 0.4 * k;
+          ctx.beginPath();
+          for (let x = 0; x <= end; x += 6) {
+            const n = x / w;
+            const y = h * (0.92 - lift * Math.pow(n, 1.5)) + Math.sin(n * 12 + i * 1.7 + t * 0.4) * 6 * (0.4 + n);
+            x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+          }
+          ctx.strokeStyle = `rgba(217,180,108,${0.04 + 0.16 * k})`; ctx.lineWidth = 1; ctx.stroke();
+        }
+      };
+      const loop = () => { if (visible) { t += 0.016; draw(); } requestAnimationFrame(loop); };
+      if (reduce) { t = 4; draw(); } else loop();
+    })();
+
+    /* nav background once you scroll */
+    const nav = document.getElementById('nav');
+    addEventListener('scroll', () => nav.classList.toggle('solid', scrollY > 40), { passive: true });
+
+    /* reveal + count-up */
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('in');
+        e.target.querySelectorAll('[data-count]').forEach(el => {
+          const end = +el.dataset.count, start = performance.now(), dur = 1600;
+          const step = now => {
+            const k = Math.min(1, (now - start) / dur);
+            el.textContent = Math.round(end * (1 - Math.pow(1 - k, 3)));
+            if (k < 1) requestAnimationFrame(step);
+          };
+          reduce ? (el.textContent = end) : requestAnimationFrame(step);
+        });
+        io.unobserve(e.target);
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    /* "The road so far": the road draws to the right as the heading moves up the screen.
+       Scroll sets a target; the drawing eases toward it every frame, so it glides instead of jumping. */
+    (() => {
+      const title = document.getElementById('roadTitle');
+      const svg = title.querySelector('.rt-path');
+      const ahead = svg.querySelector('.rt-ahead'), trail = svg.querySelector('.rt-trail'), reveal = svg.querySelector('.rt-reveal');
+      const hole = svg.querySelector('.rt-hole'), head = svg.querySelector('.rt-head'), headPath = head.querySelector('path');
+      const road = title.querySelector('.rt-road'), far = title.querySelector('.rt-far');
+      // "so far" appears letter by letter, so its letters are rebuilt when the language changes
+      let letters = [];
+      const setFar = () => {
+        const txt = window.I18N ? I18N.t('so far') : 'so far';
+        far.innerHTML = [...txt].map(ch => `<span>${ch}</span>`).join('');
+        letters = [...far.children];
+      };
+      setFar();
+      const clamp = v => Math.min(1, Math.max(0, v));
+      const ease = t => t * t * (3 - 2 * t);                       // smoothstep
+      const seg = (p, a, b) => ease(clamp((p - a) / (b - a)));
+
+      let len = 0, w = 0, h = 0, dash = 18, gap = 14, sw = 3;
+      const build = () => {
+        w = svg.clientWidth; h = svg.clientHeight;
+        svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+        sw = Math.max(2, h * .028); dash = Math.max(8, h * .15); gap = dash * .75;
+        const m = h / 2, a = h * .16;                               // a gentle S-curve, mostly level
+        const d = `M ${sw} ${m} C ${w * .32} ${m - a}, ${w * .55} ${m + a}, ${w - h * .18} ${m}`;
+        [ahead, trail, reveal].forEach(el => el.setAttribute('d', d));
+        len = trail.getTotalLength();
+        ahead.style.strokeWidth = sw * .7; ahead.style.strokeDasharray = `0 ${sw * 3.2}`;
+        trail.style.strokeWidth = sw; trail.style.strokeDasharray = `${dash} ${gap}`;
+        reveal.style.strokeWidth = sw * 6; reveal.style.strokeDasharray = `${len} ${len}`;
+        headPath.style.strokeWidth = sw * 1.05;
+        const k = Math.max(.55, h / 110);                           // arrow scales with the type
+        head.dataset.k = k; hole.setAttribute('r', h * .42);
+      };
+
+      let target = 0, cur = 0, flow = 0, last = performance.now(), visible = true;
+      const read = () => {
+        const r = title.getBoundingClientRect();
+        // begins as the heading enters the screen, completes once it reaches about a third from the top
+        target = reduce ? 1 : clamp((innerHeight * .98 - r.top) / (innerHeight * .68));
+      };
+      const render = p => {
+        const lp = seg(p, .04, .86);                                // how far along the road
+        const at = len * lp;
+        reveal.style.strokeDashoffset = len - at;
+        const pt = trail.getPointAtLength(at), pb = trail.getPointAtLength(Math.max(0, at - 2));
+        const ang = Math.atan2(pt.y - pb.y, pt.x - pb.x) * 180 / Math.PI;
+        head.setAttribute('transform', `translate(${pt.x} ${pt.y}) rotate(${lp > 0 ? ang : 0}) scale(${head.dataset.k})`);
+        head.style.opacity = seg(p, .02, .1);
+        hole.setAttribute('cx', pt.x); hole.setAttribute('cy', pt.y);   // dashes fade out before the arrow
+        ahead.style.opacity = 1 - seg(p, .86, 1) * .6;
+        trail.style.strokeDashoffset = -flow;                       // markings keep moving forward
+        const rp = seg(p, 0, .18);
+        road.style.opacity = rp; road.style.transform = `translateX(${(1 - rp) * -36}px)`;
+        letters.forEach((el, i) => {
+          const lt = seg(p, .72 + i * .025, .87 + i * .025);   // last letter lands exactly at the end
+          el.style.opacity = lt;
+          el.style.transform = `translateX(${(1 - lt) * -18}px) translateY(${(1 - lt) * 6}px)`;
+          el.style.filter = lt < 1 ? `blur(${(1 - lt) * 8}px)` : 'none';
+        });
+      };
+      const frame = now => {
+        const dt = Math.min(.05, (now - last) / 1000); last = now;
+        if (visible) {
+          cur += (target - cur) * (1 - Math.exp(-dt * 2.6));        // slow, smooth follow
+          if (Math.abs(target - cur) < .0005) cur = target;
+          if (!reduce) flow = (flow + dt * dash * 1.1) % (dash + gap);
+          render(cur);
+        }
+        requestAnimationFrame(frame);
+      };
+      new IntersectionObserver(([e]) => visible = e.isIntersecting, { rootMargin: '20% 0px' }).observe(title);
+      build(); read();
+      if (reduce) { cur = 1; render(1); }
+      else requestAnimationFrame(frame);
+      addEventListener('scroll', read, { passive: true });
+      addEventListener('resize', () => { build(); read(); render(cur); });
+      document.addEventListener('langchange', () => { setFar(); requestAnimationFrame(() => { build(); read(); render(cur); }); });
+      document.fonts && document.fonts.ready.then(() => { build(); render(cur); });
+    })();
+
+    /* journey: click a row to open its description (one at a time) */
+    const heads = document.querySelectorAll('.row-head');
+    heads.forEach(btn => btn.addEventListener('click', () => {
+      const row = btn.closest('li'), willOpen = !row.classList.contains('open');
+      heads.forEach(b => { b.closest('li').classList.remove('open'); b.setAttribute('aria-expanded', 'false'); });
+      if (willOpen) { row.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
+    }));
+
+    /* arriving from a place on the home page map (e.g. #job-2): open that role and bring it into view */
+    const openFromLink = () => {
+      const body = location.hash && document.getElementById(location.hash.slice(1));
+      if (!body || !body.classList.contains('row-body')) return;
+      const row = body.closest('li'), btn = row.querySelector('.row-head');
+      if (!row.classList.contains('open')) btn.click();
+      row.classList.add('in');                                   // skip the fade-in so it is visible right away
+      // wait for the browser's own jump to the link and for the row to open, then glide to it
+      setTimeout(() => row.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' }), 450);
+    };
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    document.readyState === 'complete' ? openFromLink() : addEventListener('load', openFromLink);
+    addEventListener('hashchange', openFromLink);
+
+    /* magnetic LinkedIn button */
+    if (finePointer && !reduce) {
+      const mag = document.getElementById('magnet');
+      mag.addEventListener('mousemove', e => {
+        const r = mag.getBoundingClientRect();
+        mag.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .25}px, ${(e.clientY - r.top - r.height / 2) * .25}px)`;
+      });
+      mag.addEventListener('mouseleave', () => mag.style.transform = '');
+    }
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
