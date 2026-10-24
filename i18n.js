@@ -199,10 +199,20 @@
     'Coins in circulation': 'Moedas em circulação',
     'Traded in 24h': 'Transacionado em 24h',
     'Offline': 'Sem ligação',
+    'Last updated': 'Atualizado há',
     'Live · just updated': 'Ao vivo · acabou de atualizar',
     'Live · updated': 'Ao vivo · atualizado há',
     'ago': '',
     'Blockchain: see live crypto prices': 'Blockchain: ver preços de cripto ao vivo',
+
+    // crypto page: ask box
+    'Ask about crypto': 'Perguntar sobre cripto',
+    'Curious?': 'Curioso?',
+    'Just ask': 'É só perguntar',
+    'Your question': 'A sua pergunta',
+    'Try “What is a stablecoin?” or “Solana price”': 'Experimente “O que é uma stablecoin?” ou “preço da Solana”',
+    'Ask': 'Perguntar',
+    'Popular questions': 'Perguntas populares',
 
     // business page
     'Business · Call me Monte': 'Negócios · Call me Monte',
@@ -312,7 +322,7 @@
 
   // ---- swapping text ----
   const original = new WeakMap();            // text node → its English text
-  const ATTRS = ['aria-label', 'alt', 'title'];
+  const ATTRS = ['aria-label', 'alt', 'title', 'placeholder'];
   const swapText = node => {
     if (!original.has(node)) original.set(node, node.textContent);
     const en = original.get(node), key = en.replace(/\s+/g, ' ').trim();

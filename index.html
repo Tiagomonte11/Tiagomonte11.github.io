@@ -431,11 +431,11 @@
     /* tags that open a portfolio page */
     .chip-link { cursor: pointer; border-style: solid; border-color: color-mix(in srgb, var(--c) 60%, var(--bg)); }
     .chip-go {
-      display: inline-grid; place-items: center; width: 22px; height: 22px; margin-left: 2px; border-radius: 50%;
-      font-size: 11px; background: color-mix(in srgb, var(--c) 22%, transparent); color: var(--c);
+      display: inline-grid; place-items: center; width: 16px; height: 16px; margin-left: 0; border-radius: 50%;
+      font-size: 10px; background: transparent; color: var(--c); opacity: .6;
       transition: background .4s, color .4s, transform .4s cubic-bezier(.2,.8,.2,1);
     }
-    .chip-link:hover .chip-go { background: var(--bg); color: var(--c); transform: rotate(45deg); }
+    .chip-link:hover .chip-go { color: var(--bg); opacity: 1; transform: translate(1px, -1px); }
     .chip-link:focus-visible { outline: 2px solid var(--c); outline-offset: 3px; }
     .js .chips li { opacity: 0; transition: opacity .9s ease calc(var(--i) * 110ms); }
     .js .chips.in li { opacity: 1; }

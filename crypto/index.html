@@ -229,6 +229,42 @@
     .note a { color: var(--accent); }
     .oops { padding: 26px 6px; color: var(--muted); }
 
+    /* ask about crypto */
+    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .ask-card { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: clamp(18px, 3vw, 30px); max-width: 920px; }
+    .ask-log { display: flex; flex-direction: column; gap: 14px; margin-bottom: 22px; max-height: 520px; overflow-y: auto; padding-right: 4px; scrollbar-width: thin; }
+    .msg { display: flex; gap: 12px; max-width: 88%; }
+    .msg p { font-size: 16px; line-height: 1.6; }
+    .msg.me { align-self: flex-end; }
+    .msg.me p { background: color-mix(in srgb, var(--accent) 18%, var(--bg-2)); border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); padding: 10px 16px; border-radius: 18px 18px 4px 18px; }
+    .msg.bot p { color: var(--text); }
+    .msg.bot > div { background: var(--bg-2); border: 1px solid var(--line); padding: 14px 18px; border-radius: 4px 18px 18px 18px; }
+    .av { flex: none; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--text); color: var(--bg); font-family: var(--display); font-size: 14px; }
+    .msg.typing > div p { opacity: 0; }
+    .msg.typing > div { position: relative; min-width: 64px; min-height: 44px; }
+    .msg.typing > div::after { content: "• • •"; position: absolute; left: 18px; top: 12px; color: var(--accent); letter-spacing: 2px; animation: dots 1s steps(3) infinite; }
+    @keyframes dots { 0% { opacity: .3; } 50% { opacity: 1; } 100% { opacity: .3; } }
+    .msg .ask-rel { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .ask-form { display: flex; gap: 10px; }
+    .ask-form input { flex: 1; min-width: 0; font: 400 16px var(--sans); color: var(--text); background: var(--bg-2); border: 1px solid var(--line); border-radius: 999px; padding: 15px 22px; outline: none; transition: border-color .3s; }
+    .ask-form input:focus { border-color: var(--accent); }
+    .ask-form input::placeholder { color: var(--muted); }
+    .ask-form button { flex: none; width: 52px; height: 52px; border-radius: 50%; border: 0; cursor: pointer; background: var(--accent); color: var(--bg); display: grid; place-items: center; transition: transform .3s cubic-bezier(.2,.8,.2,1); }
+    .ask-form button:hover { transform: translateX(3px); }
+    .ask-hint { margin: 20px 0 10px; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+    .ask-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .ask-chip { font: 400 14px var(--sans); color: color-mix(in srgb, var(--accent) 70%, var(--text)); background: color-mix(in srgb, var(--accent) 8%, var(--bg)); border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); border-radius: 999px; padding: 8px 14px; cursor: pointer; transition: background .3s, color .3s; text-align: left; }
+    .ask-chip:hover { background: var(--accent); color: var(--bg); }
+    .ask-fab {
+      position: fixed; right: max(16px, var(--pad)); bottom: 20px; z-index: 40; display: inline-flex; align-items: center; gap: 10px;
+      font: 500 13px var(--sans); letter-spacing: .06em; color: var(--bg); background: var(--accent); border: 0; border-radius: 999px; padding: 12px 18px 12px 12px; cursor: pointer;
+      box-shadow: 0 12px 30px -10px color-mix(in srgb, var(--accent) 70%, transparent);
+      opacity: 0; transform: translateY(20px); pointer-events: none; transition: opacity .4s, transform .5s cubic-bezier(.2,.8,.2,1);
+    }
+    .ask-fab span { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--bg); color: var(--accent); font-weight: 600; }
+    .ask-fab.show { opacity: 1; transform: none; pointer-events: auto; }
+    @media (max-width: 560px) { .msg { max-width: 100%; } .av { width: 28px; height: 28px; font-size: 12px; } }
+
     .closing-links { text-align: center; padding: clamp(90px, 11vw, 140px) var(--pad); display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
     .other { display: inline-flex; align-items: center; gap: 14px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; padding: 12px 22px; border-radius: 999px; transition: background .35s, color .35s; }
     .other.biz { color: var(--gold); border: 1px solid color-mix(in srgb, var(--gold) 50%, transparent); }
@@ -296,8 +332,23 @@
     </ol>
   </section>
 
+  <section class="sec" id="ask">
+    <p class="tag"><b>02</b> Ask about crypto</p>
+    <div class="bar" style="margin-top:0"><h2>Curious? <em>Just ask</em></h2></div>
+    <div class="ask-card">
+      <div class="ask-log" id="askLog" aria-live="polite" hidden></div>
+      <form class="ask-form" id="askForm" autocomplete="off">
+        <label class="sr" for="askInput">Your question</label>
+        <input id="askInput" name="q" type="text" maxlength="200" placeholder="Try “What is a stablecoin?” or “Solana price”">
+        <button type="submit" aria-label="Ask"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </form>
+      <p class="ask-hint">Popular questions</p>
+      <div class="ask-chips" id="askChips"></div>
+    </div>
+  </section>
+
   <section class="sec" id="learn">
-    <p class="tag"><b>02</b> Crypto 101</p>
+    <p class="tag"><b>03</b> Crypto 101</p>
     <div class="bar" style="margin-top:0"><h2>The words <em>that matter</em></h2></div>
     <div class="terms">
       <article class="reveal"><h3>Blockchain</h3><p>A shared record of transactions kept by thousands of computers at once. Nobody owns it, and once something is written, it can't quietly be changed.</p></article>
@@ -315,6 +366,8 @@
     <a class="other biz" href="../business/">Business <span aria-hidden="true">→</span></a>
     <a class="other art" href="../art/">Music <span aria-hidden="true">→</span></a>
   </section>
+
+  <button class="ask-fab" id="askFab" type="button"><span aria-hidden="true">?</span> Ask about crypto</button>
 
   <footer>
     <span>© <span id="year">2026</span> Tiago Monte</span>
@@ -449,6 +502,9 @@
     let lastPrices = {}, openId = null, lastAt = 0, failed = false;
 
     const getJSON = async url => { const r = await fetch(url); if (!r.ok) throw new Error(r.status); return r.json(); };
+    // the last prices this device loaded, shown (with their age) if the live source is busy
+    const remember = (c, d) => { try { localStorage.setItem('crypto-last-' + c, JSON.stringify(d)); } catch (e) {} };
+    const recall = c => { try { const d = JSON.parse(localStorage.getItem('crypto-last-' + c)); return d && d.coins && d.global ? d : null; } catch (e) { return null; } };
     const load = async (force) => {
       const c = cache[cur];
       if (!force && c && Date.now() - c.at < 55000) { render(c); return; }
@@ -458,10 +514,17 @@
           getJSON(`${API}/global`),
         ]);
         cache[cur] = { coins, global: global.data, at: Date.now() };
+        remember(cur, cache[cur]);
         failed = false; render(cache[cur]);
       } catch (e) {
-        failed = true; tick();
-        if (!list.querySelector('.coin')) list.insertAdjacentHTML('beforeend', `<li class="oops">${t('Live prices are taking a break. Please try again in a minute.')}</li>`);
+        failed = true;
+        const old = cache[cur] || recall(cur);
+        if (old) { cache[cur] = old; render(old); }
+        else if (!list.querySelector('.coin:not(.skeleton)')) {
+          list.querySelectorAll('.skeleton').forEach(n => n.remove());
+          if (!list.querySelector('.oops')) list.insertAdjacentHTML('beforeend', `<li class="oops">${t('Live prices are taking a break. Please try again in a minute.')}</li>`);
+        }
+        tick();
       }
     };
 
@@ -542,6 +605,11 @@
       liveEl.classList.toggle('off', failed);
       if (failed && !lastAt) { liveText.textContent = t('Offline'); return; }
       const s = Math.max(0, Math.round((Date.now() - lastAt) / 1000));
+      if (failed || s > 150) {
+        const m = Math.max(1, Math.round(s / 60)), h = Math.round(s / 3600);
+        liveText.textContent = `${t('Last updated')} ${m < 90 ? m + ' min' : h + ' h'} ${t('ago')}`.replace(/\s+$/, '');
+        return;
+      }
       liveText.textContent = s < 5 ? t('Live · just updated') : `${t('Live · updated')} ${s}s ${t('ago')}`;
     };
     setInterval(tick, 1000);
@@ -569,6 +637,7 @@
 
     /* first load: placeholder rows, then live data; refresh every minute while the page is visible */
     list.insertAdjacentHTML('beforeend', Array.from({ length: 8 }, () => `<li class="coin skeleton"><div class="row"><span class="rank"><i class="bone"></i></span><span class="who"><i class="bone" style="width:70%"></i></span><span class="num"><i class="bone"></i></span><span class="num c-1h"><i class="bone"></i></span><span class="num"><i class="bone"></i></span><span class="num c-7d"><i class="bone"></i></span><span class="num c-cap"><i class="bone"></i></span><span class="c-spark"><i class="bone"></i></span><span></span></div></li>`).join(''));
+    { const old = recall(cur); if (old) { cache[cur] = old; render(old); } }   // show the last known prices straight away
     load(true);
     setInterval(() => { if (!document.hidden) load(true); }, 60000);
     document.addEventListener('visibilitychange', () => { if (!document.hidden && Date.now() - lastAt > 60000) load(true); });
@@ -615,5 +684,6 @@
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
+  <script src="guide.js"></script>
 </body>
 </html>

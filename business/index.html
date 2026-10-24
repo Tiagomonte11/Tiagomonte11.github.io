@@ -174,7 +174,10 @@
     .fields-sec .tag { justify-content: center; }
     .fields a { transition: background .35s, color .35s; }
     .fields a:hover { background: var(--c); color: var(--bg); }
-    .fields span, .fields a { padding: 14px 22px; border-radius: 999px; font-size: 15px; color: color-mix(in srgb, var(--c) 60%, var(--text)); border: 1px solid color-mix(in srgb, var(--c) 35%, var(--bg)); background: color-mix(in srgb, var(--c) 7%, var(--bg)); }
+    /* the small arrow on tags that open a page */
+    .fields a .go { display: inline-block; margin-left: 6px; font-size: 12px; opacity: .55; transition: opacity .3s, transform .35s cubic-bezier(.2,.8,.2,1); }
+    .fields a:hover .go { opacity: 1; transform: translate(1px, -1px); }
+    .fields > span, .fields > a { padding: 14px 22px; border-radius: 999px; font-size: 15px; color: color-mix(in srgb, var(--c) 60%, var(--text)); border: 1px solid color-mix(in srgb, var(--c) 35%, var(--bg)); background: color-mix(in srgb, var(--c) 7%, var(--bg)); }
     .facts { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 64px; border-top: 1px solid var(--line); }
     .facts > div { padding: 28px 16px 8px; text-align: center; }
     .facts > div + div { border-left: 1px solid var(--line); }
@@ -475,7 +478,7 @@
       <span style="--c:#e8925a">Energy</span>
       <span style="--c:#a3c27f">Agriculture</span>
       <span style="--c:#7fcbd8">AI</span>
-      <a style="--c:#a99ce6" href="../crypto/" aria-label="Blockchain: see live crypto prices">Blockchain <span aria-hidden="true">↗</span></a>
+      <a style="--c:#a99ce6" href="../crypto/" aria-label="Blockchain: see live crypto prices">Blockchain<span class="go" aria-hidden="true">↗</span></a>
     </div>
     <dl class="facts reveal">
       <div><dt>Now</dt><dd>Head of HR, DST Angola</dd></div>
