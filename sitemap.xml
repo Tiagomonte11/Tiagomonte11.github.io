@@ -48,4 +48,22 @@
     <xhtml:link rel="alternate" hreflang="pt" href="https://callmemonte.com/art/?lang=pt"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://callmemonte.com/art/"/>
   </url>
+  <url>
+    <loc>https://callmemonte.com/crypto/</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://callmemonte.com/crypto/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://callmemonte.com/crypto/?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://callmemonte.com/crypto/"/>
+  </url>
+  <url>
+    <loc>https://callmemonte.com/crypto/?lang=pt</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://callmemonte.com/crypto/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://callmemonte.com/crypto/?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://callmemonte.com/crypto/"/>
+  </url>
 </urlset>

@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Live Crypto Prices — Bitcoin, Ethereum &amp; Top 20 | Call me Monte</title>
+  <meta name="description" content="Live prices of the top 20 cryptocurrencies in US dollars and euros: Bitcoin, Ethereum, XRP, Solana and more, with market mood, 7-day charts and plain-language explainers.">
+  <meta name="author" content="Tiago Monte">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="alternate" hreflang="en" href="https://callmemonte.com/crypto/">
+  <link rel="alternate" hreflang="pt" href="https://callmemonte.com/crypto/?lang=pt">
+  <link rel="alternate" hreflang="x-default" href="https://callmemonte.com/crypto/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Call me Monte">
+  <meta property="og:title" content="Live Crypto Prices — Bitcoin, Ethereum &amp; Top 20 | Call me Monte">
+  <meta property="og:description" content="Live prices of the top 20 cryptocurrencies in US dollars and euros: Bitcoin, Ethereum, XRP, Solana and more, with market mood, 7-day charts and plain-language explainers.">
+  <meta property="og:url" content="https://callmemonte.com/crypto/">
+  <meta property="og:image" content="https://callmemonte.com/og-tiago-monte.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="pt_PT">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Live Crypto Prices — Bitcoin, Ethereum &amp; Top 20 | Call me Monte">
+  <meta name="twitter:description" content="Live prices of the top 20 cryptocurrencies in US dollars and euros: Bitcoin, Ethereum, XRP, Solana and more, with market mood, 7-day charts and plain-language explainers.">
+  <meta name="twitter:image" content="https://callmemonte.com/og-tiago-monte.jpg">
+  <meta name="theme-color" content="#0d0d0b">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23e9e2d4'/%3E%3Ctext x='32' y='42' font-family='Impact,sans-serif' font-size='34' fill='%230d0d0b' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://callmemonte.com/crypto/#page",
+        "url": "https://callmemonte.com/crypto/",
+        "name": "Live crypto prices — top 20 cryptocurrencies",
+        "about": { "@type": "Thing", "name": "Cryptocurrency" },
+        "author": { "@type": "Person", "@id": "https://callmemonte.com/#person", "name": "Tiago Monte" },
+        "isPartOf": { "@type": "WebSite", "@id": "https://callmemonte.com/#website", "url": "https://callmemonte.com/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Tiago Monte", "item": "https://callmemonte.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Crypto", "item": "https://callmemonte.com/crypto/" }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://api.coingecko.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0d0b; --bg-2: #151512; --card: #1a1a17;
+      --text: #e9e2d4; --muted: #8f897d; --line: #2c2b27;
+      --accent: #a99ce6; --art: #df8fb0;   /* Crypto colour, same as the Blockchain tag on the home page */
+      --display: "Anton", Impact, "Arial Narrow", sans-serif;
+      --serif: "Instrument Serif", Georgia, serif;
+      --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --pad: clamp(16px, 4vw, 48px);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; }
+    ::selection { background: var(--accent); color: var(--bg); }
+
+    .grain {
+      position: fixed; inset: -50%; z-index: 100; pointer-events: none; opacity: .06;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      animation: grain 1.2s steps(6) infinite;
+    }
+    @keyframes grain { 0%,100% { transform: translate(0,0); } 20% { transform: translate(-3%,2%); } 40% { transform: translate(2%,-3%); } 60% { transform: translate(-2%,-1%); } 80% { transform: translate(3%,3%); } }
+
+    /* nav */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 20px var(--pad); transition: background .4s; }
+    nav.solid { background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: blur(10px); }
+    .logo { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--text); color: var(--bg); font-family: var(--display); font-size: 17px; }
+    .pill { border: 1px solid var(--text); border-radius: 999px; padding: 10px 20px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; font-weight: 500; transition: background .3s, color .3s; display: inline-flex; gap: 10px; align-items: center; }
+    .pill:hover { background: var(--text); color: var(--bg); }
+
+    /* hero */
+    .hero { padding: 150px var(--pad) 60px; position: relative; }
+    .tag { font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); display: flex; gap: 14px; align-items: center; margin-bottom: 22px; }
+    .tag b { color: var(--accent); font-weight: 500; }
+    h1 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(88px, 20vw, 300px); line-height: .82; letter-spacing: -.01em; }
+    h1 span { display: inline-block; }
+    .js h1 span { transform: translateY(105%); animation: rise 1.1s cubic-bezier(.2,.8,.2,1) forwards; }
+    h1 .wrap { display: block; overflow: hidden; }
+    @keyframes rise { to { transform: none; } }
+    .hero-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 24px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); }
+    .lede { font-family: var(--serif); font-size: clamp(22px, 2.4vw, 32px); line-height: 1.25; max-width: 620px; }
+    .lede i { color: var(--accent); }
+    .count { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+    .count b { color: var(--text); font-weight: 500; }
+
+    .nav-links { display: flex; gap: 32px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+    .nav-links a { color: var(--muted); transition: color .2s; }
+    .nav-links a:hover, .nav-links a[aria-current] { color: var(--text); }
+    .nav-links a[aria-current] { box-shadow: inset 0 -1px var(--accent); }
+    @media (max-width: 600px) { .nav-links { gap: 20px; font-size: 12px; } }
+
+    /* section heads */
+    .sec { padding: clamp(80px, 11vw, 150px) var(--pad) 0; }
+    .sec h2.big { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(48px, 8vw, 128px); line-height: .9; margin-bottom: 48px; }
+    .sec h2.big em { font-family: var(--serif); text-transform: none; color: var(--accent); }
+
+    /* "The road ⋯→ so far": a road that draws itself to the right as you scroll (see script) */
+    .road-title { display: flex; align-items: center; gap: clamp(14px, 2vw, 30px); white-space: nowrap; }
+    .rt-road, .rt-far { flex: none; will-change: opacity, transform, filter; }
+    .rt-far { display: inline-flex; padding-right: .06em; }
+    .rt-far span { display: inline-block; white-space: pre; will-change: opacity, transform, filter; }
+    .rt-path { flex: 1; min-width: 48px; height: 1em; overflow: visible; }
+    .rt-ahead { stroke: var(--accent); stroke-opacity: .3; stroke-linecap: round; }        /* the road still ahead */
+    .rt-trail { stroke: var(--accent); stroke-linecap: round; }                            /* the road travelled */
+    .rt-head path { stroke: var(--accent); stroke-linecap: round; stroke-linejoin: round; }
+    .rt-glow { fill: var(--accent); opacity: .14; }
+    .js .rt-road, .js .rt-far span, .js .rt-head { opacity: 0; }
+    @media (max-width: 600px) { .sec h2.road-title { font-size: clamp(30px, 9.5vw, 64px); gap: 10px; } .rt-path { min-width: 32px; } }
+
+
+
+    /* ---------- Crypto page ---------- */
+    :root { --up: #8fd19e; --down: #e4705f; --gold: #d9b46c; }
+    .hero { overflow: hidden; isolation: isolate; }
+    h1 { font-size: clamp(64px, 18vw, 280px); }
+    #chain { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
+    .live { display: inline-flex; align-items: center; gap: 10px; }
+    .live i { width: 8px; height: 8px; border-radius: 50%; background: var(--up); box-shadow: 0 0 0 0 color-mix(in srgb, var(--up) 60%, transparent); animation: ping 2s ease-out infinite; }
+    @keyframes ping { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--up) 55%, transparent); } 100% { box-shadow: 0 0 0 10px transparent; } }
+    .live.off i { background: var(--down); animation: none; }
+
+    /* market at a glance */
+    .glance { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .tile { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 22px 22px 20px; min-height: 150px; display: flex; flex-direction: column; gap: 8px; }
+    .tile dt { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+    .tile dd { font-family: var(--display); font-size: clamp(30px, 3.2vw, 46px); line-height: 1; }
+    .tile small { font-size: 13px; color: var(--muted); margin-top: auto; }
+    .tile .up { color: var(--up); } .tile .down { color: var(--down); }
+    .mood { position: relative; }
+    .mood svg { width: 100%; max-width: 200px; height: auto; display: block; margin-top: -4px; }
+    .mood .val { font-family: var(--display); font-size: 34px; }
+    @media (max-width: 960px) { .glance { grid-template-columns: 1fr 1fr; } }
+
+    /* table toolbar */
+    .bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; margin: 56px 0 18px; }
+    .bar h2 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(36px, 5vw, 72px); line-height: .9; }
+    .bar h2 em { font-family: var(--serif); text-transform: none; color: var(--accent); }
+    .seg { display: inline-flex; padding: 4px; border: 1px solid var(--line); border-radius: 999px; background: var(--bg-2); }
+    .seg button { all: unset; cursor: pointer; padding: 9px 16px; border-radius: 999px; font: 500 12px/1 var(--sans); letter-spacing: .14em; color: var(--muted); transition: background .3s, color .3s; }
+    .seg button[aria-pressed="true"] { background: var(--accent); color: var(--bg); }
+    .seg button:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
+    .stamp { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+
+    /* the coins */
+    .coins { list-style: none; border-top: 1px solid var(--line); }
+    .coins > li { border-bottom: 1px solid var(--line); }
+    .row {
+      all: unset; box-sizing: border-box; width: 100%; cursor: pointer; display: grid; align-items: center; gap: 14px;
+      grid-template-columns: 34px minmax(170px, 1.6fr) 1.1fr .7fr .7fr .7fr 1.1fr 130px 28px; padding: 16px 6px;
+      transition: background .3s;
+    }
+    .row:hover, li.open > .row { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+    .row:focus-visible { outline: 1px solid var(--accent); outline-offset: -1px; }
+    .head { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); cursor: default; padding: 12px 6px; }
+    .head:hover { background: none; }
+    .rank { color: var(--muted); font-size: 13px; text-align: center; }
+    .who { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .who img { width: 30px; height: 30px; border-radius: 50%; flex: none; background: var(--card); }
+    .who b { font-weight: 500; font-size: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .who small { color: var(--muted); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; margin-left: 6px; }
+    .num { text-align: right; font-variant-numeric: tabular-nums; font-size: 15px; white-space: nowrap; }
+    .price { font-weight: 500; transition: color .6s; }
+    .price.flash-up { color: var(--up); } .price.flash-down { color: var(--down); }
+    .pct.up { color: var(--up); } .pct.down { color: var(--down); }
+    .spark { width: 130px; height: 38px; display: block; }
+    .chev { width: 26px; height: 26px; border: 1px solid var(--line); border-radius: 50%; display: grid; place-items: center; color: var(--accent); font-size: 12px; transition: transform .4s cubic-bezier(.2,.8,.2,1), background .3s, color .3s; }
+    li.open .chev { transform: rotate(180deg); background: var(--accent); color: var(--bg); border-color: var(--accent); }
+    .skeleton .row > * { color: transparent !important; }
+    .skeleton .bone { display: block; height: 14px; border-radius: 6px; background: linear-gradient(90deg, var(--card), #24231f, var(--card)); background-size: 200% 100%; animation: bone 1.2s linear infinite; }
+    @keyframes bone { to { background-position: -200% 0; } }
+
+    /* the opened coin */
+    .more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s cubic-bezier(.2,.8,.2,1); }
+    li.open .more { grid-template-rows: 1fr; }
+    .more > div { overflow: hidden; }
+    .more-in { display: grid; grid-template-columns: 1.4fr 1fr; gap: 28px; padding: 6px 6px 30px 54px; opacity: 0; transform: translateY(-6px); transition: opacity .35s, transform .45s cubic-bezier(.2,.8,.2,1); }
+    li.open .more-in { opacity: 1; transform: none; transition-delay: .1s; }
+    .story { font-family: var(--serif); font-size: clamp(19px, 1.7vw, 23px); line-height: 1.4; }
+    .story .kind { display: inline-block; margin-bottom: 10px; font-family: var(--sans); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
+    .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; align-self: start; }
+    .facts div { background: var(--bg-2); padding: 14px 16px; }
+    .facts dt { font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+    .facts dd { font-size: 15px; font-variant-numeric: tabular-nums; }
+    .ext { display: inline-flex; gap: 8px; margin-top: 16px; font-family: var(--sans); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); padding-bottom: 2px; }
+
+    @media (max-width: 1000px) {
+      .row { grid-template-columns: 26px minmax(0, 1.5fr) 1fr .8fr 92px 22px; gap: 10px; }
+      .c-1h, .c-7d, .c-cap { display: none; }
+      .spark { width: 92px; height: 32px; }
+      .more-in { grid-template-columns: 1fr; padding-left: 6px; }
+    }
+    @media (max-width: 560px) {
+      .row { grid-template-columns: minmax(0, 1.6fr) 1fr .9fr 20px; padding: 14px 2px; }
+      .rank, .c-spark { display: none; }
+      .who img { width: 26px; height: 26px; }
+      .who small { display: none; }
+      .num { font-size: 14px; }
+      .chev { width: 20px; height: 20px; font-size: 10px; }
+    }
+
+    /* crypto 101 */
+    .terms { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .terms article { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 24px; transition: border-color .4s, transform .5s cubic-bezier(.2,.8,.2,1); }
+    .terms article:hover { border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); transform: translateY(-3px); }
+    .terms h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 26px; margin-bottom: 10px; }
+    .terms p { color: var(--muted); font-size: 15.5px; }
+    @media (max-width: 960px) { .terms { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .terms { grid-template-columns: 1fr; } }
+
+    .note { margin-top: 70px; padding: 22px 24px; border: 1px solid var(--line); border-radius: 18px; color: var(--muted); font-size: 14px; display: flex; gap: 14px; align-items: flex-start; }
+    .note b { color: var(--text); font-weight: 500; }
+    .note a { color: var(--accent); }
+    .oops { padding: 26px 6px; color: var(--muted); }
+
+    .closing-links { text-align: center; padding: clamp(90px, 11vw, 140px) var(--pad); display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+    .other { display: inline-flex; align-items: center; gap: 14px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; padding: 12px 22px; border-radius: 999px; transition: background .35s, color .35s; }
+    .other.biz { color: var(--gold); border: 1px solid color-mix(in srgb, var(--gold) 50%, transparent); }
+    .other.biz:hover { background: var(--gold); color: var(--bg); }
+    .other.art { color: var(--art); border: 1px solid color-mix(in srgb, var(--art) 50%, transparent); }
+    .other.art:hover { background: var(--art); color: var(--bg); }
+
+    footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 28px var(--pad); border-top: 1px solid var(--line); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .js .reveal { opacity: 0; transform: translateY(40px); transition: opacity 1s ease, transform 1s cubic-bezier(.2,.8,.2,1); }
+    .js .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .js h1 span, .js .reveal { transform: none; opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <nav id="nav">
+    <a class="logo" href="../" aria-label="Home">M</a>
+    <div class="nav-links">
+      <a href="../art/">Music</a>
+      <a href="../business/">Business</a>
+    </div>
+    <a class="pill" href="../"><span aria-hidden="true">←</span> Home</a>
+  </nav>
+
+  <header class="hero">
+    <canvas id="chain" aria-hidden="true"></canvas>
+    <p class="tag"><b>Blockchain</b> A hub for the curious</p>
+    <h1><span class="wrap"><span>Crypto</span></span></h1>
+    <div class="hero-foot">
+      <p class="lede">The top coins, live. <i>What they are, how they move, and the words you need to follow along.</i></p>
+      <p class="count live" id="live"><i></i><span id="liveText">Connecting…</span></p>
+    </div>
+  </header>
+
+  <section class="sec" id="market">
+    <p class="tag"><b>01</b> The market at a glance</p>
+    <dl class="glance" id="glance">
+      <div class="tile"><dt>Total market value</dt><dd id="gCap">—</dd><small id="gCapChg">&nbsp;</small></div>
+      <div class="tile"><dt>Traded in 24 hours</dt><dd id="gVol">—</dd><small>Across all coins</small></div>
+      <div class="tile"><dt>Bitcoin dominance</dt><dd id="gDom">—</dd><small>Bitcoin's share of the whole market</small></div>
+      <div class="tile mood"><dt>Fear &amp; Greed</dt><dd><svg viewBox="0 0 200 110" id="gauge" aria-hidden="true"></svg></dd><small id="gMood">&nbsp;</small></div>
+    </dl>
+
+    <div class="bar">
+      <h2>Top 20 <em>live</em></h2>
+      <div class="seg" role="group" aria-label="Currency">
+        <button type="button" data-cur="usd" aria-pressed="true">USD $</button>
+        <button type="button" data-cur="eur" aria-pressed="false">EUR €</button>
+      </div>
+    </div>
+    <p class="stamp">Tap a coin to learn more · Prices refresh every minute</p>
+
+    <ol class="coins" id="coins" aria-live="polite">
+      <li aria-hidden="true">
+        <div class="row head">
+          <span class="rank">#</span><span>Coin</span><span class="num">Price</span>
+          <span class="num c-1h">1h</span><span class="num">24h</span><span class="num c-7d">7d</span>
+          <span class="num c-cap">Market value</span><span class="num c-spark">Last 7 days</span><span></span>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="sec" id="learn">
+    <p class="tag"><b>02</b> Crypto 101</p>
+    <div class="bar" style="margin-top:0"><h2>The words <em>that matter</em></h2></div>
+    <div class="terms">
+      <article class="reveal"><h3>Blockchain</h3><p>A shared record of transactions kept by thousands of computers at once. Nobody owns it, and once something is written, it can't quietly be changed.</p></article>
+      <article class="reveal"><h3>Wallet</h3><p>An app or device that holds the keys to your coins. Whoever has the keys controls the money, so they're never shared with anyone.</p></article>
+      <article class="reveal"><h3>Stablecoin</h3><p>A coin built to stay at the same value as a normal currency, usually $1. People use them to move dollars quickly without the price swings.</p></article>
+      <article class="reveal"><h3>Market value</h3><p>Price × the number of coins in circulation. It's the usual way to rank coins by size, which is why Bitcoin sits at number one.</p></article>
+      <article class="reveal"><h3>Volatility</h3><p>How much and how fast a price moves. Crypto can move 10% or more in a day; that's the thrill and the risk.</p></article>
+      <article class="reveal"><h3>Fear &amp; Greed</h3><p>A 0 to 100 score of the market's mood, built from prices, trading and sentiment. Low means fear, high means greed.</p></article>
+    </div>
+
+    <p class="note"><span aria-hidden="true">ⓘ</span><span><b>For information only, not financial advice.</b> Prices can change fast and may be slightly delayed. Data by <a href="https://www.coingecko.com/" target="_blank" rel="noopener">CoinGecko</a>.</span></p>
+  </section>
+
+  <section class="closing-links">
+    <a class="other biz" href="../business/">Business <span aria-hidden="true">→</span></a>
+    <a class="other art" href="../art/">Music <span aria-hidden="true">→</span></a>
+  </section>
+
+  <footer>
+    <span>© <span id="year">2026</span> Tiago Monte</span>
+    <span>callmemonte.com</span>
+  </footer>
+
+  <script src="../i18n.js"></script>
+  <script>
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const API = 'https://api.coingecko.com/api/v3';
+    const t = s => (window.I18N ? I18N.t(s) : s);
+    const isPT = () => window.I18N && I18N.lang === 'pt';
+
+    /* plain-language background for the well-known coins (others get a short generic line) */
+    const ABOUT = {
+      bitcoin: { kind: ['Digital money', 'Dinheiro digital'],
+        en: 'The first cryptocurrency, launched in 2009 by the anonymous Satoshi Nakamoto. Only 21 million will ever exist, which is why many see it as “digital gold”: a store of value no bank or government controls.',
+        pt: 'A primeira criptomoeda, lançada em 2009 pelo anónimo Satoshi Nakamoto. Só vão existir 21 milhões, por isso muitos a veem como “ouro digital”: uma reserva de valor que nenhum banco ou governo controla.' },
+      ethereum: { kind: ['Platform', 'Plataforma'],
+        en: 'A blockchain you can program. Launched in 2015, it runs “smart contracts”: apps for lending, trading and NFTs that work without a middleman. ETH pays the fees to use it.',
+        pt: 'Uma blockchain que se pode programar. Lançada em 2015, corre “contratos inteligentes”: aplicações de empréstimos, trading e NFTs que funcionam sem intermediários. O ETH paga as taxas de utilização.' },
+      tether: { kind: ['Stablecoin', 'Stablecoin'],
+        en: 'A digital dollar: each USDT is meant to be worth exactly $1, backed by reserves held by the company Tether. The most traded coin in the world, used to move dollars between exchanges and countries.',
+        pt: 'Um dólar digital: cada USDT deve valer exatamente 1 $, garantido por reservas da empresa Tether. É a moeda mais transacionada do mundo, usada para mover dólares entre plataformas e países.' },
+      binancecoin: { kind: ['Exchange coin', 'Moeda de plataforma'],
+        en: 'The coin of Binance, the world’s biggest crypto exchange. It gives discounts on trading fees and pays for transactions on BNB Chain.',
+        pt: 'A moeda da Binance, a maior plataforma de cripto do mundo. Dá descontos nas taxas de trading e paga as transações na BNB Chain.' },
+      ripple: { kind: ['Payments', 'Pagamentos'],
+        en: 'The coin of the XRP Ledger, built in 2012 for fast, cheap payments. The company Ripple promotes it for sending money across borders between banks and payment firms.',
+        pt: 'A moeda do XRP Ledger, criada em 2012 para pagamentos rápidos e baratos. A empresa Ripple promove-a para enviar dinheiro entre países, entre bancos e empresas de pagamentos.' },
+      'usd-coin': { kind: ['Stablecoin', 'Stablecoin'],
+        en: 'A digital dollar issued by the US company Circle. Each USDC is backed by cash and short-term US government bonds, and can be swapped back for $1.',
+        pt: 'Um dólar digital emitido pela empresa americana Circle. Cada USDC é garantido por dinheiro e títulos do tesouro americano de curto prazo, e pode ser trocado de volta por 1 $.' },
+      solana: { kind: ['Platform', 'Plataforma'],
+        en: 'A blockchain launched in 2020 that focuses on speed and very low fees. Popular for payments, trading apps, NFTs and meme coins.',
+        pt: 'Uma blockchain lançada em 2020 focada na velocidade e em taxas muito baixas. Popular para pagamentos, aplicações de trading, NFTs e meme coins.' },
+      tron: { kind: ['Platform', 'Plataforma'],
+        en: 'A blockchain founded by Justin Sun in 2017. It’s one of the most used networks for sending USDT cheaply, especially in emerging markets.',
+        pt: 'Uma blockchain fundada por Justin Sun em 2017. É uma das redes mais usadas para enviar USDT de forma barata, sobretudo em mercados emergentes.' },
+      zcash: { kind: ['Privacy', 'Privacidade'],
+        en: 'A privacy-focused coin from 2016. It can hide who sent what to whom using advanced cryptography called zero-knowledge proofs.',
+        pt: 'Uma moeda focada na privacidade, de 2016. Consegue esconder quem enviou o quê a quem, usando criptografia avançada chamada provas de conhecimento zero.' },
+      hyperliquid: { kind: ['Exchange coin', 'Moeda de plataforma'],
+        en: 'The token of Hyperliquid, a decentralised exchange on its own blockchain where people trade futures without a company holding their funds.',
+        pt: 'O token da Hyperliquid, uma plataforma descentralizada na sua própria blockchain, onde se negociam futuros sem uma empresa a guardar os fundos.' },
+      dogecoin: { kind: ['Meme coin', 'Meme coin'],
+        en: 'Started in 2013 as a joke based on the “Doge” dog meme. Its friendly community made it one of the best-known coins, used for tips and small payments.',
+        pt: 'Começou em 2013 como uma piada baseada no meme do cão “Doge”. A comunidade simpática tornou-a uma das moedas mais conhecidas, usada para gorjetas e pequenos pagamentos.' },
+      monero: { kind: ['Privacy', 'Privacidade'],
+        en: 'A privacy coin launched in 2014. Unlike Bitcoin, every Monero payment is private by default: amounts and addresses are hidden.',
+        pt: 'Uma moeda de privacidade lançada em 2014. Ao contrário do Bitcoin, cada pagamento em Monero é privado por defeito: valores e endereços ficam escondidos.' },
+      usds: { kind: ['Stablecoin', 'Stablecoin'],
+        en: 'A dollar stablecoin from Sky, the project formerly known as MakerDAO. It’s the upgraded version of DAI.',
+        pt: 'Uma stablecoin do dólar da Sky, o projeto antes conhecido como MakerDAO. É a versão atualizada do DAI.' },
+      chainlink: { kind: ['Data network', 'Rede de dados'],
+        en: 'A network that feeds real-world information, like prices and weather, into blockchains so smart contracts can use it. LINK pays the providers.',
+        pt: 'Uma rede que leva informação do mundo real, como preços e meteorologia, para as blockchains, para que os contratos inteligentes a possam usar. O LINK paga a quem fornece os dados.' },
+      'leo-token': { kind: ['Exchange coin', 'Moeda de plataforma'],
+        en: 'The token of the Bitfinex exchange, used for discounts on its trading fees.',
+        pt: 'O token da plataforma Bitfinex, usado para descontos nas taxas de trading.' },
+      cardano: { kind: ['Platform', 'Plataforma'],
+        en: 'A blockchain launched in 2017 by Charles Hoskinson, a co-founder of Ethereum, built step by step from academic research.',
+        pt: 'Uma blockchain lançada em 2017 por Charles Hoskinson, cofundador do Ethereum, construída passo a passo a partir de investigação académica.' },
+      stellar: { kind: ['Payments', 'Pagamentos'],
+        en: 'A network launched in 2014 for moving money across borders quickly and almost for free, often used for remittances.',
+        pt: 'Uma rede lançada em 2014 para mover dinheiro entre países de forma rápida e quase gratuita, muito usada para remessas.' },
+      near: { kind: ['Platform', 'Plataforma'],
+        en: 'A blockchain designed to make apps easy to build and easy to use, with readable account names instead of long codes.',
+        pt: 'Uma blockchain pensada para tornar as aplicações fáceis de criar e de usar, com nomes de conta legíveis em vez de códigos longos.' },
+      'bitcoin-cash': { kind: ['Digital money', 'Dinheiro digital'],
+        en: 'A 2017 split from Bitcoin that allows bigger blocks, so everyday payments are cheaper.',
+        pt: 'Uma divisão do Bitcoin em 2017 que permite blocos maiores, para que os pagamentos do dia a dia sejam mais baratos.' },
+      'ethena-usde': { kind: ['Stablecoin', 'Stablecoin'],
+        en: 'A “synthetic dollar” from Ethena. Instead of bank reserves, it balances crypto holdings against opposite trades to stay close to $1.',
+        pt: 'Um “dólar sintético” da Ethena. Em vez de reservas bancárias, equilibra criptomoedas com posições opostas para se manter perto de 1 $.' },
+      dai: { kind: ['Stablecoin', 'Stablecoin'],
+        en: 'A decentralised dollar created by MakerDAO, backed by crypto locked in smart contracts rather than by a company’s bank account.',
+        pt: 'Um dólar descentralizado criado pela MakerDAO, garantido por criptomoedas bloqueadas em contratos inteligentes e não pela conta bancária de uma empresa.' },
+      litecoin: { kind: ['Digital money', 'Dinheiro digital'],
+        en: 'Created in 2011 by Charlie Lee as the “silver to Bitcoin’s gold”: similar design, faster and cheaper payments.',
+        pt: 'Criada em 2011 por Charlie Lee como a “prata para o ouro do Bitcoin”: desenho semelhante, pagamentos mais rápidos e baratos.' },
+      uniswap: { kind: ['Exchange coin', 'Moeda de plataforma'],
+        en: 'The governance token of Uniswap, the biggest decentralised exchange on Ethereum, where people swap coins directly from their wallets.',
+        pt: 'O token de governação da Uniswap, a maior plataforma descentralizada no Ethereum, onde se trocam moedas diretamente a partir da carteira.' },
+      'avalanche-2': { kind: ['Platform', 'Plataforma'],
+        en: 'A fast blockchain launched in 2020 that lets companies and projects run their own connected networks.',
+        pt: 'Uma blockchain rápida lançada em 2020 que permite a empresas e projetos terem as suas próprias redes ligadas.' },
+      sui: { kind: ['Platform', 'Plataforma'],
+        en: 'A blockchain launched in 2023 by Mysten Labs, a team of former Meta engineers, built for speed and games.',
+        pt: 'Uma blockchain lançada em 2023 pela Mysten Labs, uma equipa de antigos engenheiros da Meta, pensada para velocidade e jogos.' },
+      'the-open-network': { kind: ['Platform', 'Plataforma'],
+        en: 'The blockchain behind Toncoin, closely linked to Telegram, where its wallet is built into the chat app.',
+        pt: 'A blockchain por trás do Toncoin, muito ligada ao Telegram, onde a carteira está integrada na aplicação de mensagens.' },
+      'shiba-inu': { kind: ['Meme coin', 'Meme coin'],
+        en: 'A 2020 meme coin inspired by Dogecoin, with a huge supply and a large online community.',
+        pt: 'Uma meme coin de 2020 inspirada no Dogecoin, com uma oferta enorme e uma grande comunidade online.' },
+      'wrapped-bitcoin': { kind: ['Wrapped coin', 'Moeda “embrulhada”'],
+        en: 'Bitcoin “wrapped” so it can be used on Ethereum. Each WBTC is backed one-to-one by real Bitcoin held in custody.',
+        pt: 'Bitcoin “embrulhado” para poder ser usado no Ethereum. Cada WBTC é garantido um para um por Bitcoin real guardado em custódia.' },
+      'staked-ether': { kind: ['Staking token', 'Token de staking'],
+        en: 'Ether that has been put to work securing the Ethereum network through Lido. It earns rewards while staying tradable.',
+        pt: 'Ether colocado a trabalhar na segurança da rede Ethereum através da Lido. Ganha recompensas e continua negociável.' },
+    };
+
+    /* ---- formatting ---- */
+    let cur = 'usd';
+    try { const saved = localStorage.getItem('crypto-cur'); if (saved === 'eur' || saved === 'usd') cur = saved; } catch (e) {}
+    const loc = () => (isPT() ? 'pt-PT' : 'en-US');
+    const money = (v, opts = {}) => {
+      if (v == null) return '—';
+      const digits = v >= 1000 ? 0 : v >= 1 ? 2 : v >= .01 ? 4 : 6;
+      return new Intl.NumberFormat(loc(), { style: 'currency', currency: cur.toUpperCase(), minimumFractionDigits: opts.compact ? undefined : Math.min(digits, 2), maximumFractionDigits: opts.compact ? 2 : digits, notation: opts.compact ? 'compact' : 'standard' }).format(v);
+    };
+    const num = (v, compact) => v == null ? '—' : new Intl.NumberFormat(loc(), { notation: compact ? 'compact' : 'standard', maximumFractionDigits: compact ? 2 : 0 }).format(v);
+    const pct = v => v == null ? '<span class="pct">—</span>' : `<span class="pct ${v >= 0 ? 'up' : 'down'}">${v >= 0 ? '▲' : '▼'} ${Math.abs(v).toLocaleString(loc(), { maximumFractionDigits: 2, minimumFractionDigits: 1 })}%</span>`;
+    const date = s => s ? new Date(s).toLocaleDateString(loc(), { year: 'numeric', month: 'short', day: 'numeric' }) : '—';
+    const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+    const spark = (pts, up) => {
+      if (!pts || pts.length < 2) return '';
+      const step = Math.max(1, Math.floor(pts.length / 60)), p = pts.filter((_, i) => i % step === 0);
+      const min = Math.min(...p), max = Math.max(...p), W = 130, H = 38, r = max - min || 1;
+      const d = p.map((v, i) => `${(i / (p.length - 1) * W).toFixed(1)},${(H - 3 - (v - min) / r * (H - 6)).toFixed(1)}`).join(' ');
+      const col = up ? 'var(--up)' : 'var(--down)';
+      return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><polyline points="${d}" fill="none" stroke="${col}" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>`;
+    };
+
+    /* ---- state, fetching ---- */
+    const list = document.getElementById('coins');
+    const liveEl = document.getElementById('live'), liveText = document.getElementById('liveText');
+    const cache = {};                                     // per currency: { coins, global, at }
+    let lastPrices = {}, openId = null, lastAt = 0, failed = false;
+
+    const getJSON = async url => { const r = await fetch(url); if (!r.ok) throw new Error(r.status); return r.json(); };
+    const load = async (force) => {
+      const c = cache[cur];
+      if (!force && c && Date.now() - c.at < 55000) { render(c); return; }
+      try {
+        const [coins, global] = await Promise.all([
+          getJSON(`${API}/coins/markets?vs_currency=${cur}&order=market_cap_desc&per_page=20&page=1&sparkline=true&price_change_percentage=1h,24h,7d`),
+          getJSON(`${API}/global`),
+        ]);
+        cache[cur] = { coins, global: global.data, at: Date.now() };
+        failed = false; render(cache[cur]);
+      } catch (e) {
+        failed = true; tick();
+        if (!list.querySelector('.coin')) list.insertAdjacentHTML('beforeend', `<li class="oops">${t('Live prices are taking a break. Please try again in a minute.')}</li>`);
+      }
+    };
+
+    /* ---- drawing ---- */
+    const gauge = v => {
+      const g = document.getElementById('gauge'); if (v == null) { g.innerHTML = ''; return; }
+      const a = Math.PI * (1 - v / 100), x = 100 + 78 * Math.cos(a), y = 100 - 78 * Math.sin(a);
+      g.innerHTML = `
+        <defs><linearGradient id="fg" x1="0" x2="1"><stop offset="0" stop-color="#e4705f"/><stop offset=".5" stop-color="#d9b46c"/><stop offset="1" stop-color="#8fd19e"/></linearGradient></defs>
+        <path d="M22 100 A78 78 0 0 1 178 100" fill="none" stroke="url(#fg)" stroke-width="10" stroke-linecap="round" opacity=".9"/>
+        <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="9" fill="var(--bg)" stroke="var(--text)" stroke-width="3"/>
+        <text x="100" y="96" text-anchor="middle" fill="var(--text)" font-family="Anton, Impact, sans-serif" font-size="38">${v}</text>`;
+    };
+    const MOOD = { 'Extreme Fear': 'Extreme fear', 'Fear': 'Fear', 'Neutral': 'Neutral', 'Greed': 'Greed', 'Extreme Greed': 'Extreme greed' };
+
+    const render = data => {
+      const { coins, global } = data;
+      lastAt = data.at;
+      // the market at a glance
+      document.getElementById('gCap').textContent = money(global.total_market_cap[cur], { compact: true });
+      const ch = global.market_cap_change_percentage_24h_usd;
+      document.getElementById('gCapChg').innerHTML = `${pct(ch)} <span>${t('in 24 hours')}</span>`;
+      document.getElementById('gVol').textContent = money(global.total_volume[cur], { compact: true });
+      document.getElementById('gDom').textContent = (global.market_cap_percentage.btc || 0).toLocaleString(loc(), { maximumFractionDigits: 1 }) + '%';
+      const fg = global.fear_and_greed_index;
+      gauge(fg ? fg.value : null);
+      document.getElementById('gMood').textContent = fg ? t(MOOD[fg.sentiment] || fg.sentiment) : '';
+
+      // the coins
+      list.querySelectorAll('.coin, .oops').forEach(n => n.remove());
+      const html = coins.map(c => {
+        const prev = lastPrices[c.id + cur], flash = prev == null || prev === c.current_price ? '' : (c.current_price > prev ? 'flash-up' : 'flash-down');
+        lastPrices[c.id + cur] = c.current_price;
+        const up7 = (c.price_change_percentage_7d_in_currency ?? 0) >= 0;
+        return `
+        <li class="coin${openId === c.id ? ' open' : ''}" data-id="${esc(c.id)}">
+          <button class="row" type="button" aria-expanded="${openId === c.id}" aria-controls="more-${esc(c.id)}">
+            <span class="rank">${c.market_cap_rank ?? ''}</span>
+            <span class="who"><img src="${esc(c.image)}" alt="" loading="lazy" width="30" height="30"><b>${esc(c.name)}</b><small>${esc(c.symbol)}</small></span>
+            <span class="num price ${flash}">${money(c.current_price)}</span>
+            <span class="num c-1h">${pct(c.price_change_percentage_1h_in_currency)}</span>
+            <span class="num">${pct(c.price_change_percentage_24h_in_currency)}</span>
+            <span class="num c-7d">${pct(c.price_change_percentage_7d_in_currency)}</span>
+            <span class="num c-cap">${money(c.market_cap, { compact: true })}</span>
+            <span class="c-spark">${spark(c.sparkline_in_7d && c.sparkline_in_7d.price, up7)}</span>
+            <span class="chev" aria-hidden="true"><svg viewBox="0 0 12 12" width="12" height="12"><path d="M3 4.5 6 7.5 9 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </button>
+          <div class="more" id="more-${esc(c.id)}"><div>${detail(c)}</div></div>
+        </li>`;
+      }).join('');
+      list.insertAdjacentHTML('beforeend', html);
+      setTimeout(() => list.querySelectorAll('.flash-up, .flash-down').forEach(n => n.classList.remove('flash-up', 'flash-down')), 1200);
+      tick();
+    };
+
+    const detail = c => {
+      const a = ABOUT[c.id];
+      const story = a ? (isPT() ? a.pt : a.en)
+        : (isPT() ? `${esc(c.name)} (${esc(c.symbol.toUpperCase())}) está em #${c.market_cap_rank} por valor de mercado. Veja a história completa no CoinGecko.`
+                  : `${esc(c.name)} (${esc(c.symbol.toUpperCase())}) is currently #${c.market_cap_rank} by market value. See its full background on CoinGecko.`);
+      const kind = a ? `<span class="kind">${a.kind[isPT() ? 1 : 0]}</span><br>` : '';
+      const supply = c.max_supply ? `${num(c.circulating_supply, true)} / ${num(c.max_supply, true)}` : num(c.circulating_supply, true);
+      return `<div class="more-in">
+        <div class="story">${kind}${story}<br><a class="ext" href="https://www.coingecko.com/en/coins/${encodeURIComponent(c.id)}" target="_blank" rel="noopener">${t('More on CoinGecko')} <span aria-hidden="true">↗</span></a></div>
+        <dl class="facts">
+          <div><dt>${t('24h high')}</dt><dd>${money(c.high_24h)}</dd></div>
+          <div><dt>${t('24h low')}</dt><dd>${money(c.low_24h)}</dd></div>
+          <div><dt>${t('All-time high')}</dt><dd>${money(c.ath)}</dd></div>
+          <div><dt>${t('Reached on')}</dt><dd>${date(c.ath_date)}</dd></div>
+          <div><dt>${t('Coins in circulation')}</dt><dd>${supply}</dd></div>
+          <div><dt>${t('Traded in 24h')}</dt><dd>${money(c.total_volume, { compact: true })}</dd></div>
+        </dl>
+      </div>`;
+    };
+
+    /* "updated 20s ago" */
+    const tick = () => {
+      liveEl.classList.toggle('off', failed);
+      if (failed && !lastAt) { liveText.textContent = t('Offline'); return; }
+      const s = Math.max(0, Math.round((Date.now() - lastAt) / 1000));
+      liveText.textContent = s < 5 ? t('Live · just updated') : `${t('Live · updated')} ${s}s ${t('ago')}`;
+    };
+    setInterval(tick, 1000);
+
+    /* open / close a coin */
+    list.addEventListener('click', e => {
+      const btn = e.target.closest('.row'); if (!btn || btn.classList.contains('head')) return;
+      const li = btn.closest('li'), willOpen = !li.classList.contains('open');
+      list.querySelectorAll('li.open').forEach(o => { o.classList.remove('open'); o.querySelector('.row').setAttribute('aria-expanded', 'false'); });
+      if (willOpen) { li.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); openId = li.dataset.id; } else openId = null;
+    });
+
+    /* currency switch */
+    const segs = document.querySelectorAll('.seg button');
+    const markCur = () => segs.forEach(b => b.setAttribute('aria-pressed', b.dataset.cur === cur));
+    segs.forEach(b => b.addEventListener('click', () => {
+      if (b.dataset.cur === cur) return;
+      cur = b.dataset.cur; try { localStorage.setItem('crypto-cur', cur); } catch (e) {}
+      markCur(); load();
+    }));
+    markCur();
+
+    /* language change: redraw numbers and explainers */
+    document.addEventListener('langchange', () => { if (cache[cur]) render(cache[cur]); });
+
+    /* first load: placeholder rows, then live data; refresh every minute while the page is visible */
+    list.insertAdjacentHTML('beforeend', Array.from({ length: 8 }, () => `<li class="coin skeleton"><div class="row"><span class="rank"><i class="bone"></i></span><span class="who"><i class="bone" style="width:70%"></i></span><span class="num"><i class="bone"></i></span><span class="num c-1h"><i class="bone"></i></span><span class="num"><i class="bone"></i></span><span class="num c-7d"><i class="bone"></i></span><span class="num c-cap"><i class="bone"></i></span><span class="c-spark"><i class="bone"></i></span><span></span></div></li>`).join(''));
+    load(true);
+    setInterval(() => { if (!document.hidden) load(true); }, 60000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden && Date.now() - lastAt > 60000) load(true); });
+
+    /* hero: a slow web of linked blocks */
+    (() => {
+      const cv = document.getElementById('chain'), ctx = cv.getContext('2d');
+      let w, h, nodes = [], tt = 0, visible = true;
+      const size = () => {
+        const dpr = Math.min(devicePixelRatio || 1, 2); w = cv.clientWidth; h = cv.clientHeight;
+        cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const n = Math.round(Math.min(46, w * h / 26000));
+        nodes = Array.from({ length: n }, (_, i) => ({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - .5) * .25, vy: (Math.random() - .5) * .25, s: 3 + Math.random() * 3 }));
+      };
+      size(); addEventListener('resize', size);
+      new IntersectionObserver(([e]) => visible = e.isIntersecting).observe(cv);
+      const draw = () => {
+        ctx.clearRect(0, 0, w, h);
+        for (let i = 0; i < nodes.length; i++) for (let j = i + 1; j < nodes.length; j++) {
+          const a = nodes[i], b = nodes[j], d = Math.hypot(a.x - b.x, a.y - b.y);
+          if (d < 170) { ctx.strokeStyle = `rgba(169,156,230,${(.16 * (1 - d / 170)).toFixed(3)})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
+        }
+        nodes.forEach((n, i) => {
+          const glow = .25 + .25 * Math.sin(tt * 1.2 + i);
+          ctx.strokeStyle = `rgba(169,156,230,${glow.toFixed(3)})`; ctx.lineWidth = 1;
+          ctx.strokeRect(n.x - n.s, n.y - n.s, n.s * 2, n.s * 2);         // little blocks
+        });
+      };
+      const loop = () => {
+        if (visible) {
+          tt += .016;
+          nodes.forEach(n => { n.x += n.vx; n.y += n.vy; if (n.x < 0 || n.x > w) n.vx *= -1; if (n.y < 0 || n.y > h) n.vy *= -1; });
+          draw();
+        }
+        requestAnimationFrame(loop);
+      };
+      reduce ? draw() : loop();
+    })();
+
+    /* nav background, reveal on scroll */
+    const nav = document.getElementById('nav');
+    addEventListener('scroll', () => nav.classList.toggle('solid', scrollY > 40), { passive: true });
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .15 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
