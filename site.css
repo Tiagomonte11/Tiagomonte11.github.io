@@ -1,0 +1,114 @@
+/*
+  Shared header for every page.
+  The links sit exactly in the middle of the page. When the screen is too narrow for that
+  (checked by site.js, also after a language change), the header steps down to a layout
+  where nothing can overlap.
+*/
+nav#nav {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: 16px;
+}
+nav#nav > .logo { justify-self: start; }
+nav#nav > .nav-links { justify-self: center; grid-column: 2; }
+nav#nav > .nav-end, nav#nav > .pill { justify-self: end; grid-column: 3; }
+
+nav#nav .nav-links { display: flex; align-items: center; gap: 30px; white-space: nowrap; }
+nav#nav .nav-links a {
+  position: relative; padding: 6px 0; color: var(--muted);
+  transition: color .35s ease, opacity .35s ease, transform .35s cubic-bezier(.2,.8,.2,1);
+}
+/* underline that grows from the middle */
+nav#nav .nav-links a::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--accent);
+  transform: scaleX(0); transition: transform .45s cubic-bezier(.2,.8,.2,1);
+}
+nav#nav .nav-links a:hover { color: var(--text); }
+nav#nav .nav-links a:hover::after { transform: scaleX(.6); }
+nav#nav .nav-links a[aria-current] { color: var(--text); box-shadow: none; }
+nav#nav .nav-links a[aria-current]::after { transform: scaleX(1); }
+nav#nav .nav-links a:focus-visible { outline: 1px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
+
+/* step 1: not enough room to centre on the page, so centre between the logo and the right side */
+nav#nav.nav-tight { grid-template-columns: auto minmax(0, 1fr) auto; }
+nav#nav.nav-tight .nav-links { gap: 20px; font-size: 12px; }
+
+/* step 2: still too tight, so the links get their own row under the logo */
+nav#nav.nav-rows {
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "logo end" "links links";
+  row-gap: 10px;
+}
+nav#nav.nav-rows > .logo { grid-area: logo; }
+nav#nav.nav-rows > .nav-links { grid-area: links; justify-self: center; gap: 22px; font-size: 12px; }
+nav#nav.nav-rows > .nav-end, nav#nav.nav-rows > .pill { grid-area: end; }
+
+/* the header settles in without jumping while it measures itself */
+nav#nav.nav-measuring .nav-links { opacity: 0; }
+nav#nav .nav-links { transition: opacity .3s ease; }
+
+/* language change: text slides out one way and back in from the other */
+html.i18n-out body > :is(header, section, main, footer, .marquee, .closing-links),
+html.i18n-out nav#nav .nav-links,
+html.i18n-out nav#nav .pill {
+  opacity: 0; transform: translateX(-18px);
+  transition: opacity .2s ease, transform .2s ease;
+}
+html.i18n-in body > :is(header, section, main, footer, .marquee, .closing-links),
+html.i18n-in nav#nav .nav-links,
+html.i18n-in nav#nav .pill {
+  opacity: 0; transform: translateX(18px); transition: none;
+}
+html.i18n-settle body > :is(header, section, main, footer, .marquee, .closing-links),
+html.i18n-settle nav#nav .nav-links,
+html.i18n-settle nav#nav .pill {
+  transition: opacity .32s ease, transform .45s cubic-bezier(.2,.8,.2,1);
+}
+@media (prefers-reduced-motion: reduce) {
+  html.i18n-out *, html.i18n-in *, html.i18n-settle * { transition: none !important; transform: none !important; }
+}
+
+/* step 2 on the home page: the opening screen already links Music and Business, so the links step aside */
+nav#nav.nav-hide-links > .nav-links { display: none; }
+
+/* header buttons never break onto two lines */
+nav#nav .pill { white-space: nowrap; }
+@media (max-width: 400px) { nav#nav .pill { padding: 9px 12px; letter-spacing: .06em; } }
+
+/* Business, with the other fields in a small menu beside it */
+nav#nav .nav-drop { position: relative; display: inline-flex; align-items: center; gap: 4px; }
+nav#nav .nav-drop-btn {
+  all: unset; box-sizing: border-box; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%;
+  color: var(--muted); cursor: pointer; transition: color .3s, background .3s, transform .35s cubic-bezier(.2,.8,.2,1);
+}
+nav#nav .nav-drop-btn:hover, nav#nav .nav-drop.open .nav-drop-btn { color: var(--text); background: color-mix(in srgb, var(--text) 10%, transparent); }
+nav#nav .nav-drop.open .nav-drop-btn { transform: rotate(180deg); }
+nav#nav .nav-drop-btn:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
+nav#nav .nav-links a.parent-current { color: var(--text); }
+nav#nav .nav-links a.parent-current::after { transform: scaleX(1); }
+
+nav#nav .nav-menu {
+  position: absolute; top: calc(100% + 14px); left: 50%; min-width: 230px; padding: 8px; border-radius: 18px;
+  background: color-mix(in srgb, var(--bg) 88%, var(--text) 6%); border: 1px solid var(--line);
+  box-shadow: 0 24px 60px -20px rgba(0,0,0,.8); backdrop-filter: blur(12px);
+  display: grid; gap: 2px; text-transform: none; letter-spacing: 0; white-space: normal;
+  opacity: 0; visibility: hidden; transform: translate(-50%, -6px);
+  transition: opacity .25s ease, transform .35s cubic-bezier(.2,.8,.2,1), visibility 0s .35s;
+}
+/* an invisible bridge so the menu doesn't close on the way down to it */
+nav#nav .nav-menu::before { content: ""; position: absolute; left: 0; right: 0; top: -16px; height: 16px; }
+nav#nav .nav-drop.open .nav-menu { opacity: 1; visibility: visible; transform: translate(-50%, 0); transition: opacity .25s ease, transform .35s cubic-bezier(.2,.8,.2,1); }
+@media (hover: hover) {
+  nav#nav .nav-drop:hover .nav-menu { opacity: 1; visibility: visible; transform: translate(-50%, 0); transition: opacity .25s ease, transform .35s cubic-bezier(.2,.8,.2,1); }
+  nav#nav .nav-drop:hover .nav-drop-btn { color: var(--text); transform: rotate(180deg); }
+}
+nav#nav .nav-menu a {
+  display: grid; gap: 2px; padding: 11px 14px; border-radius: 12px; color: var(--text);
+  transition: background .25s ease;
+}
+nav#nav .nav-menu a::after { display: none; }
+nav#nav .nav-menu a:hover, nav#nav .nav-menu a[aria-current] { background: color-mix(in srgb, var(--text) 8%, transparent); }
+nav#nav .nav-menu b { font-weight: 500; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
+nav#nav .nav-menu a[aria-current] b { color: var(--accent); }
+nav#nav .nav-menu small { font-size: 12.5px; color: var(--muted); letter-spacing: 0; }

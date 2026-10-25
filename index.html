@@ -243,56 +243,60 @@
       position: relative; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end;
       padding: 120px var(--pad) 40px; overflow: hidden; isolation: isolate;
     }
-    /* the opening screen is split in two doors: Frequency (left) and Enterprise (right) */
-    .hero > :not(.doors, .badge) { position: relative; pointer-events: none; }
-    .doors { position: absolute; inset: 0; z-index: -1; display: grid; grid-template-columns: 1fr 1fr; }
-    .door {
-      --c: var(--art); position: relative; overflow: hidden; isolation: isolate; display: block;
-      outline-offset: -6px;
-    }
-    .door.art { --c: var(--art); }
-    .door.biz {
-      --c: var(--biz); border-left: 1px solid var(--line);
-      /* warm, deep backdrop for the journey map */
+    /* the opening screen: one picture, the music photo melting into the business globe (drawn by hero.js) */
+    .hero > :not(.doors, .jog) { position: relative; pointer-events: none; }
+    .doors {
+      position: absolute; inset: 0; z-index: -1; display: grid; grid-template-columns: 1fr 1fr;
       background:
-        radial-gradient(ellipse 70% 55% at 45% 58%, rgba(217,180,108,.09), transparent 70%),
-        radial-gradient(ellipse 60% 40% at 100% 0%, rgba(217,180,108,.06), transparent 70%),
-        #100f0c;
+        radial-gradient(ellipse 40% 55% at 77% 58%, rgba(217,180,108,.09), transparent 70%),
+        radial-gradient(ellipse 45% 60% at 28% 42%, rgba(223,143,176,.06), transparent 70%),
+        #0f0e0c;
     }
-    /* where the two sides meet: pink drifts into gold so they read as one picture */
-    .doors::after {
-      content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1; mix-blend-mode: screen;
-      background:
-        radial-gradient(ellipse 22% 60% at 47% 50%, rgba(223,143,176,.10), transparent 70%),
-        radial-gradient(ellipse 22% 60% at 53% 50%, rgba(217,180,108,.08), transparent 70%);
+    /* the DJ photo covers the music side and fades out across the middle */
+    .art-photo {
+      position: absolute; z-index: 0; left: 0; top: 0; bottom: 0; width: 64%; overflow: hidden; pointer-events: none;
+      -webkit-mask-image: linear-gradient(to right, #000 52%, transparent 100%);
+              mask-image: linear-gradient(to right, #000 52%, transparent 100%);
     }
-    .door canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
-    .door img {
+    .art-photo img {
       position: absolute; inset: 0; width: 100%; height: 115%; object-fit: cover; object-position: 55% 60%;
       filter: grayscale(1) contrast(1.15) brightness(.7); opacity: .6;
       transition: filter 1.2s ease, opacity 1.2s ease; will-change: transform;
     }
-    .js .door img { animation: settle 2.4s cubic-bezier(.2,.8,.2,1) both; }
+    .art-photo::after { content: ""; position: absolute; inset: 0; background: var(--art); mix-blend-mode: color; opacity: .28; transition: opacity .8s ease; }
+    .js .art-photo img { animation: settle 2.4s cubic-bezier(.2,.8,.2,1) both; }
     @keyframes settle { from { opacity: 0; scale: 1.08; } to { opacity: .6; scale: 1; } }
-    /* colour wash in each side's colour, stronger on hover */
-    .door::before {
-      content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
-      background: var(--c); mix-blend-mode: color; opacity: .25; transition: opacity .8s ease;
+    .doors:has(.door.art:hover, .door.art:focus-visible) .art-photo img { filter: grayscale(.4) contrast(1.1) brightness(.85); opacity: .85; }
+    .doors:has(.door.art:hover, .door.art:focus-visible) .art-photo::after { opacity: .5; }
+    /* Earth at night with the journey's flight paths covers the business side and fades out across the middle */
+    .biz-photo {
+      position: absolute; z-index: 0; right: 0; top: 0; bottom: 0; width: 64%; overflow: hidden; pointer-events: none;
+      -webkit-mask-image: linear-gradient(to left, #000 52%, transparent 100%);
+              mask-image: linear-gradient(to left, #000 52%, transparent 100%);
     }
-    .door.biz::before { mix-blend-mode: normal; opacity: 0; background: radial-gradient(circle at 70% 30%, color-mix(in srgb, var(--c) 14%, transparent), transparent 60%); }
+    .biz-photo img {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%;
+      filter: brightness(.8) saturate(.9); opacity: .9; transition: filter 1.2s ease, opacity 1.2s ease;
+    }
+    .js .biz-photo img { animation: settle-biz 2.4s cubic-bezier(.2,.8,.2,1) both; }
+    @keyframes settle-biz { from { opacity: 0; scale: 1.06; } to { opacity: .9; scale: 1; } }
+    .doors:has(.door.biz:hover, .door.biz:focus-visible) .biz-photo img { filter: brightness(1) saturate(1.05); opacity: 1; }
+    @media (max-width: 760px) { .biz-photo img { object-position: 55% 45%; } }
+    #heroFx { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
     /* dark fade at the bottom so the name stays readable */
-    .door::after {
-      content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none;
-      background: linear-gradient(to top, var(--bg) 4%, color-mix(in srgb, var(--bg) 55%, transparent) 38%, transparent 70%);
+    .doors::before {
+      content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background: linear-gradient(to top, var(--bg) 4%, color-mix(in srgb, var(--bg) 55%, transparent) 36%, transparent 66%);
     }
-    .door:hover::before, .door:focus-visible::before { opacity: .55; }
-    .door.biz:hover::before, .door.biz:focus-visible::before { opacity: 1; }
-    .door:hover img, .door:focus-visible img { filter: grayscale(.4) contrast(1.1) brightness(.85); opacity: .85; }
+    .door { --c: var(--art); position: relative; z-index: 3; display: block; outline-offset: -6px; }
+    .door.art { --c: var(--art); }
+    .door.biz { --c: var(--biz); }
+    .door-label b, .door-label small { text-shadow: 0 2px 18px rgba(10,10,8,.85); }
     .door-label {
       position: absolute; z-index: 4; top: 124px; left: var(--pad); right: var(--pad);
       display: flex; flex-direction: column; align-items: flex-start; gap: 20px;
     }
-    @media (min-width: 761px) { .door.biz .door-label { left: calc(var(--pad) + 56px); } }  /* clear the badge on the seam */
+    @media (min-width: 761px) { .door.biz .door-label { left: calc(var(--pad) + 60px); } }  /* clear the jog wheel on the seam */
     .door-label .no { display: block; font-family: var(--display); font-size: 14px; letter-spacing: .12em; color: var(--c); margin-bottom: 8px; }
     .door-label b {
       display: block; font-family: var(--display); font-weight: 400; text-transform: uppercase;
@@ -327,7 +331,7 @@
     h1 .name { font-size: clamp(96px, min(24vw, 30svh), 360px); line-height: .8; letter-spacing: -.005em; }
     /* keep the name below the door labels and arrows, even on short laptop screens */
     @media (min-width: 761px) { .hero { padding-top: 340px; } }
-    @media (max-width: 760px) { .hero { padding-top: 300px; } .badge { display: none; } }   /* phones: name below the labels; no room for the badge */
+    @media (max-width: 760px) { .hero { padding-top: 450px; } }   /* phones: the name sits below the labels, the jog wheel and the globe */
 
     .hero-bottom {
       display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 32px;
@@ -339,17 +343,41 @@
     .scroll-cue::after { content: ""; width: 1px; height: 40px; background: var(--muted); animation: cue 2s ease-in-out infinite; transform-origin: top; }
     @keyframes cue { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(0); transform-origin: bottom; } }
 
-    /* rotating badge */
-    .badge { position: absolute; top: 116px; left: 50%; width: 128px; height: 128px; margin-left: -64px; pointer-events: none; }
-    .badge::before { content: ""; position: absolute; inset: 14px; border-radius: 50%; background: var(--bg); }
-    .badge svg { position: relative; }
-    .badge svg { width: 100%; height: 100%; animation: spin 22s linear infinite; }
-    .badge text { font-family: var(--sans); font-size: 10.5px; letter-spacing: .26em; text-transform: uppercase; fill: var(--text); }
-    .badge .dot { position: absolute; inset: 0; margin: auto; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); }
+    /* the jog wheel on the seam: opens the mixer */
+    .jog {
+      position: absolute; z-index: 5; top: 116px; left: 50%; width: 132px; height: 132px; margin-left: -66px;
+      border-radius: 50%; display: grid; place-items: center; outline-offset: 6px;
+    }
+    .jog .platter {
+      position: absolute; inset: 0; border-radius: 50%;
+      background:
+        radial-gradient(circle, transparent 0 30%, rgba(255,255,255,.035) 31%, transparent 33%),
+        repeating-radial-gradient(circle, #141311 0 1.5px, #1c1b18 1.5px 3px),
+        #161512;
+      box-shadow: 0 0 0 1px #2c2b27, inset 0 0 0 7px #0d0c0a, inset 0 0 0 8px #2c2b27, 0 24px 50px -22px #000;
+    }
+    /* the light streak and the cue mark that show it turning */
+    .jog .platter::before {
+      content: ""; position: absolute; inset: 8px; border-radius: 50%;
+      background: conic-gradient(from 300deg, transparent 0 10%, rgba(255,255,255,.07) 14%, transparent 22% 60%, rgba(255,255,255,.05) 66%, transparent 74%);
+    }
+    .jog .platter::after { content: ""; position: absolute; top: 9px; left: 50%; width: 3px; height: 20px; margin-left: -1.5px; border-radius: 2px; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+    .jog svg { position: absolute; inset: -16px; width: calc(100% + 32px); height: calc(100% + 32px); animation: spin 26s linear infinite reverse; pointer-events: none; }
+    .jog text { font-family: var(--sans); font-size: 9px; letter-spacing: .3em; text-transform: uppercase; fill: var(--muted); transition: fill .4s; }
+    .jog .hub {
+      position: relative; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
+      background: radial-gradient(circle at 35% 30%, #2a2925, #121110); box-shadow: 0 0 0 1px #3a3934, 0 6px 14px -6px #000;
+      font-family: var(--display); font-size: 13px; letter-spacing: .08em; color: var(--accent); transition: color .4s, box-shadow .4s;
+    }
+    .jog:hover .hub, .jog:focus-visible .hub { color: var(--bg); background: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 0 24px -4px var(--accent); }
+    .jog:hover text, .jog:focus-visible text { fill: var(--text); }
     @keyframes spin { to { transform: rotate(360deg); } }
     @media (max-width: 760px) {
-      .badge { width: 84px; height: 84px; margin-left: -42px; top: 40%; }
-      .badge text { font-size: 12px; }
+      /* on phones the jog wheel sits under "Music", away from the globe */
+      .jog { left: var(--pad); margin-left: 0; top: 268px; width: 92px; height: 92px; }
+      .jog .hub { width: 32px; height: 32px; font-size: 11px; }
+      .jog svg { inset: -12px; width: calc(100% + 24px); height: calc(100% + 24px); }
+      .jog text { font-size: 10px; }
       .hero-bottom { grid-template-columns: 1fr; }
       .scroll-cue::after { display: none; }
       .door-label { top: 96px; gap: 14px; }
@@ -549,33 +577,35 @@
       html { scroll-behavior: auto; }
     }
   </style>
+  <link rel="stylesheet" href="site.css">
 </head>
 <body>
   <div class="grain" aria-hidden="true"></div>
   <div class="cursor" id="cursor" aria-hidden="true"></div>
 
-  <nav id="nav">
+  <nav id="nav" data-links="optional">
     <a class="logo" href="#top" aria-label="Back to top">M</a>
     <div class="nav-links">
       <a href="#about">About</a>
       <a href="art/">Music</a>
       <a href="business/">Business</a>
+      <a href="ai/">AI</a>
     </div>
     <a class="pill" href="#connect">Let's connect</a>
   </nav>
 
   <header class="hero" id="top">
     <div class="doors">
-      <a class="door art" href="art/">
-        <img id="heroPhoto" src="dj.jpg" alt="Tiago Monte DJing">
-        <canvas id="waves" aria-hidden="true"></canvas>
+      <div class="art-photo" aria-hidden="true"><img id="heroPhoto" src="dj.jpg" alt=""></div>
+      <div class="biz-photo" aria-hidden="true"><img src="business.jpg" alt=""></div>
+      <canvas id="heroFx" aria-hidden="true"></canvas>
+      <a class="door art" href="art/" aria-label="Music">
         <span class="door-label">
           <span><span class="no">I.</span><b>Music</b><small>Music · DJ sets · Events</small></span>
           <span class="door-go" aria-hidden="true">↗</span>
         </span>
       </a>
-      <a class="door biz" href="business/">
-        <canvas id="growth" aria-hidden="true"></canvas>
+      <a class="door biz" href="business/" aria-label="Business">
         <span class="door-label">
           <span><span class="no">II.</span><b>Business</b><small>Sales · People · Ventures</small></span>
           <span class="door-go" aria-hidden="true">↗</span>
@@ -583,13 +613,14 @@
       </a>
     </div>
 
-    <div class="badge" aria-hidden="true">
-      <svg viewBox="0 0 120 120">
-        <defs><path id="circle" d="M60,60 m-48,0 a48,48 0 1,1 96,0 a48,48 0 1,1 -96,0"/></defs>
-        <text><textPath href="#circle" textLength="298" lengthAdjust="spacing">Music · Business · Purpose · </textPath></text>
+    <a class="jog" href="mixer/" aria-label="Try the DJ mixer">
+      <span class="platter" aria-hidden="true"></span>
+      <svg viewBox="0 0 164 164" aria-hidden="true">
+        <defs><path id="jogRing" d="M82,82 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0"/></defs>
+        <text><textPath href="#jogRing" textLength="448" lengthAdjust="spacing">Spin me · Learn to mix · Spin me · Learn to mix · </textPath></text>
       </svg>
-      <span class="dot"></span>
-    </div>
+      <span class="hub" aria-hidden="true">MIX</span>
+    </a>
 
     <div class="hero-top">
       <p class="eyebrow"><b>Entrepreneur</b> · Producer · DJ</p>
@@ -625,7 +656,7 @@
       <li style="--i:1; --dur:5.2s; --delay:-3s;   --dx:-4px; --rot:-.8deg; --c:#e8925a"><span class="chip">Energy</span></li>
       <li style="--i:2; --dur:7.1s; --delay:-.5s;  --dx:3px;  --rot:.5deg; --c:#a3c27f"><span class="chip">Agriculture</span></li>
       <li style="--i:3; --dur:5.8s; --delay:-2.2s; --dx:-5px; --rot:-.6deg; --c:#df8fb0"><a class="chip chip-link" href="art/" aria-label="Music production: see the music page">Music Production <span class="chip-go" aria-hidden="true">↗</span></a></li>
-      <li style="--i:4; --dur:6.2s; --delay:-4s;   --dx:4px;  --rot:.9deg; --c:#7fcbd8"><span class="chip">AI</span></li>
+      <li style="--i:4; --dur:6.2s; --delay:-4s;   --dx:4px;  --rot:.9deg; --c:#7fcbd8"><a class="chip chip-link" href="ai/" aria-label="AI: news, games and milestones">AI <span class="chip-go" aria-hidden="true">↗</span></a></li>
       <li style="--i:5; --dur:6.9s; --delay:-1.6s; --dx:-3px; --rot:-.5deg; --c:#a99ce6"><a class="chip chip-link" href="crypto/" aria-label="Blockchain: see live crypto prices">Blockchain <span class="chip-go" aria-hidden="true">↗</span></a></li>
     </ul>
     <dl class="about-foot reveal">
@@ -699,266 +730,12 @@
   </footer>
 
   <script src="i18n.js"></script>
+  <script src="site.js"></script>
+  <script src="hero.js"></script>
   <script>
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
     let mouseX = -9999, mouseY = -9999;
-
-    /* ---- Hero: two living backgrounds, one per door ---- */
-    const canvasLoop = (canvas, draw) => {
-      const ctx = canvas.getContext('2d');
-      const st = { w: 0, h: 0, t: 0, ctx, visible: true };
-      const resize = () => {
-        const dpr = Math.min(devicePixelRatio || 1, 2);
-        st.w = canvas.clientWidth; st.h = canvas.clientHeight;
-        canvas.width = st.w * dpr; canvas.height = st.h * dpr;
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      };
-      resize(); addEventListener('resize', resize);
-      new IntersectionObserver(([e]) => st.visible = e.isIntersecting).observe(canvas);
-      const frame = () => { const r = canvas.getBoundingClientRect(); ctx.clearRect(0, 0, st.w, st.h); draw(st, mouseX - r.left, mouseY - r.top); };
-      const loop = () => { if (st.visible) { st.t += 0.016; frame(); } requestAnimationFrame(loop); };
-      if (reduce) { st.t = 4; frame(); } else loop();
-    };
-
-    /* Frequency: flowing sound lines that swell near the cursor */
-    canvasLoop(document.getElementById('waves'), ({ ctx, w, h, t }, mx, my) => {
-      const LINES = 18;
-      for (let i = 0; i < LINES; i++) {
-        const baseY = h * 0.3 + (h * 0.45) * (i / (LINES - 1));
-        ctx.beginPath();
-        for (let x = 0; x <= w; x += 8) {
-          const n = x / w, env = Math.sin(Math.PI * n) ** 2;
-          let y = Math.sin(n * 7 + t * 0.6 + i * 0.35) * 10 * env + Math.sin(n * 19 - t * 0.9 + i * 0.6) * 4 * env;
-          const dx = x - mx, dy = baseY - my, d = Math.exp(-(dx * dx + dy * dy) / 22000);
-          y += Math.sin(x * 0.045 - t * 3) * 20 * d;
-          x === 0 ? ctx.moveTo(x, baseY + y) : ctx.lineTo(x, baseY + y);
-        }
-        ctx.strokeStyle = `rgba(223,143,176,${0.06 + 0.16 * Math.sin(Math.PI * i / (LINES - 1))})`;
-        ctx.lineWidth = 1; ctx.stroke();
-      }
-    });
-
-    /* Enterprise: a living, dotted map of the road so far.
-       Light sweeps across it, each dot shimmers, the places glow, a traveller flies the journey leg by leg
-       and lights the land beneath it. Colour runs from rose (beside the music side) to gold. */
-    (() => {
-      const canvas = document.getElementById('growth'), ctx = canvas.getContext('2d');
-      // land dots on a 1.5° grid from 100°W, 62°N (one hex string per row; built from Natural Earth land data)
-      const MAP = { cols: 108, L0: -100, A0: 62, step: 1.5, hex: 'f801e0003e00000001fe7ffffff.f001f8000400000001fe3ffffff.f001f9800000000001fe1ffffff.f800ffc000000001c01c1ffffff.ff80ffe00000000180487ffffff.fff3fff8000000066043fffffff.fff9fffc00000006e3fffffffff.fffffff800000000f3fffffffff.fffffe00000000000ffffffffff.fffffb0f00000000fffffffffff.ffffff81000000003ffffff7fff.ffffffe0000000003ffffe6fe1f.fffff900000000003fb7fc07e7f.fffff00000000007f819fc01e3f.ffffe00000000007f00efdfff0f.ffffc00000000007e04267fff1f.ffff000000000007e00867fff1f.ffff8000000000010fc021dffff.ffff000000000001ffc0085ffff.fffc000000000003ffc0001ffff.fff8000000000007fff8e03ffff.fff8000000000007fffffffffff.f00800000000000fffffffffe7f.c00c00000000003fffffff9ff3f.c00400000000007fffffffcff87.c00000000000007fffffffeff98.c00c0000000000ffffffffe7ffe.c0010000000000fffffffff7ffe.e1818000000000fffffffff3ffc.f7801e00000000fffffffff1ff8.ff000000000000fffffffff9ff0.07e00000000000fffffffffcfc0.03f00000000000fffffffffef00.00700000000000ffffffffff000.00206c000000007fffffffff180.00106fc00000003ffffffffff80.0005fff00000003ffffffffff80.0000fff80000000ffffffffff00.0000ffff0000000641ffffffe00.0000ffff80000000003fffffe00.0001ffff80000000003fffff800.0003ffffc0000000007fffff000.0007fffff0000000007ffffe000.0007fffffa000000003ffffc000.0007ffffffc00000001ffffc000.0007fffffff00000001ffff8000.0003fffffff00000000ffff8000.0001fffffff00000000ffff8000.0001ffffffe00000000ffffc000.0000ffffffc00000000ffffc000.0000ffffffc00000000ffffc000.0000ffffff800000001ffffc180.00003fffff800000001ffffc700.00000fffff800000001ffff0f00.00000fffff800000000fffe0700.00000fffff000000000fffc0700.00000fffff0000000007ffe0e00.00000ffff80000000007ffe0e00.00000fffe00000000007ffc0400.00000fffe00000000007ff80000.00000fffe00000000003ff80000.00000fffc00000000003ff00000.00001fff800000000001fe00000.00000fff000000000001fc00000.00001ffe000000000001c000000.00001ff80000000000000000000.00003ff80000000000000000000.00003ff00000000000000000000.00003fc00000000000000000000.00003f000000000000000000000' };
-      const rows = MAP.hex.split('.'), ROWS = rows.length;
-      const land = [];
-      rows.forEach((h, r) => [...h].forEach((ch, i) => {
-        const bits = parseInt(ch, 16);
-        for (let b = 0; b < 4; b++) if (bits & (8 >> b)) { const c = i * 4 + b; if (c < MAP.cols) land.push({ c, r, ph: Math.random() * 6.283, sp: .6 + Math.random() * 1.2 }); }
-      }));
-      // where life happened, in order
-      const PLACES = [
-        // job = the row it opens on the Business page; role = shown when you hover the place
-        { name: 'Barcelona', year: '2019', lon: 2.17, lat: 41.39, side: 1, job: 'job-5', role: 'BBA, Business Administration' },
-        { name: 'Delaware', year: '2022', lon: -75.5, lat: 39.0, side: 1, job: 'job-3', role: 'Co-Founder & Operations' },
-        { name: 'Maputo', year: '2022', lon: 32.58, lat: -25.97, side: 1, job: 'job-4', role: 'Operations, Volunteer' },
-        { name: 'Braga', year: '2023', lon: -8.43, lat: 41.55, side: -1, job: 'job-2', role: 'Head of Sales' },
-        { name: 'Luanda', lon: 13.23, lat: -8.84, side: -1, now: true, job: 'job-1', role: 'Head of HR' },
-      ];
-      const ROSE = [223, 143, 176], GOLD = [217, 180, 108], CREAM = [246, 236, 214];
-      const mix = (a, b, k) => [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k, a[2] + (b[2] - a[2]) * k];
-      const sstep = (a, b, x) => { const k = Math.min(1, Math.max(0, (x - a) / (b - a))); return k * k * (3 - 2 * k); };
-      const place = p => ({ u: (p.lon - MAP.L0) / MAP.step / (MAP.cols - 1), v: (MAP.A0 - p.lat) / MAP.step / (ROWS - 1) });
-
-      let w = 0, h = 0, dpr = 1, visible = true, t = 0, narrow = false;
-      let shown = [], hover = null, glow = {};                 // places on screen now, the one under the pointer, hover fade
-      let mapW, mapH, top, cx0, cell;
-      let px = 0, py = 0;                                        // smoothed pointer, -1..1, for the gentle tilt
-      // each dot's warmth from the places nearby (worked out once)
-      land.forEach(d => {
-        d.u = d.c / (MAP.cols - 1); d.v = d.r / (ROWS - 1);
-        d.heat = 0; d.home = 0;
-        PLACES.forEach(p => {
-          const q = place(p), du = (d.u - q.u) * (MAP.cols / ROWS), dv = d.v - q.v, e = Math.exp(-(du * du + dv * dv) / .0035);
-          if (p.now) d.home = e; else d.heat = Math.max(d.heat, e);
-        });
-        d.hue = sstep(.12, .62, d.u);                            // rose on the left, gold on the right
-      });
-
-      const build = () => {
-        dpr = Math.min(devicePixelRatio || 1, 2);
-        w = canvas.clientWidth; h = canvas.clientHeight;
-        canvas.width = w * dpr; canvas.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        narrow = w < 300;   // phones (each half of the screen is under 300px)
-        // big and bleeding off the edges; on phones, zoom on Europe and Africa where most of the story is
-        mapW = narrow ? Math.max(w * 1.7, h * .58) : Math.max(w * 1.3, h * .9);
-        mapH = mapW * (ROWS / MAP.cols);
-        top = h * (narrow ? .3 : .25);
-        const focus = ((narrow ? 4 : -24) - MAP.L0) / MAP.step / (MAP.cols - 1);
-        cx0 = w * .5 + (.5 - focus) * mapW * .87;
-        cell = mapW / MAP.cols;
-      };
-      // flat map position (0..1) → screen, on a plane tilted away from the viewer; the pointer leans it a little
-      const project = (u, v) => {
-        const s = .72 + .28 * v + py * .035 * (v - .5);
-        return { x: cx0 + px * -18 * (1 - v * .5) + (u - .5) * mapW * s, y: top + py * -10 + mapH * (v * .9 + .1 * v * v), s };
-      };
-
-      const legPoint = (L, k) => {
-        const m = 1 - k;
-        return { x: m * m * L.a.x + 2 * m * k * L.c.x + k * k * L.b.x, y: m * m * L.a.y + 2 * m * k * L.c.y + k * k * L.b.y };
-      };
-      const strokeLeg = (L, k0, k1, style, width) => {
-        ctx.beginPath();
-        for (let i = 0; i <= 32; i++) { const p = legPoint(L, k0 + (k1 - k0) * i / 32); i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y); }
-        ctx.strokeStyle = style; ctx.lineWidth = width; ctx.stroke();
-      };
-      const rgba = (c, a) => `rgba(${c[0] | 0},${c[1] | 0},${c[2] | 0},${a.toFixed(3)})`;
-
-      const draw = (mx, my) => {
-        ctx.clearRect(0, 0, w, h);
-        const places = PLACES.map(p => { const q = place(p); return { ...p, ...project(q.u, q.v) }; });
-        shown = places;
-        const legs = places.slice(1).map((b, i) => {
-          const a = places[i], dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy);
-          return { a, b, c: { x: (a.x + b.x) / 2 + dy * .28, y: (a.y + b.y) / 2 - Math.abs(dx) * .28 - d * .04 } };
-        });
-
-        // where the traveller is right now
-        const LEG = 1.9, PAUSE = 2.4, cycle = legs.length * LEG + PAUSE;
-        const ph = reduce ? cycle : (t * .85) % cycle;
-        const legNow = Math.min(legs.length - 1, Math.floor(ph / LEG));
-        const kNow = ph < legs.length * LEG ? (ph - legNow * LEG) / LEG : 1;
-        const eNow = kNow < .5 ? 2 * kNow * kNow : 1 - Math.pow(-2 * kNow + 2, 2) / 2;
-        const comet = ph < legs.length * LEG ? legPoint(legs[legNow], eNow) : null;
-
-        // the light sweeping across, like daylight moving over the earth
-        const sweep = reduce ? -9 : ((t * .045) % 1.6) - .3;
-        const pulse = .5 + .5 * Math.sin(t * 1.6);
-        const R2cursor = Math.pow(Math.max(90, w * .15), 2), R2comet = Math.pow(Math.max(40, cell * 5), 2);
-
-        for (const d of land) {
-          const p = project(d.u, d.v);
-          if (p.x < -10 || p.x > w + 10 || p.y < -10 || p.y > h + 10) continue;
-          let a = .14 + .2 * p.s * p.s;                              // base: nearer is brighter
-          a += .07 * Math.sin(t * d.sp + d.ph);                     // shimmer
-          const sw = d.u - sweep; a += .32 * Math.exp(-(sw * sw) / .006);
-          a += .45 * d.heat + (.55 + .35 * pulse) * d.home;         // the places glow; home pulses
-          let lift = 0;
-          if (comet) { const dx = p.x - comet.x, dy = p.y - comet.y, q = dx * dx + dy * dy; if (q < R2comet * 4) { const k = Math.exp(-q / R2comet); a += .8 * k; lift += k; } }
-          { const dx = p.x - mx, dy = p.y - my, q = dx * dx + dy * dy; if (q < R2cursor) { const k = 1 - q / R2cursor; a += .55 * k * k; lift += k * k; } }
-          a = Math.min(1, Math.max(.05, a));
-          let col = mix(ROSE, GOLD, d.hue);
-          col = mix(col, CREAM, sstep(.55, 1, a) * .75);             // the brightest dots turn to warm white
-          ctx.fillStyle = rgba(col, a);
-          const r = Math.max(.6, cell * .22 * p.s) * (1 + .45 * Math.min(1, lift) + .25 * d.home);
-          ctx.beginPath(); ctx.arc(p.x, p.y - 2 * Math.min(1, lift), r, 0, 6.283); ctx.fill();
-        }
-
-        // the journey: a faint dashed route, then the traveller drawing each leg in light
-        ctx.setLineDash([2, 5]);
-        legs.forEach(L => strokeLeg(L, 0, 1, rgba(GOLD, .22), 1));
-        ctx.setLineDash([]);
-        legs.forEach((L, i) => {
-          const k = Math.min(1, Math.max(0, (ph - i * LEG) / LEG));
-          if (k <= 0) return;
-          const e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
-          const fade = ph > legs.length * LEG ? 1 - (ph - legs.length * LEG) / PAUSE : 1;
-          strokeLeg(L, 0, e, rgba(mix(ROSE, GOLD, .7), .55 * fade), 1.4);
-        });
-        if (comet) {
-          const g = ctx.createRadialGradient(comet.x, comet.y, 0, comet.x, comet.y, 22);
-          g.addColorStop(0, rgba(CREAM, 1)); g.addColorStop(.25, rgba(GOLD, .6)); g.addColorStop(1, rgba(GOLD, 0));
-          ctx.fillStyle = g; ctx.beginPath(); ctx.arc(comet.x, comet.y, 22, 0, 6.283); ctx.fill();
-        }
-
-        // the places
-        ctx.font = `500 ${narrow ? 8.5 : 10.5}px Inter, system-ui, sans-serif`;
-        ctx.textBaseline = 'middle';
-        if ('letterSpacing' in ctx) ctx.letterSpacing = narrow ? '1.4px' : '2.2px';
-        const pt = window.I18N && I18N.lang === 'pt';
-        const boxes = places.map(p => ({ x0: p.x - 8, x1: p.x + 8, y: p.y, own: p.name }));   // dots and placed labels: nothing overlaps
-        places.forEach(p => {
-          const hv = glow[p.name] = (glow[p.name] || 0) + ((hover === p.name ? 1 : 0) - (glow[p.name] || 0)) * .18;
-          const r = (p.now ? 4.5 : 3) + hv * 1.5;
-          if (hv > .02) {                                           // hovered: a ring that says "click me"
-            ctx.strokeStyle = rgba(CREAM, .75 * hv); ctx.lineWidth = 1.2;
-            ctx.beginPath(); ctx.arc(p.x, p.y, 9 + hv * 4, 0, 6.283); ctx.stroke();
-          }
-          if (p.now && !reduce) for (let j = 0; j < 2; j++) {          // Luanda: two rings rippling out
-            const k = (t * .45 + j * .5) % 1;
-            ctx.strokeStyle = rgba(GOLD, .6 * (1 - k)); ctx.lineWidth = 1;
-            ctx.beginPath(); ctx.arc(p.x, p.y, 6 + k * 30, 0, 6.283); ctx.stroke();
-          }
-          const halo = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.now ? 26 : 14);
-          halo.addColorStop(0, rgba(GOLD, p.now ? .45 : .25)); halo.addColorStop(1, rgba(GOLD, 0));
-          ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(p.x, p.y, p.now ? 26 : 14, 0, 6.283); ctx.fill();
-          ctx.fillStyle = '#100f0c'; ctx.beginPath(); ctx.arc(p.x, p.y, r + 2.5, 0, 6.283); ctx.fill();
-          ctx.fillStyle = rgba(p.now ? CREAM : GOLD, 1); ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 6.283); ctx.fill();
-          if ((narrow && !p.now && hv < .3) || p.x < 4 || p.x > w - 4) return;
-          const name = p.name.toUpperCase(), tail = p.now ? (pt ? 'AGORA' : 'NOW') : p.year;
-          const gapW = ctx.measureText('  ').width, nameW = ctx.measureText(name).width, tailW = ctx.measureText(tail).width;
-          const total = nameW + gapW + tailW;
-          // try beside the dot (its usual side), then above, below, the other side: first spot that is clear wins
-          const spots = [
-            { x: p.x + p.side * (r + 10) - (p.side < 0 ? total : 0), y: p.y },
-            { x: p.x - total / 2, y: p.y - 17 },
-            { x: p.x - total / 2, y: p.y + 17 },
-            { x: p.x - p.side * (r + 10) - (p.side > 0 ? total : 0), y: p.y },
-          ];
-          const clear = sp => sp.x > 8 && sp.x + total < w - 8 &&
-            !boxes.some(b => b.own !== p.name && b.x0 < sp.x + total + 6 && sp.x < b.x1 + 6 && Math.abs(b.y - sp.y) < 13);
-          const spot = spots.find(clear) || spots[0];
-          boxes.push({ x0: spot.x, x1: spot.x + total, y: spot.y });
-          // name in light, year in gold
-          ctx.textAlign = 'left';
-          ctx.shadowColor = 'rgba(10,10,8,.95)'; ctx.shadowBlur = 8;   // keeps labels readable over bright dots
-          ctx.fillStyle = `rgba(233,226,212,${Math.min(1, (p.now ? .95 : .78) + hv)})`; ctx.fillText(name, spot.x, spot.y);
-          ctx.fillStyle = rgba(GOLD, 1); ctx.fillText(tail, spot.x + nameW + gapW, spot.y);
-          if (hv > .02) {                                           // the role there, and an arrow to it
-            const role = (window.I18N ? I18N.t(p.role) : p.role) + '  →';
-            const f = ctx.font; ctx.font = `italic 400 ${narrow ? 13 : 16}px "Instrument Serif", Georgia, serif`;
-            if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
-            const rw = ctx.measureText(role).width, rx = Math.max(8, Math.min(w - 8 - rw, spot.x));
-            ctx.fillStyle = rgba(GOLD, hv); ctx.fillText(role, rx, spot.y + (spot.y < p.y ? -16 : 17));
-            ctx.font = f; if ('letterSpacing' in ctx) ctx.letterSpacing = narrow ? '1.4px' : '2.2px';
-          }
-          ctx.shadowBlur = 0;
-        });
-      };
-
-      // places are clickable: they open that part of the road on the Business page
-      const door = canvas.closest('.door');
-      const hit = (x, y, touch) => {
-        const r = canvas.getBoundingClientRect(), R = touch ? 30 : 22;
-        let best = null, bd = R * R;
-        shown.forEach(p => { const dx = p.x - (x - r.left), dy = p.y - (y - r.top), d = dx * dx + dy * dy; if (d < bd) { bd = d; best = p; } });
-        return best;
-      };
-      addEventListener('pointermove', e => {
-        const p = e.pointerType === 'mouse' ? hit(e.clientX, e.clientY) : null;
-        hover = p ? p.name : null;
-        door.classList.toggle('on-place', !!p);
-        const cur = document.getElementById('cursor'); if (cur) cur.classList.toggle('aim', !!p);
-      }, { passive: true });
-      door.addEventListener('click', e => {
-        const p = hit(e.clientX, e.clientY, e.pointerType !== 'mouse');
-        if (!p) return;                                           // anywhere else: the normal Business link
-        e.preventDefault();
-        location.href = `business/#${p.job}`;
-      });
-
-      build(); addEventListener('resize', build);
-      document.fonts && document.fonts.ready.then(build);
-      new IntersectionObserver(([e]) => visible = e.isIntersecting).observe(canvas);
-      const frame = () => {
-        const r = canvas.getBoundingClientRect();
-        const lx = mouseX - r.left, ly = mouseY - r.top;
-        // lean toward the pointer only while it is over the opening screen
-        const over = mouseY > -9000 && ly > -r.height * .2 && ly < r.height * 1.2;
-        const tx = over ? Math.max(-1, Math.min(1, (lx / w - .5) * 2)) : 0, ty = over ? Math.max(-1, Math.min(1, (ly / h - .5) * 2)) : 0;
-        px += (tx - px) * .05; py += (ty - py) * .05;
-        draw(lx, ly);
-      };
-      const loop = () => { if (visible) { t += .016; frame(); } requestAnimationFrame(loop); };
-      if (reduce) { t = 4; frame(); } else loop();
-    })();
 
     /* ---- Cursor ---- */
     const cursor = document.getElementById('cursor');

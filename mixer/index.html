@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Learn to Beatmatch — Virtual DJ Mixer | Call me Monte</title>
+  <meta name="description" content="A free virtual DJ mixer by Tiago Monte. Two decks, real sound in your browser, and a step-by-step guide to beatmatching: match the tempo, line up the kicks, blend with the crossfader.">
+  <meta name="author" content="Tiago Monte">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="alternate" hreflang="en" href="https://callmemonte.com/mixer/">
+  <link rel="alternate" hreflang="pt" href="https://callmemonte.com/mixer/?lang=pt">
+  <link rel="alternate" hreflang="x-default" href="https://callmemonte.com/mixer/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Call me Monte">
+  <meta property="og:title" content="Learn to Beatmatch — Virtual DJ Mixer | Call me Monte">
+  <meta property="og:description" content="A free virtual DJ mixer by Tiago Monte. Two decks, real sound in your browser, and a step-by-step guide to beatmatching: match the tempo, line up the kicks, blend with the crossfader.">
+  <meta property="og:url" content="https://callmemonte.com/mixer/">
+  <meta property="og:image" content="https://callmemonte.com/og-tiago-monte.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="pt_PT">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Learn to Beatmatch — Virtual DJ Mixer | Call me Monte">
+  <meta name="twitter:description" content="A free virtual DJ mixer by Tiago Monte. Two decks, real sound in your browser, and a step-by-step guide to beatmatching: match the tempo, line up the kicks, blend with the crossfader.">
+  <meta name="twitter:image" content="https://callmemonte.com/og-tiago-monte.jpg">
+  <meta name="theme-color" content="#0d0d0b">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23e9e2d4'/%3E%3Ctext x='32' y='42' font-family='Impact,sans-serif' font-size='34' fill='%230d0d0b' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "WebApplication", "@id": "https://callmemonte.com/mixer/#app", "name": "Learn to Beatmatch",
+        "url": "https://callmemonte.com/mixer/", "applicationCategory": "EducationalApplication", "operatingSystem": "Any web browser",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "@id": "https://callmemonte.com/#person", "name": "Tiago Monte" } },
+      { "@type": "BreadcrumbList", "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Tiago Monte", "item": "https://callmemonte.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Music", "item": "https://callmemonte.com/art/" },
+        { "@type": "ListItem", "position": 3, "name": "Mixer", "item": "https://callmemonte.com/mixer/" } ] }
+    ]
+  }
+  </script>
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0d0b; --bg-2: #151512; --card: #1a1a17;
+      --text: #e9e2d4; --muted: #8f897d; --line: #2c2b27;
+      --accent: #df8fb0; --biz: #d9b46c;   /* Frequency colour, same as the Frequency side on the home page */
+      --display: "Anton", Impact, "Arial Narrow", sans-serif;
+      --serif: "Instrument Serif", Georgia, serif;
+      --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --pad: clamp(16px, 4vw, 48px);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; }
+    ::selection { background: var(--accent); color: var(--bg); }
+
+    .grain {
+      position: fixed; inset: -50%; z-index: 100; pointer-events: none; opacity: .06;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      animation: grain 1.2s steps(6) infinite;
+    }
+    @keyframes grain { 0%,100% { transform: translate(0,0); } 20% { transform: translate(-3%,2%); } 40% { transform: translate(2%,-3%); } 60% { transform: translate(-2%,-1%); } 80% { transform: translate(3%,3%); } }
+
+    /* nav */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 20px var(--pad); transition: background .4s; }
+    nav.solid { background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: blur(10px); }
+    .logo { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--text); color: var(--bg); font-family: var(--display); font-size: 17px; }
+    .pill { border: 1px solid var(--text); border-radius: 999px; padding: 10px 20px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; font-weight: 500; transition: background .3s, color .3s; display: inline-flex; gap: 10px; align-items: center; }
+    .pill:hover { background: var(--text); color: var(--bg); }
+
+    /* hero */
+    .hero { padding: 150px var(--pad) 60px; position: relative; }
+    .tag { font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); display: flex; gap: 14px; align-items: center; margin-bottom: 22px; }
+    .tag b { color: var(--accent); font-weight: 500; }
+    h1 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(88px, 20vw, 300px); line-height: .82; letter-spacing: -.01em; }
+    h1 span { display: inline-block; }
+    .js h1 span { transform: translateY(105%); animation: rise 1.1s cubic-bezier(.2,.8,.2,1) forwards; }
+    h1 .wrap { display: block; overflow: hidden; }
+    @keyframes rise { to { transform: none; } }
+    .hero-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 24px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); }
+    .lede { font-family: var(--serif); font-size: clamp(22px, 2.4vw, 32px); line-height: 1.25; max-width: 620px; }
+    .lede i { color: var(--accent); }
+    .count { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+    .count b { color: var(--text); font-weight: 500; }
+
+    .nav-links { display: flex; gap: 32px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+    .nav-links a { color: var(--muted); transition: color .2s; }
+    .nav-links a:hover, .nav-links a[aria-current] { color: var(--text); }
+    .nav-links a[aria-current] { box-shadow: inset 0 -1px var(--accent); }
+    @media (max-width: 600px) { .nav-links { gap: 20px; font-size: 12px; } }
+
+
+    /* section heads */
+    .sec { padding: clamp(80px, 11vw, 150px) var(--pad) 0; }
+    .sec h2.big { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(48px, 8vw, 128px); line-height: .9; margin-bottom: 48px; }
+    .sec h2.big em { font-family: var(--serif); text-transform: none; color: var(--accent); }
+
+
+    /* ---------- Mixer page ---------- */
+    :root { --a: #df8fb0; --b: #7fcbd8; --ok: #8fd19e; }
+    .hero { padding-bottom: 30px; }
+    h1 { font-size: clamp(56px, 14vw, 200px); }
+
+    /* the guide */
+    .guide { display: grid; grid-template-columns: 1fr auto; gap: 20px 28px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: clamp(18px, 2.6vw, 28px); margin: 0 var(--pad); }
+    .guide .step-no { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
+    .guide h2 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(26px, 3vw, 40px); line-height: 1; margin: 6px 0 8px; }
+    .guide p { color: var(--muted); font-size: 16px; max-width: 760px; }
+    .guide p b { color: var(--text); font-weight: 500; }
+    .guide .tip { margin-top: 10px; font-family: var(--serif); font-style: italic; font-size: 19px; color: var(--accent); min-height: 1.3em; }
+    .guide .tip.good { color: var(--ok); }
+    .dots-progress { display: flex; gap: 6px; margin-top: 14px; }
+    .dots-progress i { width: 22px; height: 4px; border-radius: 2px; background: var(--line); transition: background .4s; }
+    .dots-progress i.done { background: var(--accent); }
+    .dots-progress i.now { background: color-mix(in srgb, var(--accent) 55%, var(--line)); }
+    .g-btns { display: flex; flex-direction: column; gap: 8px; }
+    .btn { font: 500 12px var(--sans); letter-spacing: .14em; text-transform: uppercase; padding: 12px 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg-2); color: var(--text); cursor: pointer; transition: background .3s, color .3s, border-color .3s; white-space: nowrap; }
+    .btn:hover { border-color: var(--accent); }
+    .btn.primary { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+    .btn:disabled { opacity: .35; cursor: default; }
+    @media (max-width: 700px) { .guide { grid-template-columns: 1fr; } .g-btns { flex-direction: row; flex-wrap: wrap; } }
+
+    /* the rig */
+    .rig { display: grid; grid-template-columns: 1fr 230px 1fr; gap: 16px; padding: 18px var(--pad) 0; align-items: stretch; }
+    .deck { --c: var(--a); position: relative; background: linear-gradient(180deg, #1b1a17, #141311); border: 1px solid var(--line); border-radius: 24px; padding: 18px; display: grid; grid-template-columns: 1fr 64px; grid-template-rows: auto 1fr auto; gap: 14px; transition: border-color .4s, box-shadow .4s; }
+    .deck.b { --c: var(--b); }
+    .deck.hint { border-color: var(--c); box-shadow: 0 0 0 1px var(--c), 0 0 40px -14px var(--c); }
+    .deck-head { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+    .deck-head b { font-family: var(--display); font-weight: 400; font-size: 22px; letter-spacing: .04em; color: var(--c); }
+    .deck-head small { color: var(--muted); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+    .bpm { font-family: var(--display); font-size: 30px; font-variant-numeric: tabular-nums; }
+    .bpm em { font-family: var(--sans); font-style: normal; font-size: 11px; letter-spacing: .14em; color: var(--muted); margin-left: 4px; }
+    .platter-wrap { display: grid; place-items: center; }
+    .platter {
+      position: relative; width: min(100%, 280px); aspect-ratio: 1; border-radius: 50%; cursor: grab; touch-action: none; user-select: none;
+      background: radial-gradient(circle, #222 0 14%, transparent 15%), repeating-radial-gradient(circle, #111 0 1.5px, #1d1c19 1.5px 3px), #161512;
+      box-shadow: 0 0 0 1px #2c2b27, inset 0 0 0 9px #0d0c0a, inset 0 0 0 10px #2c2b27, 0 30px 60px -30px #000;
+    }
+    .platter:active { cursor: grabbing; }
+    .platter .disc { position: absolute; inset: 0; border-radius: 50%; }
+    .platter .disc::before { content: ""; position: absolute; inset: 12px; border-radius: 50%; background: conic-gradient(from 300deg, transparent 0 10%, rgba(255,255,255,.08) 14%, transparent 22% 60%, rgba(255,255,255,.05) 66%, transparent 74%); }
+    .platter .disc::after { content: ""; position: absolute; top: 12px; left: 50%; width: 4px; height: 26%; margin-left: -2px; border-radius: 2px; background: var(--c); box-shadow: 0 0 12px var(--c); }
+    .platter .label { position: absolute; inset: 34%; border-radius: 50%; background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--c) 70%, #fff), var(--c) 45%, color-mix(in srgb, var(--c) 50%, #000)); display: grid; place-items: center; font-family: var(--display); color: #111; font-size: clamp(16px, 2vw, 22px); }
+    .lights { grid-column: 1; display: flex; gap: 8px; justify-content: center; }
+    .lights i { width: 14px; height: 14px; border-radius: 50%; background: #262521; transition: background .08s, box-shadow .08s; }
+    .lights i.on { background: var(--c); box-shadow: 0 0 12px var(--c); }
+    .lights i.one.on { background: #fff; box-shadow: 0 0 14px #fff; }
+    .deck-btns { grid-column: 1; display: grid; gap: 8px; justify-items: center; }
+    .deck-btns .row { display: flex; gap: 8px; justify-content: center; }
+    .cue { min-width: 72px; }
+    .cue.at { border-color: var(--biz); color: var(--biz); }
+    .cue.blink { animation: cueblink 1s steps(2, jump-none) infinite; }
+    .cue.held { background: var(--biz); border-color: var(--biz); color: var(--bg); animation: none; }
+    @keyframes cueblink { 0% { border-color: var(--biz); color: var(--biz); } 100% { border-color: var(--line); color: var(--text); } }
+    .sync { min-width: 72px; }
+    .sync.on { border-color: var(--c); color: var(--c); box-shadow: 0 0 14px -4px var(--c); }
+    .sync.flash { background: var(--c); color: var(--bg); }
+    .play { min-width: 96px; }
+    .play.on { background: var(--c); color: var(--bg); border-color: var(--c); }
+    .nudge { width: 44px; padding: 12px 0; text-align: center; }
+    /* pitch fader */
+    .pitch { grid-column: 2; grid-row: 2 / 4; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .pitch label { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); text-align: center; }
+    .vfader { -webkit-appearance: none; appearance: none; writing-mode: vertical-lr; direction: rtl; width: 34px; flex: 1; min-height: 200px; background: transparent; cursor: pointer; }
+    .vfader::-webkit-slider-runnable-track { width: 6px; border-radius: 3px; background: linear-gradient(#2c2b27, #2c2b27) center / 6px 100% no-repeat; }
+    .vfader::-webkit-slider-thumb { -webkit-appearance: none; width: 34px; height: 18px; border-radius: 4px; background: linear-gradient(#d8d2c4, #8f897d); border: 1px solid #0d0c0a; box-shadow: 0 0 0 1px #2c2b27; }
+    .vfader::-moz-range-track { width: 6px; background: #2c2b27; border-radius: 3px; }
+    .vfader::-moz-range-thumb { width: 34px; height: 18px; border-radius: 4px; background: linear-gradient(#d8d2c4, #8f897d); border: 1px solid #0d0c0a; }
+    .pct { font-variant-numeric: tabular-nums; font-size: 13px; }
+
+    /* the mixer in the middle */
+    .mixer { background: linear-gradient(180deg, #1b1a17, #141311); border: 1px solid var(--line); border-radius: 24px; padding: 18px 16px; display: flex; flex-direction: column; gap: 18px; }
+    .mixer h3 { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); font-weight: 500; text-align: center; }
+    .phase { position: relative; height: 44px; border-radius: 12px; background: #0f0e0c; border: 1px solid var(--line); overflow: hidden; }
+    .phase::before { content: ""; position: absolute; left: 50%; top: 6px; bottom: 6px; width: 2px; margin-left: -1px; background: var(--ok); opacity: .7; }
+    .phase .marker { position: absolute; top: 8px; bottom: 8px; width: 10px; margin-left: -5px; left: 50%; border-radius: 4px; background: var(--b); box-shadow: 0 0 12px var(--b); transition: background .3s; }
+    .phase .marker.locked { background: var(--ok); box-shadow: 0 0 14px var(--ok); }
+    .phase-read { text-align: center; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; min-height: 1.4em; }
+    .phase-read b { color: var(--text); font-weight: 500; }
+    .bpm-diff { text-align: center; font-family: var(--display); font-size: 26px; font-variant-numeric: tabular-nums; }
+    .bpm-diff.ok { color: var(--ok); }
+    .channels { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; justify-items: center; }
+    .channels label { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+    .channels .vfader { min-height: 120px; }
+    .channels-wrap h3 { margin-bottom: 12px; }
+    .strip { display: grid; justify-items: center; gap: 6px; }
+    .eq { display: grid; gap: 6px; margin-bottom: 6px; }
+    .kn { display: grid; justify-items: center; gap: 2px; }
+    .kn span { font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+    .knob {
+      --r: 0deg; position: relative; width: 40px; height: 40px; border-radius: 50%; cursor: ns-resize; touch-action: none; user-select: none;
+      background: radial-gradient(circle at 40% 32%, #4a4842, #24231f 62%, #161512);
+      box-shadow: 0 0 0 1px #0d0c0a, 0 0 0 3px #24231f, 0 6px 14px -6px #000; transition: box-shadow .3s;
+    }
+    .knob::before { content: ""; position: absolute; inset: -6px; border-radius: 50%; background: conic-gradient(from 225deg, #3a3833 0 270deg, transparent 270deg); -webkit-mask: radial-gradient(closest-side, transparent 88%, #000 91% 97%, transparent 100%); mask: radial-gradient(closest-side, transparent 88%, #000 91% 97%, transparent 100%); }
+    .knob i { position: absolute; inset: 0; transform: rotate(var(--r)); }
+    .knob i::after { content: ""; position: absolute; left: 50%; top: 4px; width: 3px; height: 12px; margin-left: -1.5px; border-radius: 2px; background: var(--text); }
+    .knob:focus-visible { outline: 1px solid var(--accent); outline-offset: 8px; }
+    .strip:first-child .knob.cut i::after { background: var(--a); } .strip:last-child .knob.cut i::after { background: var(--b); }
+    .knob.kill { box-shadow: 0 0 0 1px #0d0c0a, 0 0 0 3px #5a2b2b, 0 0 16px -4px #e0605a; }
+    .knob.kill i::after { background: #e0605a; }
+    .xfade { display: grid; gap: 8px; }
+    .xfade .ends { display: flex; justify-content: space-between; font-family: var(--display); font-size: 15px; }
+    .xfade .ends span:first-child { color: var(--a); } .xfade .ends span:last-child { color: var(--b); }
+    .hfader { -webkit-appearance: none; appearance: none; width: 100%; height: 34px; background: transparent; cursor: pointer; }
+    .hfader::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--a), #2c2b27 35% 65%, var(--b)); }
+    .hfader::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 34px; margin-top: -14px; border-radius: 4px; background: linear-gradient(90deg, #d8d2c4, #8f897d); border: 1px solid #0d0c0a; }
+    .hfader::-moz-range-track { height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--a), #2c2b27 35% 65%, var(--b)); }
+    .hfader::-moz-range-thumb { width: 22px; height: 34px; border-radius: 4px; background: linear-gradient(90deg, #d8d2c4, #8f897d); border: 1px solid #0d0c0a; }
+    .hint-glow { outline: 2px solid var(--accent); outline-offset: 6px; border-radius: 10px; animation: halo 1.6s ease-in-out infinite; }
+    @keyframes halo { 50% { outline-color: transparent; } }
+
+    @media (max-width: 960px) {
+      .rig { grid-template-columns: 1fr 1fr; }
+      .mixer { grid-column: 1 / -1; order: 3; display: grid; grid-template-columns: 1fr 1fr; align-items: start; }
+      .mixer .xfade, .mixer .phase-block { grid-column: 1 / -1; }
+      .mixer > * { grid-column: 1 / -1; }
+      .eq { grid-auto-flow: column; gap: 16px; }
+    }
+    @media (max-width: 640px) {
+      .rig { grid-template-columns: 1fr; }
+      .platter { width: min(100%, 230px); }
+      .vfader { min-height: 160px; }
+      .knob { width: 34px; height: 34px; } .knob i::after { height: 10px; }
+      .eq { gap: 14px; }
+    }
+
+    .notes { padding: clamp(60px, 8vw, 110px) var(--pad) 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    @media (max-width: 1200px) { .notes { grid-template-columns: repeat(2, 1fr); } }
+    .notes article { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 24px; }
+    .notes h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 24px; margin-bottom: 8px; }
+    .notes p { color: var(--muted); font-size: 15.5px; }
+    .notes p b { color: var(--text); font-weight: 500; }
+    @media (max-width: 860px) { .notes { grid-template-columns: 1fr; } }
+    .closing-links { text-align: center; padding: clamp(80px, 10vw, 130px) var(--pad); display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+    .other { display: inline-flex; align-items: center; gap: 14px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; padding: 12px 22px; border-radius: 999px; color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 50%, transparent); transition: background .35s, color .35s; }
+    .other:hover { background: var(--accent); color: var(--bg); }
+    footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 28px var(--pad); border-top: 1px solid var(--line); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .party { position: fixed; inset: 0; pointer-events: none; z-index: 60; }
+  </style>
+  <link rel="stylesheet" href="../site.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <nav id="nav">
+    <a class="logo" href="../" aria-label="Home">M</a>
+    <div class="nav-links">
+      <a href="../art/">Music</a>
+      <a href="../business/">Business</a>
+      <a href="../ai/">AI</a>
+    </div>
+    <a class="pill" href="../"><span aria-hidden="true">←</span> Home</a>
+  </nav>
+
+  <header class="hero">
+    <p class="tag"><b>Music</b> Learn to mix</p>
+    <h1><span class="wrap"><span>The decks</span></span></h1>
+    <div class="hero-foot">
+      <p class="lede">Beatmatching is the first thing every DJ learns. <i>Two tracks, one rhythm. Let’s do it together.</i></p>
+      <p class="count">🎧 Headphones or speakers on</p>
+    </div>
+  </header>
+
+  <section class="guide" id="guide" aria-live="polite">
+    <div>
+      <span class="step-no" id="gNo"></span>
+      <h2 id="gTitle"></h2>
+      <p id="gText"></p>
+      <p class="tip" id="gTip"></p>
+      <div class="dots-progress" id="gDots" aria-hidden="true"></div>
+    </div>
+    <div class="g-btns">
+      <button class="btn primary" type="button" id="gNext">Next</button>
+      <button class="btn" type="button" id="gRestart">Start over</button>
+    </div>
+  </section>
+
+  <section class="rig" aria-label="DJ mixer">
+    <div class="deck a" id="deckA">
+      <div class="deck-head"><span><b>Deck A</b> <small>Deep groove</small></span><span class="bpm" id="bpmA">124.0<em>BPM</em></span></div>
+      <div class="platter-wrap"><div class="platter" id="platA" role="slider" aria-label="Deck A jog wheel" aria-valuetext="0"><div class="disc" id="discA"></div><div class="label">A</div></div></div>
+      <div class="pitch"><label for="pitchA">Tempo</label><input class="vfader" type="range" id="pitchA" min="-8" max="8" step="0.05" value="0" aria-label="Deck A tempo"><span class="pct" id="pctA">0.0%</span></div>
+      <div class="lights" id="lightsA" aria-hidden="true"><i class="one"></i><i></i><i></i><i></i></div>
+      <div class="deck-btns">
+        <div class="row"><button class="btn cue" type="button" id="cueA" title="Hold to preview from the cue point. Let go to jump back.">Cue</button><button class="btn play" type="button" id="playA">Play</button></div>
+        <div class="row"><button class="btn nudge" type="button" data-deck="A" data-nudge="-1" aria-label="Nudge deck A back">‹</button><button class="btn sync" type="button" id="syncA" aria-pressed="false" title="Match this deck’s tempo and beat to the other deck">Sync</button><button class="btn nudge" type="button" data-deck="A" data-nudge="1" aria-label="Nudge deck A forward">›</button></div>
+      </div>
+    </div>
+
+    <div class="mixer">
+      <div class="phase-block">
+        <h3>Beat alignment</h3>
+        <div class="phase" id="phase" aria-hidden="true"><span class="marker" id="phaseMarker"></span></div>
+        <p class="phase-read" id="phaseRead">Start both decks to compare</p>
+      </div>
+      <div>
+        <h3>Tempo difference</h3>
+        <p class="bpm-diff" id="bpmDiff">—</p>
+      </div>
+      <div class="channels-wrap">
+      <h3>EQ &amp; volume</h3>
+      <div class="channels">
+        <div class="strip"><div class="eq"><div class="kn"><div class="knob" role="slider" tabindex="0" id="eqAhi" data-deck="A" data-band="hi" aria-label="Deck A treble" aria-valuemin="-1" aria-valuemax="1" aria-valuenow="0" aria-valuetext="0 dB"><i></i></div><span>Hi</span></div><div class="kn"><div class="knob" role="slider" tabindex="0" id="eqAmid" data-deck="A" data-band="mid" aria-label="Deck A mids" aria-valuemin="-1" aria-valuemax="1" aria-valuenow="0" aria-valuetext="0 dB"><i></i></div><span>Mid</span></div><div class="kn"><div class="knob" role="slider" tabindex="0" id="eqAlow" data-deck="A" data-band="low" aria-label="Deck A bass" aria-valuemin="-1" aria-valuemax="1" aria-valuenow="0" aria-valuetext="0 dB"><i></i></div><span>Low</span></div></div><input class="vfader" type="range" id="volA" min="0" max="1" step="0.01" value="0.85" aria-label="Deck A volume"><label for="volA">Vol A</label></div>
+        <div class="strip"><div class="eq"><div class="kn"><div class="knob" role="slider" tabindex="0" id="eqBhi" data-deck="B" data-band="hi" aria-label="Deck B treble" aria-valuemin="-1" aria-valuemax="1" aria-valuenow="0" aria-valuetext="0 dB"><i></i></div><span>Hi</span></div><div class="kn"><div class="knob" role="slider" tabindex="0" id="eqBmid" data-deck="B" data-band="mid" aria-label="Deck B mids" aria-valuemin="-1" aria-valuemax="1" aria-valuenow="0" aria-valuetext="0 dB"><i></i></div><span>Mid</span></div><div class="kn"><div class="knob" role="slider" tabindex="0" id="eqBlow" data-deck="B" data-band="low" aria-label="Deck B bass" aria-valuemin="-1" aria-valuemax="1" aria-valuenow="0" aria-valuetext="0 dB"><i></i></div><span>Low</span></div></div><input class="vfader" type="range" id="volB" min="0" max="1" step="0.01" value="0.85" aria-label="Deck B volume"><label for="volB">Vol B</label></div>
+      </div>
+      </div>
+      <div class="xfade" id="xfadeBox">
+        <h3>Crossfader</h3>
+        <input class="hfader" type="range" id="xfade" min="0" max="1" step="0.01" value="0.5" aria-label="Crossfader">
+        <div class="ends"><span>A</span><span>B</span></div>
+      </div>
+    </div>
+
+    <div class="deck b" id="deckB">
+      <div class="deck-head"><span><b>Deck B</b> <small>Afro percussion</small></span><span class="bpm" id="bpmB">118.0<em>BPM</em></span></div>
+      <div class="platter-wrap"><div class="platter" id="platB" role="slider" aria-label="Deck B jog wheel" aria-valuetext="0"><div class="disc" id="discB"></div><div class="label">B</div></div></div>
+      <div class="pitch"><label for="pitchB">Tempo</label><input class="vfader" type="range" id="pitchB" min="-8" max="8" step="0.05" value="0" aria-label="Deck B tempo"><span class="pct" id="pctB">0.0%</span></div>
+      <div class="lights" id="lightsB" aria-hidden="true"><i class="one"></i><i></i><i></i><i></i></div>
+      <div class="deck-btns">
+        <div class="row"><button class="btn cue" type="button" id="cueB" title="Hold to preview from the cue point. Let go to jump back.">Cue</button><button class="btn play" type="button" id="playB">Play</button></div>
+        <div class="row"><button class="btn nudge" type="button" data-deck="B" data-nudge="-1" aria-label="Nudge deck B back">‹</button><button class="btn sync" type="button" id="syncB" aria-pressed="false" title="Match this deck’s tempo and beat to the other deck">Sync</button><button class="btn nudge" type="button" data-deck="B" data-nudge="1" aria-label="Nudge deck B forward">›</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="notes">
+    <article><h3>Why beatmatch?</h3><p>When two tracks play at the same speed with their kicks landing together, you can blend them for as long as you like. That smooth handover is what keeps a dance floor moving.</p></article>
+    <article><h3>Listen first</h3><p>Two kicks slightly out of time sound like a galloping horse: “ba-dum, ba-dum”. When they’re locked, the two kicks become one, solid and punchy.</p></article>
+    <article><h3>Small moves</h3><p>Real DJs fix drift with tiny touches: a small push or drag on the jog wheel, a fraction of a percent on the tempo fader. Patience beats big moves.</p></article>
+    <article><h3>Cue, EQ, Sync</h3><p><b>Cue</b>: hold it to preview the track from your cue point, let go to jump back. <b>EQ</b>: turn the LOW down on the incoming track so two basslines don’t clash. <b>Sync</b>: matches tempo and beat for you. Handy, but learn it by ear first.</p></article>
+  </section>
+
+  <section class="closing-links">
+    <a class="other" href="../art/">Music by Monte <span aria-hidden="true">→</span></a>
+  </section>
+
+  <footer>
+    <span>© <span id="year">2026</span> Tiago Monte</span>
+    <span>callmemonte.com</span>
+  </footer>
+  <canvas class="party" id="party" aria-hidden="true"></canvas>
+
+  <script src="../i18n.js"></script>
+  <script src="../site.js"></script>
+  <script src="mixer.js"></script>
+</body>
+</html>

@@ -137,7 +137,7 @@
     .live.off i { background: var(--down); animation: none; }
 
     /* market at a glance */
-    .glance { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .glance { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
     .tile { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 22px 22px 20px; min-height: 150px; display: flex; flex-direction: column; gap: 8px; }
     .tile dt { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
     .tile dd { font-family: var(--display); font-size: clamp(30px, 3.2vw, 46px); line-height: 1; }
@@ -146,7 +146,9 @@
     .mood { position: relative; }
     .mood svg { width: 100%; max-width: 200px; height: auto; display: block; margin-top: -4px; }
     .mood .val { font-family: var(--display); font-size: 34px; }
-    @media (max-width: 960px) { .glance { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 960px) { .glance { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 420px) { .tile { padding: 18px 16px; } .tile dd { font-size: 26px; } .tile dt { letter-spacing: .14em; } }
+    .tile { min-width: 0; overflow-wrap: anywhere; }
 
     /* table toolbar */
     .bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; margin: 56px 0 18px; }
@@ -280,6 +282,7 @@
       .js h1 span, .js .reveal { transform: none; opacity: 1; }
     }
   </style>
+  <link rel="stylesheet" href="../site.css">
 </head>
 <body>
   <div class="grain" aria-hidden="true"></div>
@@ -289,6 +292,7 @@
     <div class="nav-links">
       <a href="../art/">Music</a>
       <a href="../business/">Business</a>
+      <a href="../ai/">AI</a>
     </div>
     <a class="pill" href="../"><span aria-hidden="true">←</span> Home</a>
   </nav>
@@ -375,6 +379,7 @@
   </footer>
 
   <script src="../i18n.js"></script>
+  <script src="../site.js"></script>
   <script>
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const API = 'https://api.coingecko.com/api/v3';

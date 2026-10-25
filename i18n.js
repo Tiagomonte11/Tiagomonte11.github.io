@@ -214,6 +214,162 @@
     'Ask': 'Perguntar',
     'Popular questions': 'Perguntas populares',
 
+    // AI page, mixer and the jog wheel
+    "Spin me · Learn to mix · Spin me · Learn to mix ·": "Gire-me · Aprenda a misturar · Gire-me · Aprenda ·",
+    "Try the DJ mixer": "Experimentar a mesa de DJ",
+    "AI: news, games and milestones": "IA: notícias, jogos e marcos",
+    "Try the decks": "Experimentar os pratos",
+    "AI News, Games & Milestones | Call me Monte": "IA: Notícias, Jogos & Marcos | Call me Monte",
+    "Live AI news from around the world, games where you play against and teach real AI, and how AI changed chess, medicine, translation and more. A free AI hub by Tiago Monte.": "Notícias de IA ao vivo de todo o mundo, jogos em que joga contra uma IA real e a ensina, e como a IA mudou o xadrez, a medicina, a tradução e muito mais. Um espaço gratuito sobre IA de Tiago Monte.",
+    "News, games and the story so far": "Notícias, jogos e a história até aqui",
+    "The breakthroughs, as they happen.": "As descobertas, à medida que acontecem.",
+    "Then play with it, and see how far it’s come.": "Depois brinque com ela e veja até onde já chegou.",
+    "Updated live": "Atualizado ao vivo",
+    "Latest news": "Últimas notícias",
+    "What’s new": "O que há de novo",
+    "in AI": "na IA",
+    "News source": "Fonte de notícias",
+    "Worldwide": "Mundo",
+    "Tech community": "Comunidade tech",
+    "Refresh the news": "Atualizar as notícias",
+    "Play with AI": "Brincar com IA",
+    "Train your mind,": "Treine a mente,",
+    "train a machine": "treine uma máquina",
+    "Games": "Jogos",
+    "Out-think the machine": "Engane a máquina",
+    "Teach a neuron": "Ensine um neurónio",
+    "Which came first?": "O que veio primeiro?",
+    "Play rock, paper, scissors against an AI that studies your habits as you go. It can’t see your move; it only learns your patterns. Can you stay unpredictable?": "Jogue pedra, papel, tesoura contra uma IA que estuda os seus hábitos enquanto joga. Não vê a sua jogada; só aprende os seus padrões. Consegue manter-se imprevisível?",
+    "People are terrible at being random. This is how recommendation apps learn what you’ll click next.": "As pessoas são péssimas a ser aleatórias. É assim que as aplicações de recomendações aprendem em que vai clicar a seguir.",
+    "Pick a move": "Escolha uma jogada",
+    "Rock": "Pedra",
+    "Paper": "Papel",
+    "Scissors": "Tesoura",
+    "The AI is still studying you…": "A IA ainda o está a estudar…",
+    "Tap the board to drop dots of each colour. A small neural network, running right here in your browser, keeps adjusting itself until it can tell your colours apart. The shading shows what it believes.": "Toque no quadro para pôr pontos de cada cor. Uma pequena rede neuronal, a funcionar aqui mesmo no seu navegador, vai-se ajustando até conseguir distinguir as cores. O sombreado mostra aquilo em que acredita.",
+    "This is how AI learns from examples: guess, check, nudge, repeat, thousands of times a second.": "É assim que a IA aprende com exemplos: adivinha, confirma, ajusta, repete, milhares de vezes por segundo.",
+    "Neural network board": "Quadro da rede neuronal",
+    "Pink": "Rosa",
+    "Blue": "Azul",
+    "Circle": "Círculo",
+    "Corners": "Cantos",
+    "Clear": "Limpar",
+    "Two moments from tech and AI history. Pick the one that happened first. Some of these will surprise you.": "Dois momentos da história da tecnologia e da IA. Escolha o que aconteceu primeiro. Alguns vão surpreendê-lo.",
+    "Hint: the first chatbot is older than the Moon landing.": "Dica: o primeiro chatbot é mais antigo do que a chegada à Lua.",
+    "or": "ou",
+    "Next pair →": "Par seguinte →",
+    "Before & after": "Antes & depois",
+    "How AI": "Como a IA",
+    "changed the game": "mudou o jogo",
+    "Tap to see after ↻": "Toque para ver o depois ↻",
+    "Before": "Antes",
+    "Before · 1997": "Antes · 1997",
+    "Before · 2015": "Antes · 2015",
+    "Before · 50 years": "Antes · 50 anos",
+    "Before · 2011": "Antes · 2011",
+    "Before · 2004": "Antes · 2004",
+    "Before · 1966": "Antes · 1966",
+    "Before · 2016": "Antes · 2016",
+    "Before · 1950": "Antes · 1950",
+    "After · today": "Depois · hoje",
+    "After · 2016": "Depois · 2016",
+    "After · 2020 – 2024": "Depois · 2020 – 2024",
+    "After · 2015": "Depois · 2015",
+    "After · 2022": "Depois · 2022",
+    "After · 2023": "Depois · 2023",
+    "After · 2016 →": "Depois · 2016 →",
+    "After · 2025": "Depois · 2025",
+    "Chess": "Xadrez",
+    "Go": "Go",
+    "Proteins": "Proteínas",
+    "Seeing": "Visão",
+    "Driving": "Condução",
+    "Chatbots": "Chatbots",
+    "Weather": "Meteorologia",
+    "Translation": "Tradução",
+    "The test": "O teste",
+    "Chess: before and after AI": "Xadrez: antes e depois da IA",
+    "Go: before and after AI": "Go: antes e depois da IA",
+    "Proteins: before and after AI": "Proteínas: antes e depois da IA",
+    "Seeing: before and after AI": "Visão: antes e depois da IA",
+    "Driving: before and after AI": "Condução: antes e depois da IA",
+    "Chatbots: before and after AI": "Chatbots: antes e depois da IA",
+    "Weather: before and after AI": "Meteorologia: antes e depois da IA",
+    "Translation: before and after AI": "Tradução: antes e depois da IA",
+    "The Turing test: before and after AI": "O teste de Turing: antes e depois da IA",
+    "It took IBM a room-sized supercomputer, Deep Blue, to beat world champion Garry Kasparov. The world called it a turning point.": "A IBM precisou de um supercomputador do tamanho de uma sala, o Deep Blue, para vencer o campeão mundial Garry Kasparov. O mundo chamou-lhe um ponto de viragem.",
+    "A free chess app on a phone now plays far stronger than any human ever has. Top players train with AI to find new ideas.": "Hoje, uma aplicação de xadrez gratuita num telemóvel joga muito melhor do que qualquer humano alguma vez jogou. Os melhores jogadores treinam com IA para encontrar ideias novas.",
+    "The ancient board game has more possible positions than atoms in the universe. Experts thought beating a top human was still a decade away.": "Este antigo jogo de tabuleiro tem mais posições possíveis do que átomos no universo. Os especialistas achavam que vencer um grande mestre ainda estava a uma década de distância.",
+    "DeepMind’s AlphaGo beat legend Lee Sedol 4–1. Its famous “move 37” looked like a mistake to experts, until it won.": "O AlphaGo da DeepMind venceu a lenda Lee Sedol por 4–1. A famosa “jogada 37” pareceu um erro aos especialistas, até ganhar.",
+    "Working out the 3D shape of a single protein, key to understanding disease, could take scientists years of lab work.": "Descobrir a forma 3D de uma única proteína, essencial para compreender doenças, podia custar anos de trabalho de laboratório.",
+    "AlphaFold predicted the shapes of over 200 million proteins, almost every one known. Its creators shared the 2024 Nobel Prize in Chemistry.": "O AlphaFold previu a forma de mais de 200 milhões de proteínas, quase todas as conhecidas. Os seus criadores partilharam o Nobel da Química de 2024.",
+    "The best computer vision systems got about one in four photos wrong in the big ImageNet challenge.": "Os melhores sistemas de visão por computador erravam cerca de uma em cada quatro fotos no grande desafio ImageNet.",
+    "Deep learning cut that error to under 4%, better than the roughly 5% estimated for people. Today your phone sorts your photos by face.": "O deep learning baixou esse erro para menos de 4%, melhor do que os cerca de 5% estimados para as pessoas. Hoje o seu telemóvel organiza as fotos por rosto.",
+    "In DARPA’s first desert race for robot cars, not one finished. The best managed about 12 km of a 240 km course.": "Na primeira corrida no deserto da DARPA para carros robô, nenhum terminou. O melhor fez cerca de 12 km de um percurso de 240 km.",
+    "Robotaxis with nobody in the driver’s seat now carry paying passengers through several US cities every day.": "Hoje, robotáxis sem ninguém ao volante transportam passageiros pagantes em várias cidades dos EUA, todos os dias.",
+    "ELIZA, the first chatbot, mostly turned your words back into questions. Still, some people confided in it like a therapist.": "O ELIZA, o primeiro chatbot, limitava-se quase sempre a transformar as suas palavras em perguntas. Mesmo assim, houve quem lhe fizesse confidências como a um terapeuta.",
+    "ChatGPT was estimated to reach 100 million users in about two months, one of the fastest-growing apps in history.": "Estima-se que o ChatGPT chegou aos 100 milhões de utilizadores em cerca de dois meses, uma das aplicações que mais depressa cresceu na história.",
+    "A 10-day global forecast meant hours of number-crunching on some of the world’s biggest supercomputers.": "Uma previsão global a 10 dias exigia horas de cálculos em alguns dos maiores supercomputadores do mundo.",
+    "DeepMind’s GraphCast makes a 10-day forecast in under a minute on a single machine, and beat traditional methods on most measures tested.": "O GraphCast da DeepMind faz uma previsão a 10 dias em menos de um minuto numa só máquina, e superou os métodos tradicionais na maioria das medidas testadas.",
+    "Online translators stitched sentences together phrase by phrase, which is why results often sounded robotic.": "Os tradutores online juntavam as frases bocado a bocado, por isso o resultado soava muitas vezes robótico.",
+    "Neural networks began translating whole sentences at once. Today you can talk to someone in another language in near real time.": "As redes neuronais passaram a traduzir frases inteiras de uma vez. Hoje pode falar com alguém noutra língua quase em tempo real.",
+    "Alan Turing asked: if you chat with a machine and can’t tell it from a person, should we say it thinks?": "Alan Turing perguntou: se conversar com uma máquina e não a conseguir distinguir de uma pessoa, devemos dizer que pensa?",
+    "In a study at UC San Diego, people chatting with GPT-4.5 judged it to be the human 73% of the time, more often than the real humans.": "Num estudo da Universidade da Califórnia em San Diego, quem conversou com o GPT-4.5 achou que era o humano em 73% das vezes, mais do que os humanos reais.",
+    "About these stories:": "Sobre estas notícias:",
+    "news headlines link to the original publishers, gathered automatically by GDELT and Hacker News. This page doesn’t write or edit them.": "os títulos levam aos jornais originais e são reunidos automaticamente pelo GDELT e pelo Hacker News. Esta página não os escreve nem edita.",
+    "Crypto, live": "Cripto, ao vivo",
+    "Learn to Beatmatch — Virtual DJ Mixer | Call me Monte": "Aprenda Beatmatching — Mesa de DJ Virtual | Call me Monte",
+    "A free virtual DJ mixer by Tiago Monte. Two decks, real sound in your browser, and a step-by-step guide to beatmatching: match the tempo, line up the kicks, blend with the crossfader.": "Uma mesa de DJ virtual e gratuita de Tiago Monte. Dois pratos, som real no navegador e um guia passo a passo de beatmatching: acertar o andamento, alinhar os bombos e misturar com o crossfader.",
+    "Learn to mix": "Aprenda a misturar",
+    "The decks": "Os pratos",
+    "Beatmatching is the first thing every DJ learns.": "O beatmatching é a primeira coisa que qualquer DJ aprende.",
+    "Two tracks, one rhythm. Let’s do it together.": "Duas faixas, um só ritmo. Vamos fazê-lo juntos.",
+    "🎧 Headphones or speakers on": "🎧 Ligue os auscultadores ou colunas",
+    "Next": "Seguinte",
+    "Start over": "Recomeçar",
+    "DJ mixer": "Mesa de DJ",
+    "Deck A": "Prato A",
+    "Deck B": "Prato B",
+    "Deep groove": "Groove profundo",
+    "Afro percussion": "Percussão afro",
+    "Tempo": "Andamento",
+    "Play": "Tocar",
+    "Deck A jog wheel": "Prato do Prato A",
+    "Deck B jog wheel": "Prato do Prato B",
+    "Deck A tempo": "Andamento do Prato A",
+    "Deck B tempo": "Andamento do Prato B",
+    "Nudge deck A back": "Atrasar ligeiramente o Prato A",
+    "Nudge deck A forward": "Adiantar ligeiramente o Prato A",
+    "Nudge deck B back": "Atrasar ligeiramente o Prato B",
+    "Nudge deck B forward": "Adiantar ligeiramente o Prato B",
+    "Deck A volume": "Volume do Prato A",
+    "Deck B volume": "Volume do Prato B",
+    "Beat alignment": "Alinhamento do ritmo",
+    "Start both decks to compare": "Ponha os dois pratos a tocar para comparar",
+    "Tempo difference": "Diferença de andamento",
+    "Crossfader": "Crossfader",
+    "Why beatmatch?": "Porquê fazer beatmatching?",
+    "When two tracks play at the same speed with their kicks landing together, you can blend them for as long as you like. That smooth handover is what keeps a dance floor moving.": "Quando duas faixas tocam à mesma velocidade, com os bombos a bater juntos, pode misturá-las o tempo que quiser. É essa passagem suave que mantém a pista a dançar.",
+    "Listen first": "Primeiro, ouça",
+    "Two kicks slightly out of time sound like a galloping horse: “ba-dum, ba-dum”. When they’re locked, the two kicks become one, solid and punchy.": "Dois bombos ligeiramente desfasados soam a um cavalo a galope: “ta-tum, ta-tum”. Quando encaixam, os dois bombos tornam-se um só, sólido e com força.",
+    "Small moves": "Pequenos gestos",
+    "Real DJs fix drift with tiny touches: a small push or drag on the jog wheel, a fraction of a percent on the tempo fader. Patience beats big moves.": "Os DJs a sério corrigem a deriva com toques pequenos: um ligeiro empurrão ou travão no prato, uma fração de percentagem no fader de andamento. A paciência ganha aos gestos grandes.",
+    "Music by Monte": "Música de Monte",
+    "Cue": "Cue",
+    "More areas": "Mais áreas",
+    "News, games & milestones": "Notícias, jogos e marcos",
+    "Live crypto prices": "Preços de cripto ao vivo",
+    "Sync": "Sync",
+    "Hold to preview from the cue point. Let go to jump back.": "Mantenha carregado para ouvir a partir do ponto de cue. Largue para voltar atrás.",
+    "Match this deck’s tempo and beat to the other deck": "Acertar o andamento e o ritmo deste prato com o outro",
+    "EQ & volume": "EQ e volume",
+    "Deck A treble": "Agudos do Prato A", "Deck A mids": "Médios do Prato A", "Deck A bass": "Graves do Prato A",
+    "Deck B treble": "Agudos do Prato B", "Deck B mids": "Médios do Prato B", "Deck B bass": "Graves do Prato B",
+    "Cue, EQ, Sync": "Cue, EQ, Sync",
+    ": hold it to preview the track from your cue point, let go to jump back.": ": mantenha carregado para ouvir a faixa a partir do ponto de cue; largue para voltar atrás.",
+    ": turn the LOW down on the incoming track so two basslines don’t clash.": ": baixe os graves (LOW) da faixa que está a entrar, para os dois baixos não chocarem.",
+    ": matches tempo and beat for you. Handy, but learn it by ear first.": ": acerta o andamento e o ritmo por si. Dá jeito, mas aprenda primeiro de ouvido.",
+
     // business page
     'Business · Call me Monte': 'Negócios · Call me Monte',
     'The business side of Tiago Monte: sales, people and operations across Portugal, Mozambique and Angola, and the road so far.':
@@ -373,15 +529,28 @@
   const css = document.createElement('style');
   css.textContent = `
     .nav-end { display: flex; align-items: center; gap: 14px; }
-    .lang-switch { display: inline-flex; padding: 3px; border: 1px solid var(--line); border-radius: 999px; background: color-mix(in srgb, var(--bg) 60%, transparent); }
-    .lang-switch button {
-      all: unset; cursor: pointer; padding: 6px 11px; border-radius: 999px;
-      font: 500 11px/1 var(--sans); letter-spacing: .14em; color: var(--muted); transition: background .3s, color .3s;
+    /* EN / PT toggle, like an iPhone switch: tap it, or slide the knob across */
+    .lang-switch {
+      --w: 80px; --k: 40px; all: unset; box-sizing: border-box; position: relative; display: inline-block; width: var(--w); height: 34px;
+      border-radius: 999px; border: 1px solid var(--line); background: color-mix(in srgb, var(--bg) 60%, transparent);
+      cursor: pointer; touch-action: none; user-select: none; -webkit-tap-highlight-color: transparent; transition: border-color .3s;
     }
-    .lang-switch button:hover { color: var(--text); }
-    .lang-switch button[aria-pressed="true"] { background: var(--text); color: var(--bg); }
-    .lang-switch button:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
-    @media (max-width: 420px) { .nav-end { gap: 8px; } .lang-switch button { padding: 6px 8px; } nav .pill { padding: 10px 14px; } }
+    .lang-switch:hover { border-color: color-mix(in srgb, var(--text) 35%, var(--line)); }
+    .lang-switch:focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; }
+    .lang-switch .ls-label {
+      position: absolute; top: 0; bottom: 0; width: 50%; display: grid; place-items: center;
+      font: 500 11px/1 var(--sans); letter-spacing: .14em; color: var(--muted); transition: opacity .3s;
+    }
+    .lang-switch .ls-label.en { left: 0; } .lang-switch .ls-label.pt { right: 0; }
+    .lang-switch .ls-knob {
+      position: absolute; top: 3px; left: 3px; width: var(--k); height: 26px; border-radius: 999px; background: var(--text); color: var(--bg);
+      display: grid; place-items: center; font: 600 11px/1 var(--sans); letter-spacing: .12em;
+      box-shadow: 0 2px 8px rgba(0,0,0,.45); transition: transform .45s cubic-bezier(.2,.9,.25,1.15);
+    }
+    .lang-switch[data-on="pt"] .ls-knob { transform: translateX(calc(var(--w) - var(--k) - 8px)); }
+    .lang-switch.dragging .ls-knob { transition: none; transform: translateX(var(--x)); }
+    .lang-switch.dragging { cursor: grabbing; }
+    @media (max-width: 420px) { .nav-end { gap: 8px; } .lang-switch { --w: 74px; --k: 36px; } nav .pill { padding: 10px 14px; } }
     /* on phones, the Music and Business menus drop the Home button (the M logo goes home) so everything fits */
     @media (max-width: 600px) { nav:has(.nav-links a[aria-current]) .nav-end .pill { display: none; } }
   `;
@@ -391,23 +560,76 @@
     const nav = document.getElementById('nav'), pill = nav && nav.querySelector('.pill');
     if (!pill) return;
     const end = document.createElement('div'); end.className = 'nav-end';
-    const sw = document.createElement('div'); sw.className = 'lang-switch'; sw.setAttribute('role', 'group'); sw.setAttribute('aria-label', 'Language / Idioma');
-    sw.innerHTML = '<button type="button" data-lang="en" lang="en">EN</button><button type="button" data-lang="pt" lang="pt">PT</button>';
+    const sw = document.createElement('button'); sw.type = 'button'; sw.className = 'lang-switch';
+    sw.setAttribute('role', 'switch'); sw.setAttribute('aria-label', 'Português');
+    sw.innerHTML = '<span class="ls-label en" aria-hidden="true">EN</span><span class="ls-label pt" aria-hidden="true">PT</span><span class="ls-knob" aria-hidden="true"></span>';
     pill.replaceWith(end); end.append(sw, pill);
-    sw.addEventListener('click', e => { const b = e.target.closest('button'); if (b) I18N.set(b.dataset.lang); });
+
+    // tap anywhere to switch, or drag the knob across and let go
+    const knob = sw.querySelector('.ls-knob');
+    let down = false, moved = false, startX = 0, from = 0, pos = 0;
+    const travel = () => sw.clientWidth - knob.offsetWidth - 6;
+    sw.addEventListener('pointerdown', e => {
+      down = true; moved = false; startX = e.clientX; from = lang === 'pt' ? travel() : 0; pos = from;
+      sw.setPointerCapture(e.pointerId);
+    });
+    sw.addEventListener('pointermove', e => {
+      if (!down) return;
+      const dx = e.clientX - startX;
+      if (!moved && Math.abs(dx) < 4) return;
+      moved = true; sw.classList.add('dragging');
+      pos = Math.max(0, Math.min(travel(), from + dx));
+      sw.style.setProperty('--x', pos + 'px');
+      knob.textContent = pos > travel() / 2 ? 'PT' : 'EN';
+    });
+    const release = () => {
+      if (!down) return; down = false;
+      const next = moved ? (pos > travel() / 2 ? 'pt' : 'en') : (lang === 'pt' ? 'en' : 'pt');
+      sw.classList.remove('dragging');
+      if (next !== lang) I18N.set(next); else markSwitch();
+    };
+    sw.addEventListener('pointerup', release); sw.addEventListener('pointercancel', release);
+    sw.addEventListener('click', e => { if (e.detail === 0) I18N.set(lang === 'pt' ? 'en' : 'pt'); });   // keyboard: Enter or Space
+    sw.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' && lang !== 'pt') { e.preventDefault(); I18N.set('pt'); }
+      if (e.key === 'ArrowLeft' && lang !== 'en') { e.preventDefault(); I18N.set('en'); }
+    });
   };
-  const markSwitch = () => document.querySelectorAll('.lang-switch button').forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === lang));
+  const markSwitch = () => {
+    document.querySelectorAll('.lang-switch').forEach(sw => {
+      sw.dataset.on = lang;
+      sw.setAttribute('aria-checked', lang === 'pt');
+      sw.setAttribute('aria-label', lang === 'pt' ? 'Idioma: Português (deslize para English)' : 'Language: English (slide for Português)');
+      const k = sw.querySelector('.ls-knob'); if (k) k.textContent = lang.toUpperCase();
+    });
+  };
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  let swapping = false;
 
   const I18N = window.I18N = {
     get lang() { return lang; },
     t: en => (lang === 'pt' ? (toPT(en) ?? en) : en),
     html: HTML,
     apply,
-    set(next) {
-      if (next === lang) return;
+    // the text slides out, the words change, then it slides back in from the other side
+    async set(next) {
+      if (next === lang || swapping) return;
       lang = next; save(lang);
-      apply(); markSwitch();
+      markSwitch();
+      const root = document.documentElement;
+      if (still) { apply(); document.dispatchEvent(new CustomEvent('langchange', { detail: lang })); return; }
+      swapping = true;
+      root.classList.add('i18n-out');
+      await wait(200);
+      apply();
       document.dispatchEvent(new CustomEvent('langchange', { detail: lang }));
+      root.classList.remove('i18n-out'); root.classList.add('i18n-in');
+      void root.offsetWidth;                       // let the browser place the text on the other side first
+      root.classList.add('i18n-settle'); root.classList.remove('i18n-in');
+      await wait(460);
+      root.classList.remove('i18n-settle');
+      swapping = false;
     },
   };
   document.documentElement.lang = lang === 'pt' ? 'pt-PT' : 'en';

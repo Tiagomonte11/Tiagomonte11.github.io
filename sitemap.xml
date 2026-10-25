@@ -66,4 +66,36 @@
     <xhtml:link rel="alternate" hreflang="pt" href="https://callmemonte.com/crypto/?lang=pt"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://callmemonte.com/crypto/"/>
   </url>
+  <url>
+    <loc>https://callmemonte.com/ai/</loc>
+    <lastmod>2026-10-25</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://callmemonte.com/ai/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://callmemonte.com/ai/?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://callmemonte.com/ai/"/>
+  </url>
+  <url>
+    <loc>https://callmemonte.com/ai/?lang=pt</loc>
+    <lastmod>2026-10-25</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://callmemonte.com/ai/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://callmemonte.com/ai/?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://callmemonte.com/ai/"/>
+  </url>
+  <url>
+    <loc>https://callmemonte.com/mixer/</loc>
+    <lastmod>2026-10-25</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://callmemonte.com/mixer/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://callmemonte.com/mixer/?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://callmemonte.com/mixer/"/>
+  </url>
+  <url>
+    <loc>https://callmemonte.com/mixer/?lang=pt</loc>
+    <lastmod>2026-10-25</lastmod>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://callmemonte.com/mixer/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://callmemonte.com/mixer/?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://callmemonte.com/mixer/"/>
+  </url>
 </urlset>

@@ -278,6 +278,8 @@
     /* SoundCloud link in the intro */
     .listen { display: inline-flex; align-items: center; gap: 12px; padding: 12px 22px; border-radius: 999px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 50%, transparent); transition: background .35s, color .35s; }
     .listen:hover { background: var(--accent); color: var(--bg); }
+    .listen + .listen { margin-left: 8px; }
+    @media (max-width: 480px) { .listen + .listen { margin: 10px 0 0; } }
     .event-intro .lede .count { display: block; margin-top: 14px; font-family: var(--sans); }
 
     footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 28px var(--pad); border-top: 1px solid var(--line); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
@@ -287,6 +289,7 @@
       .js h1 span, .js .ph { transform: none; opacity: 1; }
     }
   </style>
+  <link rel="stylesheet" href="../site.css">
 </head>
 <body>
   <div class="grain" aria-hidden="true"></div>
@@ -296,6 +299,7 @@
     <div class="nav-links">
       <a href="./" aria-current="page">Music</a>
       <a href="../business/">Business</a>
+      <a href="../ai/">AI</a>
     </div>
     <a class="pill" href="../"><span aria-hidden="true">←</span> Home</a>
   </nav>
@@ -306,6 +310,7 @@
     <div class="hero-foot">
       <p class="lede">Music where inspiration leads. <i>Sharing the art, one set at a time.</i></p>
       <a class="listen" href="https://soundcloud.com/tigas-m" target="_blank" rel="noopener me">Listen on SoundCloud <span aria-hidden="true">↗</span></a>
+      <a class="listen" href="../mixer/">Try the decks <span aria-hidden="true">→</span></a>
       <p class="count">Organic · Underground · House</p>
     </div>
   </header>
@@ -382,6 +387,7 @@
   </div>
 
   <script src="../i18n.js"></script>
+  <script src="../site.js"></script>
   <script>
     /*
       To add an event: put its photos in img/<slug>/ (01.jpg, 02.jpg, ...) plus smaller copies in img/<slug>/thumb/,
