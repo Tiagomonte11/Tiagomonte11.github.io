@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://callmemonte.com/</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://callmemonte.com/"/>
     <xhtml:link rel="alternate" hreflang="pt" href="https://callmemonte.com/?lang=pt"/>
@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://callmemonte.com/?lang=pt</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://callmemonte.com/"/>
     <xhtml:link rel="alternate" hreflang="pt" href="https://callmemonte.com/?lang=pt"/>
@@ -18,7 +18,7 @@
   </url>
   <url>
     <loc>https://callmemonte.com/business/</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://callmemonte.com/business/"/>
     <xhtml:link rel="alternate" hreflang="pt" href="https://callmemonte.com/business/?lang=pt"/>
@@ -26,7 +26,7 @@
   </url>
   <url>
     <loc>https://callmemonte.com/business/?lang=pt</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://callmemonte.com/business/"/>
     <xhtml:link rel="alternate" hreflang="pt" href="https://callmemonte.com/business/?lang=pt"/>
@@ -34,7 +34,7 @@
   </url>
   <url>
     <loc>https://callmemonte.com/art/</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://callmemonte.com/art/"/>
     <xhtml:link rel="alternate" hreflang="pt" href="https://callmemonte.com/art/?lang=pt"/>
@@ -42,7 +42,7 @@
   </url>
   <url>
     <loc>https://callmemonte.com/art/?lang=pt</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://callmemonte.com/art/"/>
     <xhtml:link rel="alternate" hreflang="pt" href="https://callmemonte.com/art/?lang=pt"/>
@@ -50,7 +50,7 @@
   </url>
   <url>
     <loc>https://callmemonte.com/crypto/</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://callmemonte.com/crypto/"/>
@@ -59,7 +59,7 @@
   </url>
   <url>
     <loc>https://callmemonte.com/crypto/?lang=pt</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://callmemonte.com/crypto/"/>

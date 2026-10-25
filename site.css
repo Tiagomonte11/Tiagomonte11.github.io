@@ -112,3 +112,33 @@ nav#nav .nav-menu a:hover, nav#nav .nav-menu a[aria-current] { background: color
 nav#nav .nav-menu b { font-weight: 500; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
 nav#nav .nav-menu a[aria-current] b { color: var(--accent); }
 nav#nav .nav-menu small { font-size: 12.5px; color: var(--muted); letter-spacing: 0; }
+
+/* questions people search for, on every page */
+.faq-sec { padding: clamp(70px, 9vw, 120px) var(--pad) 0; max-width: 1100px; margin: 0 auto; }
+.faq-sec .tag { justify-content: flex-start; }
+.faq { border-top: 1px solid var(--line); }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary {
+  list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 20px;
+  padding: 22px 0; font-family: var(--serif); font-size: clamp(21px, 2.2vw, 28px); line-height: 1.25; color: var(--text);
+  transition: color .3s;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "+"; flex: none; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center;
+  font-family: var(--sans); font-size: 18px; color: var(--muted); transition: transform .4s cubic-bezier(.2,.8,.2,1), border-color .3s, color .3s;
+}
+.faq summary:hover { color: var(--accent); }
+.faq details[open] summary::after { transform: rotate(45deg); border-color: var(--accent); color: var(--accent); }
+.faq summary:focus-visible { outline: 1px solid var(--accent); outline-offset: 4px; }
+.faq details p { color: var(--muted); font-size: 16.5px; line-height: 1.7; max-width: 760px; padding: 0 50px 24px 0; }
+.faq details[open] p { animation: faq-in .45s cubic-bezier(.2,.8,.2,1); }
+@keyframes faq-in { from { opacity: 0; transform: translateY(-6px); } }
+
+/* links to every part of the site, just above the footer */
+.site-links {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 28px; padding: 36px var(--pad) 30px;
+  font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+}
+.site-links a { color: var(--muted); transition: color .3s; }
+.site-links a:hover { color: var(--text); }
